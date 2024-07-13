@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import DeviceIcons from '../../components/DeviceIcons';
 import Submenu from '../../components/Submenu';
 import LiveStatusChart from '../../components/LiveStatusChart';
+import AlarmSetting from './AlarmSetting.page';
 
 // Mock data for devices and their live status
 const mockDevices = [
@@ -122,8 +123,8 @@ const Device: React.FC = () => {
             );
           case 'showMap':
             return <div>Show Map</div>;
-          case 'alarmHistory':
-            return <div>Alarm History</div>;
+          case 'alarmSetting':
+            return <div><AlarmSetting /></div>;
         case 'showActions' : 
             return <div>Actions</div>;
           default:

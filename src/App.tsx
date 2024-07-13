@@ -4,6 +4,11 @@ import Sidebar from '../src/components/Sidebar.tsx';
 import Footer from '../src/components/Footer.tsx';
 import Dashboard from "../src/pages/dashboard/Dashboard.page";
 import DevicePage from "../src/pages/device/Device.page";
+import AssignDevices from "../src/pages/device/AssignDevices.page";
+import Notification from "../src/pages/notification/Notification.page";
+import UserList from "../src/pages/users/UserList.page";
+import CreateUser from "../src/pages/users/CreateUser.page";
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -17,6 +22,11 @@ function App() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/devices" element={<DevicePage />} />
+            <Route path="/notifications" element={<Notification />} />
+            <Route path="/users" element={<UserList />} />
+            <Route path="/new_user" element={<CreateUser />} />
+            <Route path="/assign_device" element={<AssignDevices />} />
+            
             {/* Add other routes here */}
           </Routes>
         </main>

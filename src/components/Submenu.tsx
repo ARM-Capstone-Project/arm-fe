@@ -16,8 +16,8 @@ const Submenu: React.FC<SubmenuProps> = ({ onSelect }) => {
         <li className="px-4 cursor-pointer hover:bg-gray-100 border-r border-gray-300" onClick={() => onSelect('showMap')}>
           <a href="#" className="block">Map</a>
         </li>
-        <li className="px-4 cursor-pointer hover:bg-gray-100 border-r border-gray-300" onClick={() => onSelect('alarmHistory')}>
-          <a href="#" className="block">Alarm History</a>
+        <li className="px-4 cursor-pointer hover:bg-gray-100 border-r border-gray-300" onClick={() => onSelect('alarmSetting')}>
+          <a href="#" className="block">Alarm Setting</a>
         </li>
         <li className="px-4 cursor-pointer hover:bg-gray-100" onClick={() => onSelect('showActions')}>
           <a href="#" className="block">Actions</a>
