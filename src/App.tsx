@@ -1,8 +1,9 @@
 import './App.css'
 import Header from '../src/components/Header.tsx';
 import Sidebar from '../src/components/Sidebar.tsx';
-import Dashboard from "../src/pages/dashboard/Dashboard.page";
 import Footer from '../src/components/Footer.tsx';
+import Dashboard from "../src/pages/dashboard/Dashboard.page";
+import DevicePage from "../src/pages/device/Device.page";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <main className="flex-grow bg-gray-100 p-4">
           <Routes>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/devices" element={<DevicePage />} />
             {/* Add other routes here */}
           </Routes>
         </main>

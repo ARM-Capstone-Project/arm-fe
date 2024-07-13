@@ -26,6 +26,8 @@ a:hover {
   color: #BE123C;
 }
 
+.sub_menu a{color: #BE123C !important; } 
+.sub_menu a:hover{color: #ed6788 !important; } 
 /* body {
   margin: 0;
   display: flex;
@@ -61,7 +63,7 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -69,7 +71,5 @@ button:focus-visible {
   a:hover {
     color: #BE123C;
   }
-  button {
-    /* background-color: #f9f9f9; */
-  }
-}
+
+} */
