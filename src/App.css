@@ -45,6 +45,10 @@
   min-height: calc(100% - 300px);          /*min-height hack*/
 }
 
+.recharts-wrapper{
+  box-shadow: 0 24px 48px rgba(17,16,62,0.12);
+  background-color: #fff;
+}
 .profile_btn{
   padding: 4px;
   background: none;

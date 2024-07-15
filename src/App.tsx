@@ -8,7 +8,8 @@ import AssignDevices from "../src/pages/device/AssignDevices.page";
 import Notification from "../src/pages/notification/Notification.page";
 import UserList from "../src/pages/users/UserList.page";
 import CreateUser from "../src/pages/users/CreateUser.page";
-
+import AnalyticsPage from "../src/pages/analytics/Analytics.page";
+import CompanyHierarchy from "../src/pages/company/CompanyHierarchy.page";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -26,7 +27,8 @@ function App() {
             <Route path="/users" element={<UserList />} />
             <Route path="/new_user" element={<CreateUser />} />
             <Route path="/assign_device" element={<AssignDevices />} />
-            
+            <Route path="/analytics" element={<AnalyticsPage />} />
+            <Route path="/company" element={<CompanyHierarchy />} />
             {/* Add other routes here */}
           </Routes>
         </main>
