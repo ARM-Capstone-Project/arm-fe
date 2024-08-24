@@ -1,0 +1,33 @@
+# Ignore node_modules since dependencies will be installed in the container
+node_modules
+
+# Logs and lockfiles
+npm-debug.log
+yarn-error.log
+*.lock
+
+# Environment variable
+*.env
+
+# Ignore cache and other temporary files
+.cache
+*.tmp
+*.swp
+.DS_Store
+
+# Ignore dist and other build outputs (if you generate them locally)
+dist
+
+# Ignore source control and IDE settings
+.git
+.gitignore
+.vscode
+.idea
+
+.github/
+helm/
+terraform/
+
+# Images
+localhost.png
+terraform.png

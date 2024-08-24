@@ -1,0 +1,11 @@
+replicaCount: 1
+
+image:
+  repository: arm-fe-repository
+  tag: latest
+
+service:
+  type: ClusterIP
+  port: 8000
+
+resources: {}
