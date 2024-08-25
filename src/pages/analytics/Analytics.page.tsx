@@ -118,6 +118,7 @@ const AnalyticsPage: React.FC = () => {
           <h2 className="text-xl font-semibold mb-4">Device List and Status</h2>
           <DeviceList devices={mockDevices} />
         </div>
+        
       </div>
 
       <div className="grid grid-cols-1 gap-6 mb-6">

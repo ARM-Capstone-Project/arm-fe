@@ -24,7 +24,7 @@ const lineChartData = [
 ];
 
 const mockDevices = [
-  { id: 1, name: 'Temperature Sensor 1', type: 'temperature', status: 'active', location: 'Room A' },
+  { id: 1, name: 'Temperature hello 1', type: 'temperature', status: 'active', location: 'Room A' },
   { id: 2, name: 'Pressure Sensor 1', type: 'pressure', status: 'active', location: 'Room B' },
   { id: 3, name: 'Moisture Sensor 1', type: 'moisture', status: 'inactive', location: 'Garden' },
   { id: 4, name: 'Humidity Sensor 1', type: 'humidity', status: 'active', location: 'Greenhouse' },
