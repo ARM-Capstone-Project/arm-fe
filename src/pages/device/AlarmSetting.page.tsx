@@ -1,61 +1,21 @@
 import React, { useState, useCallback } from 'react';
 import Listing from './ThresholdListing.page';
-import type {
-  JsonGroup,
-  Config,
-  ImmutableTree,
-  BuilderProps,
-} from '@react-awesome-query-builder/ui';
-import { Utils as QbUtils, Query, Builder, BasicConfig } from '@react-awesome-query-builder/ui';
+import QueryBuilder from './QueryBuilder';
 
-const InitialConfig = BasicConfig;
-let queryStringToSave: string;
-const config: Config = {
-  ...InitialConfig,
-  fields: {
-    'reading': {
-      label: "Reading Value",
-      type: 'number',
-      fieldSettings: {
-        min: 0,
-      },
-      valueSources: ['value'],
-      preferWidgets: ['number'],
-    }
-  },
-};
 
-const queryValue: JsonGroup = { id: QbUtils.uuid(), type: 'group' };
+
+
 const AlarmSettings: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newThreshold, setNewThreshold] = useState({
     deviceId: '',
     sensorId: '',
+    level: '',
+    reading: '',
     email: '',
-    level: ''
   });
 
-  const [state, setState] = useState({
-    tree: QbUtils.checkTree(QbUtils.loadTree(queryValue), config),
-    config: config,
-  });
-  const onChange = useCallback((immutableTree: ImmutableTree, config: Config) => {
-    setState((prevState) => ({ ...prevState, tree: immutableTree, config: config }));
-    const jsonTree = QbUtils.getTree(immutableTree);
-    console.log(jsonTree);
-    queryStringToSave = QbUtils.queryString(immutableTree, config);
-    console.log(queryStringToSave);
-  }, []);
-  const renderBuilder = useCallback(
-    (props: BuilderProps) => (
-      <div className="query-builder-container" style={{ padding: '10px' }}>
-        <div className="query-builder qb-lite">
-          <Builder {...props} />
-        </div>
-      </div>
-    ),
-    [],
-  );
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewThreshold({
@@ -120,18 +80,40 @@ const AlarmSettings: React.FC = () => {
 
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="level">
-                Sensor Id
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="reading">
+                Reading
               </label>
-              <input
+              <select
+                id="reading"
+                name="reading"
+                value={newThreshold.reading}
+                onChange={handleInputChange} // Add this line
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              >
+                <option value="">Select Reading</option>
+                <option value="temperature">Temperature</option> {/* Fixed option value */}
+                <option value="humidity">Humidity</option> {/* Fixed option value */}
+              </select>
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="level">
+                Level
+              </label>
+              <select
                 id="level"
                 name="level"
-                type="text"
-                value={newThreshold.sensorId}
-                onChange={handleInputChange}
+                value={newThreshold.level}
+                onChange={handleInputChange} // Add this line
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              />
+              >
+                <option value="">Select Level</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+              </select>
             </div>
+
+
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                 Email
@@ -146,13 +128,10 @@ const AlarmSettings: React.FC = () => {
               />
 
             </div>
+            <QueryBuilder></QueryBuilder>
+            <div>
 
-
-
-            <div >
-              <Query {...config} value={state.tree} onChange={onChange} renderBuilder={renderBuilder} />
             </div>
-
 
             <div className="flex justify-end">
               <button
