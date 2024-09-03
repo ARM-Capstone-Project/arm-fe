@@ -5,7 +5,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import GaugeChart from 'react-gauge-chart';
-import DeviceList from './DeviceList.tsx';
+import DeviceList from '../../components/DeviceList.tsx';
 
 // Mock data for charts and gauges
 const lineChartData = [
@@ -24,7 +24,7 @@ const lineChartData = [
 ];
 
 const mockDevices = [
-  { id: 1, name: 'Temperature hello 1', type: 'temperature', status: 'active', location: 'Room A' },
+  { id: 1, name: 'Temperature Sensor 1', type: 'temperature', status: 'active', location: 'Room A' },
   { id: 2, name: 'Pressure Sensor 1', type: 'pressure', status: 'active', location: 'Room B' },
   { id: 3, name: 'Moisture Sensor 1', type: 'moisture', status: 'inactive', location: 'Garden' },
   { id: 4, name: 'Humidity Sensor 1', type: 'humidity', status: 'active', location: 'Greenhouse' },

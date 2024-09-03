@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { MapContainer, TileLayer, Polygon, Popup } from 'react-leaflet';
 import { Link } from 'react-router-dom';
+import Pagination from '../../components/Pagination';
+import Table from '../../components/Table';
 
 interface Zone {
     id: number;
@@ -70,7 +72,61 @@ const ZoneList: React.FC = () => {
 
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
-      };
+    };
+
+    const headers = (
+        <tr>
+            <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                Code
+            </th>
+            <th
+                scope="col"
+                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 cursor-pointer"
+                onClick={handleSortChange}
+            >
+                Name {sortOrder === 'asc' ? '▲' : '▼'}
+            </th>
+            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                Description
+            </th>
+            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+            </th>
+        </tr>
+      );
+      
+    const rows = (
+    <>
+        {currentZones.length > 0 ? (
+        currentZones.map(zone => (
+            <tr key={zone.code}>
+                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                    <Link to={`/zones/${zone.id}`} className="text-indigo-600 hover:text-indigo-900">
+                        {zone.code}
+                    </Link>
+                </td>
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {zone.name}
+                </td>
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {zone.description}
+                </td>
+                <td className="whitespace-nowrap px-3 py-4 text-sm flex space-x-4">
+                    <FaTrash
+                        className="text-red-500 cursor-pointer"
+                        onClick={() => handleDelete(zone.id)}
+                    />
+                </td>
+            </tr>
+        ))
+    ) : (
+        <tr>
+            <td colSpan={4} className="text-center py-4 text-gray-500">
+                No Zones Found.
+            </td>
+        </tr>
+    )}
+    </>
+    );
 
     return (
         <div className="p-6 bg-gray-100 min-h-screen">
@@ -98,87 +154,15 @@ const ZoneList: React.FC = () => {
                     </button>
                 </div>
                 <div className="mt-8 flow-root">
-                    <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                        <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                            <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
-                                <table className="min-w-full divide-y divide-gray-300">
-                                    <thead className="bg-gray-50">
-                                        <tr>
-                                            <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                                Code
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 cursor-pointer"
-                                                onClick={handleSortChange}
-                                            >
-                                                Name {sortOrder === 'asc' ? '▲' : '▼'}
-                                            </th>
-                                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                Description
-                                            </th>
-                                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-gray-200 bg-white">
-                                        {currentZones.length > 0 ? (
-                                            currentZones.map(zone => (
-                                                <tr key={zone.code}>
-                                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                                        <Link to={`/zones/${zone.id}`} className="text-indigo-600 hover:text-indigo-900">
-                                                            {zone.code}
-                                                        </Link>
-                                                    </td>
-                                                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                        {zone.name}
-                                                    </td>
-                                                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                        {zone.description}
-                                                    </td>
-                                                    <td className="whitespace-nowrap px-3 py-4 text-sm flex space-x-4">
-                                                        <FaTrash
-                                                            className="text-red-500 cursor-pointer"
-                                                            onClick={() => handleDelete(zone.id)}
-                                                        />
-                                                    </td>
-                                                </tr>
-                                            ))
-                                        ) : (
-                                            <tr>
-                                                <td colSpan={4} className="text-center py-4 text-gray-500">
-                                                    No Zones Found.
-                                                </td>
-                                            </tr>
-                                        )}
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-                        </div>
-                    </div>
+                    <Table headers={headers} rows={rows} />
                 </div>
-                
             </div>
-            <div className="flex justify-between items-center mt-4">
-                <button
-                onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
-                className="bg-gray-300 text-gray-700 px-4 py-2 rounded"
-                disabled={currentPage === 1}
-                >
-                    Previous
-                </button>
-                <div className="text-gray-700">
-                    Page {currentPage} of {totalPages}
-                </div>
-                <button
-                onClick={() => handlePageChange(Math.min(currentPage + 1, totalPages))}
-                className="bg-gray-300 text-gray-700 px-4 py-2 rounded"
-                disabled={currentPage === totalPages}
-                >
-                    Next
-                </button>
-            </div>
+            
+            <Pagination 
+                currentPage={currentPage} 
+                totalPages={totalPages} 
+                onPageChange={handlePageChange} 
+            />
             <div className="mt-6">
                 <h2 className="text-xl font-semibold text-gray-800 mb-4">Map of Singapore</h2>
                 <div className="map-container">
