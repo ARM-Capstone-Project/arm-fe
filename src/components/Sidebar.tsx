@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding, faUsers, faCogs, faBell, faChartLine, faBars, faMap } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import logoImg from '../assets/Logo.jpg';
+import ListItem from './sidebar/ListItem';
 
 const Sidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -23,44 +24,44 @@ const Sidebar: React.FC = () => {
           <FontAwesomeIcon icon={faBars} />
         </button>
       </div>
-      <nav className="">
+      <nav>
         <ul>
-          <li className="border-b border-gray-700">
-            <Link to="/company" className="flex items-center p-4 hover:bg-gray-700">
-              <FontAwesomeIcon icon={faBuilding} className="mr-3" />
-              <span className={`${isOpen ? 'inline' : 'hidden'}`}>Company</span>
-            </Link>
-          </li>
-          <li className="border-b border-gray-700">
-            <Link to="/users" className="flex items-center p-4 hover:bg-gray-700">
-              <FontAwesomeIcon icon={faUsers} className="mr-3" />
-              <span className={`${isOpen ? 'inline' : 'hidden'}`}>Users</span>
-            </Link>
-          </li>
-          <li className="border-b border-gray-700">
-            <Link to="/devices" className="flex items-center p-4 hover:bg-gray-700">
-              <FontAwesomeIcon icon={faCogs} className="mr-3" />
-              <span className={`${isOpen ? 'inline' : 'hidden'}`}>Devices</span>
-            </Link>
-          </li>
-          <li className="border-b border-gray-700">
-            <Link to="/zones" className="flex items-center p-4 hover:bg-gray-700">
-              <FontAwesomeIcon icon={faMap} className="mr-3" />
-              <span className={`${isOpen ? 'inline' : 'hidden'}`}>Zones</span>
-            </Link>
-          </li>
-          <li className="border-b border-gray-700">
-            <Link to="/notifications" className="flex items-center p-4 hover:bg-gray-700">
-              <FontAwesomeIcon icon={faBell} className="mr-3" />
-              <span className={`${isOpen ? 'inline' : 'hidden'}`}>Notifications</span>
-            </Link>
-          </li>
-          <li className="border-b border-gray-700">
-            <Link to="/analytics" className="flex items-center p-4 hover:bg-gray-700">
-              <FontAwesomeIcon icon={faChartLine} className="mr-3" />
-              <span className={`${isOpen ? 'inline' : 'hidden'}`}>Analytics</span>
-            </Link>
-          </li>
+          <ListItem
+            to="/company"
+            icon={faBuilding}
+            text="Company"
+            isOpen={isOpen}
+          />
+          <ListItem
+            to="/users"
+            icon={faUsers}
+            text="Users"
+            isOpen={isOpen}
+          />
+          <ListItem
+            to="/devices"
+            icon={faCogs}
+            text="Devices"
+            isOpen={isOpen}
+          />
+          <ListItem
+            to="/zones"
+            icon={faMap}
+            text="Zones"
+            isOpen={isOpen}
+          />
+          <ListItem
+            to="/notifications"
+            icon={faBell}
+            text="Notifications"
+            isOpen={isOpen}
+          />
+          <ListItem
+            to="/analytics"
+            icon={faChartLine}
+            text="Analytics"
+            isOpen={isOpen}
+          />
         </ul>
       </nav>
     </aside>
