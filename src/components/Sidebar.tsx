@@ -1,7 +1,7 @@
 // src/components/Sidebar.tsx
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBuilding, faUsers, faCogs, faBell, faChartLine, faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faUsers, faCogs, faBell, faChartLine, faBars, faMap } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import logoImg from '../assets/Logo.jpg';
 
@@ -41,6 +41,12 @@ const Sidebar: React.FC = () => {
             <Link to="/devices" className="flex items-center p-4 hover:bg-gray-700">
               <FontAwesomeIcon icon={faCogs} className="mr-3" />
               <span className={`${isOpen ? 'inline' : 'hidden'}`}>Devices</span>
+            </Link>
+          </li>
+          <li className="border-b border-gray-700">
+            <Link to="/zones" className="flex items-center p-4 hover:bg-gray-700">
+              <FontAwesomeIcon icon={faMap} className="mr-3" />
+              <span className={`${isOpen ? 'inline' : 'hidden'}`}>Zones</span>
             </Link>
           </li>
           <li className="border-b border-gray-700">
