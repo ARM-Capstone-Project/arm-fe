@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Pagination from '../../components/Pagination';
 import Table from '../../components/Table';
+import Title from '../../components/Title';
 
 // Generate mock data
 const generateMockUsers = () => {
@@ -143,12 +144,7 @@ const UserList: React.FC = () => {
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-3xl font-bold text-gray-800">User Management</h2>
-        {/* <button className="bg-blue-500 text-white px-4 py-2 rounded">
-          Add User
-        </button> */}
-      </div>
+      <Title title="User Management" />
 
       {/* Add User Form */}
       <div className="mb-4">

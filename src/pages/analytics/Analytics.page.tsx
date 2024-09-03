@@ -9,6 +9,7 @@ import {
 import GaugeChart from 'react-gauge-chart';
 import DeviceList from '../../components/DeviceList.tsx';
 import AlertList from '../../components/AlertList.tsx';
+import Title from '../../components/Title.tsx';
 
 // Mock data for charts and gauges
 const lineChartData = [
@@ -70,7 +71,7 @@ const icon = L.icon({
 const AnalyticsPage: React.FC = () => {
   return (
     <div className="p-4">
-      <h1 className="text-3xl font-bold mb-6">IoT Analytics</h1>
+      <Title title="IoT Analytics" />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         {/* Line Chart */}
         <div className="bg-white shadow-md rounded p-4">

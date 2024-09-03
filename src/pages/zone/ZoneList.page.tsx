@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, Polygon, Popup } from 'react-leaflet';
 import { Link } from 'react-router-dom';
 import Pagination from '../../components/Pagination';
 import Table from '../../components/Table';
+import Title from '../../components/Title';
 
 interface Zone {
     id: number;
@@ -130,10 +131,10 @@ const ZoneList: React.FC = () => {
 
     return (
         <div className="p-6 bg-gray-100 min-h-screen">
-            <div className="flex justify-between items-center mb-4">
-                <h1 className="text-2xl font-semibold text-gray-800">View Zones</h1>
+            <div className="flex justify-between items-center ">
+                <Title title="View Zones" />
                 <Link to="/zone/new">
-                    <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    <button className="flex items-center mb-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                         Add New Zone
                     </button>
                 </Link>

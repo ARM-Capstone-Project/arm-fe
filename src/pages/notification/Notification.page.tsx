@@ -1,7 +1,10 @@
-import React from 'react';
-import { FaBell, FaTrash } from 'react-icons/fa';
+// src/components/Notification.tsx
 
-const notifications = [
+import React, { useState } from 'react';
+import { FaBell, FaTrash } from 'react-icons/fa';
+import Title from '../../components/Title';
+
+const mockNotifications = [
   {
     id: 1,
     title: 'Temperature Alert',
@@ -23,14 +26,22 @@ const notifications = [
 ];
 
 const Notification: React.FC = () => {
+  const [notifications, setNotifications] = useState(mockNotifications);
+
+  const handleDelete = (id: number) => {
+    setNotifications(notifications.filter(notification => notification.id !== id));
+    console.log(`Deleted Notification ID: ${id}`);
+  };
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-3xl font-bold text-gray-800">Notifications</h2>
+        <Title title="Notifications" />
         <FaBell className="text-gray-600 text-2xl" />
+        
       </div>
       <div className="space-y-4">
-        {notifications.map((notification) => (
+        {notifications.map(notification => (
           <div key={notification.id} className="bg-white shadow rounded-lg p-4 flex items-start">
             <div className="flex-shrink-0">
               <FaBell className="text-rose-600 text-2xl" />
@@ -42,8 +53,11 @@ const Notification: React.FC = () => {
               </div>
               <p className="mt-2 text-gray-600">{notification.message}</p>
               <div className="mt-2 text-right">
-                <button className="text-red-500 hover:text-red-700 focus:outline-none">
-                  <FaTrash />
+                <button
+                  className="text-red-500 hover:text-red-700 focus:outline-none"
+                  onClick={() => handleDelete(notification.id)}
+                >
+                  <FaTrash className="text-red-500" />
                 </button>
               </div>
             </div>
