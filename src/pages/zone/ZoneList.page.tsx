@@ -11,7 +11,7 @@ interface Zone {
     code: string;
     name: string;
     description: string;
-    coordinates: [number, number][]; // Polygon coordinates for the zone area
+    coordinates: [number, number][];
 }
 
 const purpleOptions = { fillColor: 'blue', color: 'purple', weight: 2 }; 
@@ -91,6 +91,7 @@ const ZoneList: React.FC = () => {
                 Description
             </th>
             <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                Actions
             </th>
         </tr>
       );
