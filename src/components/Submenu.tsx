@@ -47,7 +47,7 @@ const Submenu: React.FC<SubmenuProps> = ({ onSelect }) => {
           }`}
           onClick={() => handleSelect('alarmSetting')}
         >
-          <a href="#" className="block">Alarm Setting</a>
+          <a href="#" className="block">Threshold Setting</a>
         </li>
       </ul>
     </div>

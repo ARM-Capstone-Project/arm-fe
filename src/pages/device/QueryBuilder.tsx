@@ -56,7 +56,7 @@ const QueryBuilder: React.FC = () => {
       />
       <div className="query-builder-result">
         <div>
-          Alarm Setting:{" "}
+          Threshold Setting:{" "}
           <pre>
             {JSON.stringify(QbUtils.queryString(state.tree, state.config))}
           </pre>
