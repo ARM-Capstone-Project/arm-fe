@@ -4,6 +4,7 @@ import Submenu from '../../components/Submenu';
 import LiveStatusChart from '../../components/LiveStatusChart';
 import AlarmSetting from './AlarmSetting.page';
 import DeviceMap from './DeviceMap.page';
+import DevicePage from './DevicePage.page';
 
 // Mock data for devices and their live status
 const mockDevices = [
@@ -126,8 +127,8 @@ const Device: React.FC = () => {
             return <div><DeviceMap /></div>;
           case 'alarmSetting':
             return <div><AlarmSetting /></div>;
-        case 'showActions' : 
-            return <div>Actions</div>;
+         case 'showActions' : 
+         return <div><DevicePage /></div>;
           default:
             return null;
         }

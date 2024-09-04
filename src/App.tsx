@@ -3,7 +3,7 @@ import Header from '../src/components/Header.tsx';
 import Sidebar from '../src/components/Sidebar.tsx';
 import Footer from '../src/components/Footer.tsx';
 import Dashboard from "../src/pages/dashboard/Dashboard.page";
-import DevicePage from "../src/pages/device/Device.page";
+import DevicePage from "./pages/device/DeviceSummary.page.tsx";
 import AssignDevices from "../src/pages/device/AssignDevices.page";
 import Notification from "../src/pages/notification/Notification.page";
 import UserList from "../src/pages/users/UserList.page";

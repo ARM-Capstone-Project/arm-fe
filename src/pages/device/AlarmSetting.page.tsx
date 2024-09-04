@@ -1,7 +1,21 @@
 import React, { useState, useCallback } from 'react';
-import Listing from './ThresholdListing.page';
 import QueryBuilder from './QueryBuilder';
+import SensorReadingList from './ThresholdListing.page';
+import SensorReading from './interfaces/SensorReading';
 
+
+const readings: SensorReading[] = [
+  {
+    deviceId: "a",
+    sensorId: "b",
+    reading: "temperature",
+    condition: "(reading >= 40 && reading <= 50)",
+    email: "your_notification_email@example.com",
+    level: "warning",
+    unit: "celsius",
+  },
+
+];
 
 
 
@@ -44,7 +58,7 @@ const AlarmSettings: React.FC = () => {
       </div>
 
       <div className="bg-white shadow rounded-lg p-4">
-        <Listing />
+      <SensorReadingList readings={readings} />
       </div>
 
       {/* Modal */}
