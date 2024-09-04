@@ -5,7 +5,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import GaugeChart from 'react-gauge-chart';
-import DeviceList from './DeviceList.tsx';
+import DeviceList from '../../components/DeviceList.tsx';
 
 // Mock data for charts and gauges
 const lineChartData = [
