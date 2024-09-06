@@ -1,20 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import { fetchDevice } from '../../api/deviceApi';
 import { Device } from '../../types/device';
 import './DeviceForm.css';
 
-interface DeviceFormProps {
-  mode: 'view' | 'edit';
-}
-
-const DeviceForm: React.FC<DeviceFormProps> = ({ mode }) => {
+const DeviceForm: React.FC = () => {
   const [device, setDevice] = useState<Device | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
-  const navigate = useNavigate(); // Hook for navigation
-  const { deviceId } = useParams<{ deviceId: string }>(); // Get deviceId from URL params
 
   // Mock data
   const dummyDevice: Device = {
@@ -35,18 +27,17 @@ const DeviceForm: React.FC<DeviceFormProps> = ({ mode }) => {
   };
 
   useEffect(() => {
-    if (deviceId) {
-      fetchDevice(deviceId)
-        .then((data: Device) => {
-          setDevice(data);
-          setLoading(false);
-        })
-        .catch((err: Error) => {
-          setError(err.message);
-          setLoading(false);
-        });
-    }
-  }, [deviceId]);
+    const deviceId = '123'; // Replace with actual deviceId
+    fetchDevice(deviceId)
+      .then((data: Device) => {
+        setDevice(data);
+        setLoading(false);
+      })
+      .catch((err: Error) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
 
   const handleCheckboxChange = (sensor: string) => {
     setDevice((prevDevice) => {
@@ -64,20 +55,12 @@ const DeviceForm: React.FC<DeviceFormProps> = ({ mode }) => {
     });
   };
 
-  const handleSave = () => {
-    // Implement your save logic here
-    console.log('Saved device:', device);
-
-    // After saving, navigate back to the view page
-    navigate(`/device-form/${device?.deviceId}`);
-  };
-
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="device-form">
-      <h1 className="form-title">{mode === 'edit' ? 'Edit Device' : 'View Device'}</h1>
+      <h1 className="form-title">Device Form</h1>
       {device && (
         <form>
           <div className="form-group">
@@ -86,11 +69,11 @@ const DeviceForm: React.FC<DeviceFormProps> = ({ mode }) => {
           </div>
           <div className="form-group">
             <label htmlFor="deviceName">Device Name:</label>
-            <input type="text" id="deviceName" value={device.deviceName} readOnly={mode === 'view'} />
+            <input type="text" id="deviceName" value={device.deviceName} readOnly />
           </div>
           <div className="form-group">
             <label htmlFor="deviceType">Device Type:</label>
-            <input type="text" id="deviceType" value={device.deviceType} readOnly={mode === 'view'} />
+            <input type="text" id="deviceType" value={device.deviceType} readOnly />
           </div>
           <div className="form-group">
             <label htmlFor="sensors">Sensors:</label>
@@ -101,8 +84,7 @@ const DeviceForm: React.FC<DeviceFormProps> = ({ mode }) => {
                     type="checkbox"
                     id={`sensor-${sensor}`}
                     checked={device.sensors.includes(sensor)}
-                    onChange={() => mode === 'edit' && handleCheckboxChange(sensor)}
-                    disabled={mode === 'view'}
+                    onChange={() => handleCheckboxChange(sensor)}
                   />
                   <label htmlFor={`sensor-${sensor}`}>{sensor}</label>
                 </div>
@@ -111,15 +93,12 @@ const DeviceForm: React.FC<DeviceFormProps> = ({ mode }) => {
           </div>
           <div className="form-group">
             <label htmlFor="zone">Zone:</label>
-            <input type="text" id="zone" value={device.zone} readOnly={mode === 'view'} />
+            <input type="text" id="zone" value={device.zone} readOnly />
           </div>
           <div className="form-group">
             <label htmlFor="location">Location:</label>
-            <input type="text" id="location" value={device.location} readOnly={mode === 'view'} />
+            <input type="text" id="location" value={device.location} readOnly />
           </div>
-          {mode === 'edit' && (
-            <button type="button" onClick={handleSave}>Save</button>
-          )}
         </form>
       )}
     </div>
