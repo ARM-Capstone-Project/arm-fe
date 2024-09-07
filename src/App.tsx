@@ -11,6 +11,7 @@ import CreateUser from "../src/pages/users/CreateUser.page";
 import AnalyticsPage from "../src/pages/analytics/Analytics.page";
 import CompanyHierarchy from "../src/pages/company/CompanyHierarchy.page";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import DeviceForm from './components/Device/DeviceForm';
 
 function App() {
   return (
@@ -29,6 +30,8 @@ function App() {
             <Route path="/assign_device" element={<AssignDevices />} />
             <Route path="/analytics" element={<AnalyticsPage />} />
             <Route path="/company" element={<CompanyHierarchy />} />
+            <Route path="/device-form/:deviceId" element={<DeviceForm mode="view" />} />// View mode
+            <Route path="/device-upd/:deviceId" element={<DeviceForm mode="edit" />} />// Edit mode
             {/* Add other routes here */}
           </Routes>
         </main>
