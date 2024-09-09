@@ -29,7 +29,7 @@ const LiveStatusChart: React.FC<LiveStatusChartProps> = ({ data, dataKey, yAxisL
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="time"
-          type="Date"
+          //type="Date"  //showing build error Date type not supported
           scale="time"
           domain={['auto', 'auto']}
           tickFormatter={(time: number) => format(new Date(time), 'HH:mm:ss')}

@@ -10,12 +10,13 @@ import UserList from "../src/pages/users/UserList.page";
 import CreateUser from "../src/pages/users/CreateUser.page";
 import AnalyticsPage from "../src/pages/analytics/Analytics.page";
 import CompanyHierarchy from "../src/pages/company/CompanyHierarchy.page";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+//import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import DeviceForm from './components/Device/DeviceForm';
 
 function App() {
   return (
-    <Router>
+    //<Router>
     <div className="flex min-h-screen">
       <Sidebar />
       <div className="flex-grow flex flex-col">
@@ -37,7 +38,7 @@ function App() {
         </main>
       </div>
     </div>
-  </Router>
+  //</Router>
     // <Router>
     //   <div className="flex flex-col min-h-screen">
     //     <nav className="bg-white border-gray-200 light:bg-gray-900 shadow">

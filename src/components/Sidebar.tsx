@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding, faUsers, faCogs, faBell, faChartLine, faBars } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import logoImg from '../assets/Logo.jpg';
+//import logoImg from '../assets/Logo.jpg';
 
 const Sidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);

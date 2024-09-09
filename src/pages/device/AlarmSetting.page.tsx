@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react';
+//import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import QueryBuilder from './QueryBuilder';
 import SensorReadingList from './ThresholdListing.page';
 import SensorReading from './interfaces/SensorReading';
@@ -31,7 +32,7 @@ const AlarmSettings: React.FC = () => {
 
 
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setNewThreshold({
       ...newThreshold,
       [e.target.name]: e.target.value

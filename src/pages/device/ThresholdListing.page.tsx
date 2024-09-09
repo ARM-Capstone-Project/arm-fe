@@ -1,6 +1,11 @@
 import SensorReading from "./interfaces/SensorReading";
 
-const SensorReadingList: React.FC<SensorReading[]> = ({ readings }) => {
+// Define an interface for the component props
+interface SensorReadingListProps {
+  readings: SensorReading[];
+}
+
+const SensorReadingList: React.FC<SensorReadingListProps> = ({ readings }) => {
   return (
     <div className="container mx-auto">
       

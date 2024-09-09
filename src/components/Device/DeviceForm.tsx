@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { fetchDevice } from '../../api/deviceApi';
+import { fetchDevice } from '../../services/deviceApi';
 import { Device } from '../../types/device';
 import './DeviceForm.css';
 
