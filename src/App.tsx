@@ -13,7 +13,7 @@ import CompanyHierarchy from "../src/pages/company/CompanyHierarchy.page";
 //import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
 import DeviceForm from './components/Device/DeviceForm';
-
+import DevicesList from "./pages/device/DevicesList.page.tsx";
 function App() {
   return (
     //<Router>
@@ -31,6 +31,7 @@ function App() {
             <Route path="/assign_device" element={<AssignDevices />} />
             <Route path="/analytics" element={<AnalyticsPage />} />
             <Route path="/company" element={<CompanyHierarchy />} />
+            <Route path="/deviceslist" element={<DevicesList />} />
             <Route path="/device-form/:deviceId" element={<DeviceForm mode="view" />} />// View mode
             <Route path="/device-upd/:deviceId" element={<DeviceForm mode="edit" />} />// Edit mode
             {/* Add other routes here */}

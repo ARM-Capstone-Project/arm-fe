@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchDevice } from '../../services/deviceApi';
+import { fetchDevice } from '../../services/device.service';
 import { Device } from '../../types/device';
 import './DeviceForm.css';
 

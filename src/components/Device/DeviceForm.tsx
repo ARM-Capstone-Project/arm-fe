@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { fetchDevice } from '../../services/deviceApi';
+import { fetchDevice } from '../../services/device.service';
 import { Device } from '../../types/device';
 import './DeviceForm.css';
 
@@ -24,6 +24,7 @@ const DeviceForm: React.FC<DeviceFormProps> = ({ mode }) => {
     sensors: ['Temperature', 'Humidity'],
     zone: 'Zone A',
     location: 'Room 101',
+    status: 'active'
   };
 
   const fetchDevice = (deviceId: string): Promise<Device> => {

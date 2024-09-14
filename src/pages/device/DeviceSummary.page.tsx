@@ -5,6 +5,7 @@ import LiveStatusChart from '../../components/LiveStatusChart';
 import AlarmSetting from './AlarmSetting.page';
 import DeviceMap from './DeviceMap.page';
 import DevicePage from './DevicePage.page';
+import DevicesList from './DevicesList.page';
 
 // Mock data for devices and their live status
 const mockDevices = [
@@ -123,6 +124,8 @@ const Device: React.FC = () => {
                 </div>
               </div>
             );
+          case 'deviceslist':
+            return<div><DevicesList /></div>
           case 'showMap':
             return <div><DeviceMap /></div>;
           case 'alarmSetting':

@@ -5,4 +5,5 @@ export interface Device {
   sensors: string[];
   zone: string;
   location: string;
+  status: string;
 }
