@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const mockDevices: Device[] = [
     {
-        deviceId: 'D001',
+        deviceId: '123',
         deviceName: 'Temperature Sensor 1',
         deviceType: 'temperature',
         sensors: ['sensor1', 'sensor2'],
@@ -14,7 +14,7 @@ const mockDevices: Device[] = [
         status: 'active',
     },
     {
-        deviceId: 'D002',
+        deviceId: '121',
         deviceName: 'Pressure Sensor 1',
         deviceType: 'pressure',
         sensors: ['sensor3'],
@@ -23,7 +23,7 @@ const mockDevices: Device[] = [
         status: 'inactive',
     },
     {
-        deviceId: 'D003',
+        deviceId: '122',
         deviceName: 'Humidity Sensor 1',
         deviceType: 'humidity',
         sensors: ['sensor4', 'sensor5'],
@@ -42,8 +42,8 @@ const mockDevices: Device[] = [
     },
     {
         deviceId: 'D005',
-        deviceName: 'Vibration Sensor 1',
-        deviceType: 'vibration',
+        deviceName: 'Frequency Sensor 1',
+        deviceType: 'movement frequency',
         sensors: ['sensor7', 'sensor8'],
         zone: 'Zone E',
         location: 'Building 3, Room 301',
@@ -53,7 +53,7 @@ const mockDevices: Device[] = [
 
 const DevicesList: React.FC = () => {
     const [devices, setDevices] = useState<Device[]>(mockDevices);
-    const navigate = useNavigate(); // Moved inside the component
+    const navigate = useNavigate();
 
     const handleEdit = (deviceId: string) => {
         console.log('Edit device:', deviceId);

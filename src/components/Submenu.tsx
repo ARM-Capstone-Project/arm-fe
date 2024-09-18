@@ -1,12 +1,15 @@
 // src/components/Submenu.tsx
 import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 interface SubmenuProps {
   onSelect: (section: string) => void;
 }
 
 const Submenu: React.FC<SubmenuProps> = ({ onSelect }) => {
-    const [activeSection, setActiveSection] = useState('liveData');
+    const [searchParams] = useSearchParams();
+    //updated to navigate after device update
+    const [activeSection, setActiveSection] = useState<string>(searchParams.get('section') || 'liveData');
 
     const handleSelect = (section: string) => {
       setActiveSection(section);
