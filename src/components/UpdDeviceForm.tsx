@@ -1,39 +1,45 @@
 import React, { useState, useEffect } from 'react';
-import { fetchDevice } from './../services/device.service';
-import { Device } from './../types/device';
+import { Device, Sensor } from './../types/device';
 import './Device/DeviceForm.css';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const UpdDeviceForm: React.FC = () => {
-  const { deviceId } = useParams<{ deviceId?: string }>(); // deviceId can be undefined
+  const { deviceId } = useParams<{ deviceId?: string }>();
   const [device, setDevice] = useState<Device | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  // Mock data start
+  // Mock data
   const dummyDevice: Device = {
     deviceId: '123',
     deviceName: 'Sample Device',
     deviceType: 'Sensor',
-    sensors: ['Temperature', 'Humidity'],
+    sensors: [
+      { name: 'sensor 1', type: 'Temperature', unit: 'Celsius', deviceId: '123' },
+      { name: 'sensor 2', type: 'Humidity', unit: 'g/kg', deviceId: '123' },
+    ],
     zone: 'Zone A',
     location: 'Room 101',
     status: 'active',
+    users: [
+      { id: 'usr1', name: 'Amy', role: 'Supervisor' },
+      { id: 'usr2', name: 'Joe', role: 'Supervisor' },
+      { id: 'usr3', name: 'Fin', role: 'Operator' },
+      { id: 'usr4', name: 'Agae', role: 'Operator' },
+    ],
   };
 
   const fetchDevice = (deviceId: string): Promise<Device> => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(dummyDevice); // Return the dummy data
-      }, 1000); // Simulate a delay
+        resolve(dummyDevice);
+      }, 1000);
     });
   };
-  //end mock data
 
   useEffect(() => {
-    if (deviceId) { // Check if deviceId is defined
+    if (deviceId) {
       fetchDevice(deviceId)
         .then((data: Device) => {
           setDevice(data);
@@ -47,28 +53,13 @@ const UpdDeviceForm: React.FC = () => {
       setError('Device ID is missing');
       setLoading(false);
     }
-  }, [deviceId]); // Add deviceId to dependencies
+  }, [deviceId]);
 
-  const handleCheckboxChange = (sensor: string) => {
-    setDevice((prevDevice) => {
-      if (prevDevice) {
-        const updatedSensors = prevDevice.sensors.includes(sensor)
-          ? prevDevice.sensors.filter((s) => s !== sensor)
-          : [...prevDevice.sensors, sensor];
-
-        return {
-          ...prevDevice,
-          sensors: updatedSensors,
-        };
-      }
-      return null;
-    });
-  };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
 
     setDevice((prevDevice) => {
-      if (prevDevice) {        
+      if (prevDevice) {
         return {
           ...prevDevice,
           [id]: value,
@@ -78,31 +69,49 @@ const UpdDeviceForm: React.FC = () => {
     });
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-
-  const handleSave = () => {
-    if (device) {
-      console.log('Saving device:', device);
-      navigate(`/devices?section=${'deviceslist'}`);
-      // Implement your save logic here, e.g., sending data to a server.
-      // For now, just log the device object.
-    }
-  };
-
-  const handleStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-
+  const handleSensorChange = (index: number, field: keyof Sensor, value: string) => {
     setDevice((prevDevice) => {
       if (prevDevice) {
+        const updatedSensors = prevDevice.sensors.map((sensor, i) =>
+          i === index ? { ...sensor, [field]: value } : sensor
+        );
+
         return {
           ...prevDevice,
-          status: value, // set either 'active' or 'inactive'
+          sensors: updatedSensors,
         };
       }
       return null;
     });
   };
+
+  const handleStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target as HTMLInputElement;
+
+    setDevice((prevDevice) => {
+      if (prevDevice) {
+        return {
+          ...prevDevice,
+          status: value as 'active' | 'inactive',
+        };
+      }
+      return null;
+    });
+  };
+
+  const handleSave = () => {
+    if (device) {
+        window.alert(`Updated for ${device.deviceName}`);
+      console.log('Saving device:', device);
+      navigate(`/devices?section=deviceslist`);
+    }
+  };
+  const handleCancel =() => {
+    navigate(`/devices?section=deviceslist`);
+  }
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="device-form">
@@ -111,7 +120,7 @@ const UpdDeviceForm: React.FC = () => {
         <form>
           <div className="form-group">
             <label htmlFor="deviceId">Device ID:</label>
-            <input type="text" id="deviceId" value={device.deviceId} readOnly/>
+            <input type="text" id="deviceId" value={device.deviceId} readOnly />
           </div>
           <div className="form-group">
             <label htmlFor="deviceName">Device Name:</label>
@@ -131,22 +140,47 @@ const UpdDeviceForm: React.FC = () => {
               onChange={handleInputChange}
             />
           </div>
+
           <div className="form-group">
-            <label htmlFor="sensors">Sensors:</label>
-            <div className="sensor-checkboxes">
-              {['Temperature', 'Humidity', 'Pressure'].map((sensor) => (
-                <div key={sensor} className="sensor-checkbox">
-                  <input
-                    type="checkbox"
-                    id={`sensor-${sensor}`}
-                    checked={device.sensors.includes(sensor)}
-                    onChange={() => handleCheckboxChange(sensor)}
-                  />
-                  <label htmlFor={`sensor-${sensor}`}>{sensor}</label>
-                </div>
-              ))}
-            </div>
+            <label>Sensors:</label>
+            <table className="sensor-table">
+              <thead>
+                <tr>
+                  <th>Sensor Name</th>
+                  <th>Sensor Type</th>
+                  <th>Unit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {device.sensors.map((sensor, index) => (
+                  <tr key={index}>
+                    <td>
+                      <input
+                        type="text"
+                        value={sensor.name}
+                        onChange={(e) => handleSensorChange(index, 'name', e.target.value)}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        value={sensor.type}
+                        onChange={(e) => handleSensorChange(index, 'type', e.target.value)}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        value={sensor.unit}
+                        onChange={(e) => handleSensorChange(index, 'unit', e.target.value)}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
+
           <div className="form-group">
             <label htmlFor="zone">Zone:</label>
             <input type="text" id="zone" value={device.zone} onChange={handleInputChange} />
@@ -184,10 +218,25 @@ const UpdDeviceForm: React.FC = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="flex justify-end mt-4">
-            <button type="button" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onClick={handleSave}>Save</button>
-          </div>
+          <button
+    type="button"
+    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+    onClick={handleSave}
+  >
+    Save
+  </button>
+  <button
+    type="button"
+    className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 ml-4"
+    onClick={handleCancel}
+  >
+    Cancel
+  </button>
+  
+</div>
+
         </form>
       )}
     </div>

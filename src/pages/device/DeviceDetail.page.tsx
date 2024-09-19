@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Device } from '../../types/device';
-import './DeviceDetail.css';
+import '../../components/Device/DeviceDetail.css';
 
 const DeviceDetail: React.FC = () => {
   const [device, setDevice] = useState<Device | null>(null);

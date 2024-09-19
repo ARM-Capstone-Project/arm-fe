@@ -7,6 +7,7 @@ import DeviceMap from './DeviceMap.page';
 import DevicePage from './DevicePage.page';
 import DevicesList from './DevicesList.page';
 import { useSearchParams } from 'react-router-dom';
+import CreateDevice from '../../components/CreateDevice';
 
 // Mock data for devices and their live status
 const mockDevices = [
@@ -142,7 +143,7 @@ const Device: React.FC = () => {
           case 'alarmSetting':
             return <div><AlarmSetting /></div>;
          case 'showActions' : 
-         return <div><DevicePage /></div>;
+         return <div><CreateDevice /></div>;
           default:
             return null;
         }

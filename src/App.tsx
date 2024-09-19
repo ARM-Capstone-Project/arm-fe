@@ -12,9 +12,10 @@ import AnalyticsPage from "../src/pages/analytics/Analytics.page";
 import CompanyHierarchy from "../src/pages/company/CompanyHierarchy.page";
 //import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
-import DeviceForm from './components/Device/DeviceForm';
+import DeviceDetail from './pages/device/DeviceDetail.page.tsx';
 import UpdDeviceForm from './components/UpdDeviceForm';
 import DevicesList from "./pages/device/DevicesList.page.tsx";
+import CreateDevice from './components/CreateDevice';
 function App() {
   return (
     //<Router>
@@ -33,42 +34,14 @@ function App() {
             <Route path="/analytics" element={<AnalyticsPage />} />
             <Route path="/company" element={<CompanyHierarchy />} />
             <Route path="/deviceslist" element={<DevicesList />} />
-            <Route path="/device-form/:deviceId" element={<DeviceForm mode="view" />} />// View mode
+            <Route path="/device-form/:deviceId" element={<DeviceDetail />} />
             <Route path="/device-upd/:deviceId" element={<UpdDeviceForm />} />// Edit mode
+            <Route path="/device-create" element={<CreateDevice />} />
             {/* Add other routes here */}
           </Routes>
         </main>
       </div>
-    </div>
-  //</Router>
-    // <Router>
-    //   <div className="flex flex-col min-h-screen">
-    //     <nav className="bg-white border-gray-200 light:bg-gray-900 shadow">
-    //       <div className="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
-    //         <a href="/" className="flex items-center text-rose-700">
-    //           <span className="self-center text-1xl font-semibold whitespace-nowrap dark:text-white">
-    //             Alco Remote Monitoring
-    //           </span>
-    //         </a>
-    //         {/* <RenderAuthLinks currentUser={currentUser} logOut={logOut} /> */}
-    //       </div>
-    //     </nav>
-    //     <div className="boxed-container w-full px-2">
-    //       <div className="flex-wrap lg:flex">
-    //         <div className="w-full">
-    //           <Routes>
-    //             <Route path="/" element={<Dashboard />} />
-    //             {/* <Route path="/home" element={<Home />} />
-    //             <Route path="/login" element={<Login />} />
-    //             <Route path="/register" element={<Register />} />
-    //             <Route path="/profile" element={<Profile />} /> */}
-    //           </Routes>
-    //         </div>
-    //       </div>
-    //     </div>
-    //     <Footer />
-    //   </div>
-    // </Router>
+    </div>  
   );
 }
 
