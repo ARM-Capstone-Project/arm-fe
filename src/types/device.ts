@@ -7,6 +7,14 @@ export interface Sensor {
   deviceId: string;
 }
 
+export interface SensorReading{
+  deviceId: string;
+  timestamp: string;
+  type: string; //temperature, etc  
+  value: string;
+  unit: string;
+}
+
 export interface Device {
   deviceId: string;
   deviceName: string;

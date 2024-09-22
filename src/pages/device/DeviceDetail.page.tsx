@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Device } from '../../types/device';
 import '../../components/Device/DeviceDetail.css';
+import DeviceSensorReading from '../../components/DeviceSensorReading';
 
 const DeviceDetail: React.FC = () => {
   const [device, setDevice] = useState<Device | null>(null);
@@ -60,27 +61,27 @@ const DeviceDetail: React.FC = () => {
       {device && (
         <div>
           <div className="detail-group">
-            <label>Device ID:</label>
+            <label style={{ fontSize: '20px' }}>Device ID:</label>
             <p>{device.deviceId}</p>
           </div>
           <div className="detail-group">
-            <label>Device Name:</label>
+            <label style={{ fontSize: '20px' }}>Device Name:</label>
             <p>{device.deviceName}</p>
           </div>
           <div className="detail-group">
-            <label>Device Type:</label>
+            <label style={{ fontSize: '20px' }}>Device Type:</label>
             <p>{device.deviceType}</p>
           </div>
           <div className="detail-group">
-            <label>Zone:</label>
+            <label style={{ fontSize: '20px' }}>Zone:</label>
             <p>{device.zone}</p>
           </div>
           <div className="detail-group">
-            <label>Location:</label>
+            <label style={{ fontSize: '20px' }}>Location:</label>
             <p>{device.location}</p>
           </div>
           <div className="detail-group">
-            <label>Status:</label>
+            <label style={{ fontSize: '20px' }}>Status:</label>
             <p>{device.status}</p>
           </div>
 
@@ -122,7 +123,13 @@ const DeviceDetail: React.FC = () => {
           </div>
         </div>
       )}
+      <br></br>
+      <br></br>
+      <div>
+    <DeviceSensorReading />
     </div>
+    </div>
+    
   );
 };
 
