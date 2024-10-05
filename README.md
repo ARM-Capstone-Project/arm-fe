@@ -16,14 +16,14 @@ npm run dev
 
 The server will start on port 5173. You can access it by navigating to `http://localhost:5173/` in your web browser.
 
-![localhost](localhost.png)
+![localhost](screenshots/localhost.png)
 
 # Devops
 
 ## Overview
 
 ```
-Infrastructure Setup: Jenkins and Terraform
+Infrastructure Setup: Terraform
 
 Containerization: Podman
 
@@ -35,7 +35,7 @@ CD: GitOps (ArgoCD)
 
 Deployment Platform: Kubernetes Cluster - EKS
 
-Configuration Managment: Helm - Dev, QA, Prod
+Configuration Managment: Helm
 
 Ingress Controller: Load Balancer - Exposed, DNS
 ```
@@ -66,7 +66,7 @@ podman run -p 5173:80 <image-id>
 
 Create ECR and EKS cluster using Terraform
 
-![terraform](terraform.png)
+![terraform](screenshots/terraform.png)
 
 ```
 terraform fmt -recursive
@@ -98,3 +98,23 @@ Configure kubectl
 ```
 aws eks --region <aws-region> update-kubeconfig --name <cluster-name>
 ```
+
+## Automated Infrastructure
+
+Jenkins
+
+![jenkins-server](screenshots/jenkins-server.png)
+
+![ec2-contents](screenshots/ec2-contents.png)
+
+Get Jenkins admin password through SSM
+```
+sudo su ubuntu
+cd
+systemctl status jenkins.service
+```
+
+Allow Jenkins to run terraform actions
+
+![terraform-in-jenkins](screenshots/terraform-in-jenkins.png)
+
