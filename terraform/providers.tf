@@ -12,6 +12,9 @@ terraform {
 provider "aws" {
   region = local.aws_region
 
-  shared_credentials_files = ["/Users/macbook/.aws/config"]
-  profile                  = "default"
+  // These are required to connect Terraform and AWS from local machine
+  // Not required when using Jenkins server
+  
+  // shared_credentials_files = ["/Users/macbook/.aws/config"]
+  // profile                  = "default"
 }
