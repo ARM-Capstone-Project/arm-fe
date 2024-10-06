@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: arm-fe
+  labels:
+    app: arm-fe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: arm-fe
+  template:
+    metadata:
+      labels:
+        app: arm-fe
+    spec:
+      containers:
+      - name: arm-fe
+        image: 654654435122.dkr.ecr.ap-southeast-1.amazonaws.com/arm-fe-repo:v1
+        ports:
+        - containerPort: 80
