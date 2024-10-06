@@ -31,21 +31,23 @@ const Submenu: React.FC<SubmenuProps> = ({ onSelect }) => {
         >
           <a href="#" className="block">Map</a>
         </li>
-        <li
-          className={`px-4 py-2 cursor-pointer hover:bg-gray-100  ${
-            activeSection === 'alarmSetting' ? 'bg-gray-200 border-b-2 border-rose-500' : ''
-          }`}
-          onClick={() => handleSelect('alarmSetting')}
-        >
-          <a href="#" className="block">Alarm Setting</a>
-        </li>
+       
         <li
           className={`px-4 py-2 cursor-pointer hover:bg-gray-100 ${
             activeSection === 'showActions' ? 'bg-gray-200 border-b-2 border-rose-500' : ''
           }`}
           onClick={() => handleSelect('showActions')}
         >
-          <a href="#" className="block">Actions</a>
+          <a href="#" className="block">Device Setup</a>
+        </li>
+
+        <li
+          className={`px-4 py-2 cursor-pointer hover:bg-gray-100  ${
+            activeSection === 'alarmSetting' ? 'bg-gray-200 border-b-2 border-rose-500' : ''
+          }`}
+          onClick={() => handleSelect('alarmSetting')}
+        >
+          <a href="#" className="block">Threshold Setting</a>
         </li>
       </ul>
     </div>

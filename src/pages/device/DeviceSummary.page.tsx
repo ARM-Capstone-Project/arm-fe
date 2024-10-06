@@ -4,7 +4,7 @@ import Submenu from '../../components/Submenu';
 import LiveStatusChart from '../../components/LiveStatusChart';
 import AlarmSetting from './AlarmSetting.page';
 import DeviceMap from './DeviceMap.page';
-import Title from '../../components/Title';
+import DevicePage from './DevicePage.page';
 
 // Mock data for devices and their live status
 const mockDevices = [
@@ -127,16 +127,19 @@ const Device: React.FC = () => {
             return <div><DeviceMap /></div>;
           case 'alarmSetting':
             return <div><AlarmSetting /></div>;
-        case 'showActions' : 
-            return <div>Actions</div>;
+         case 'showActions' : 
+         return <div><DevicePage /></div>;
           default:
             return null;
         }
       };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <Title title="View Devices" />
+    <div className="p-4 text-black">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-2xl font-bold text-rose-600">View Devices</h2>
+        {/* Any additional header content */}
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {/* Example devices */}
         <div className="bg-white shadow-md rounded p-4">
@@ -166,3 +169,4 @@ const Device: React.FC = () => {
   );
 }
 export default Device;
+
