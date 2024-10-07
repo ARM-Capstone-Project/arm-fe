@@ -10,12 +10,15 @@ import UserList from "../src/pages/users/UserList.page";
 import CreateUser from "../src/pages/users/CreateUser.page";
 import AnalyticsPage from "../src/pages/analytics/Analytics.page";
 import CompanyHierarchy from "../src/pages/company/CompanyHierarchy.page";
-//import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import { Routes, Route } from 'react-router-dom';
 import DeviceDetail from './pages/device/DeviceDetail.page.tsx';
 import UpdDeviceForm from './components/UpdDeviceForm';
 import DevicesList from "./pages/device/DevicesList.page.tsx";
 import CreateDevice from './components/CreateDevice';
+import ZoneList from "./pages/zone/ZoneList.page.tsx";
+import ZoneForm from "./pages/zone/ZoneForm.page.tsx";
+
 function App() {
   return (
     //<Router>
@@ -27,6 +30,10 @@ function App() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/devices" element={<DevicePage />} />
+            <Route path="/zones" element={<ZoneList />} />
+            <Route path="/zone/new" element={<ZoneForm />} />
+            <Route path="/zones/:id" element={<ZoneForm />} />
+            <Route path="/zones/:id/edit" element={<ZoneForm />} />
             <Route path="/notifications" element={<Notification />} />
             <Route path="/users" element={<UserList />} />
             <Route path="/new_user" element={<CreateUser />} />

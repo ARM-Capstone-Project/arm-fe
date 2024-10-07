@@ -1,57 +1,124 @@
-//import React, { useState, useCallback } from 'react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import QueryBuilder from './QueryBuilder';
-import SensorReadingList from './ThresholdListing.page';
-import SensorReading from './interfaces/SensorReading';
-
-
-const readings: SensorReading[] = [
-  {
-    deviceId: "a",
-    sensorId: "b",
-    reading: "temperature",
-    condition: "(reading >= 40 && reading <= 50)",
-    email: "your_notification_email@example.com",
-    level: "warning",
-    unit: "celsius",
-  },
-
-];
-
-
+import { saveThreshold, fetchThresholds } from '../../services/DataService';
+import ThresholdSetting from './interfaces/ThresholdSetting';
+import ThresholdSettingList from './ThresholdListing.page';
 
 const AlarmSettings: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newThreshold, setNewThreshold] = useState({
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentThreshold, setCurrentThreshold] = useState<ThresholdSetting | null>(null);
+  const [newThreshold, setNewThreshold] = useState<ThresholdSetting>({
+    id: null,
     deviceId: '',
     sensorId: '',
-    level: '',
     reading: '',
+    condition: '',
     email: '',
+    level: '',
+    unit: '',
   });
+  const [thresholds, setThresholds] = useState<ThresholdSetting[]>([]);
+  useEffect(() => {
+    const loadThresholds = async () => {
+      try {
+        const fetchedThresholds = await fetchThresholds();
+        setThresholds(fetchedThresholds);
+      } catch (error) {
+        console.error('Failed to fetch thresholds:', error);
+      }
+    };
 
-
+    loadThresholds();
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setNewThreshold({
-      ...newThreshold,
-      [e.target.name]: e.target.value
-    });
+    if (isEditing && currentThreshold) {
+      setCurrentThreshold({
+        ...currentThreshold,
+        [e.target.name]: e.target.value,
+      });
+    } else {
+      setNewThreshold({
+        ...newThreshold,
+        [e.target.name]: e.target.value,
+      });
+    }
   };
 
-  const handleAddThreshold = () => {
-    // Here you would typically update the state or call an API to save the new threshold
-    console.log('New Threshold:', newThreshold);
-    setIsModalOpen(false);
+  const handleConditionChange = (condition: string) => {
+    if (isEditing && currentThreshold) {
+      setCurrentThreshold((prev) => ({
+        ...prev,
+        condition,
+      }));
+    } else {
+      setNewThreshold((prev) => ({
+        ...prev,
+        condition,
+      }));
+    }
   };
 
+  const handleAddOrEditThreshold = async () => {
+    if (isEditing && currentThreshold) {
+      const updatedThreshold = { ...currentThreshold };
+      try {
+        await saveThreshold(updatedThreshold);
+        setThresholds((prev) => prev.map(threshold => threshold.id === updatedThreshold.id ? updatedThreshold : threshold));
+        setIsModalOpen(false);
+        setCurrentThreshold(null);
+      } catch (error) {
+        console.error('Failed to update threshold', error);
+      }
+    } else {
+      console.log('New Threshold:', newThreshold);
+      try {
+        await saveThreshold(newThreshold);
+        setThresholds((prev) => [...prev, newThreshold]);
+        setIsModalOpen(false);
+        setNewThreshold({
+          id: '',
+          deviceId: '',
+          sensorId: '',
+          reading: '',
+          condition: '',
+          email: '',
+          level: '',
+          unit: '',
+        });
+      } catch (error) {
+        console.error('Failed to add threshold', error);
+      }
+    }
+  };
+
+  const handleEditThreshold = (threshold: ThresholdSetting) => {
+    setCurrentThreshold(threshold);
+    setIsEditing(true);
+    setNewThreshold(threshold); // Populate newThreshold with the current threshold
+    setIsModalOpen(true);
+  };
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-3xl font-bold text-gray-800">Threshold Settings</h2>
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => {
+            setIsModalOpen(true);
+            setIsEditing(false);
+            setNewThreshold({
+              id: '',
+              deviceId: '',
+              sensorId: '',
+              reading: '',
+              condition: '',
+              email: '',
+              level: '',
+              unit: '',
+            }); // Reset for adding new threshold
+          }}
           className="bg-blue-500 text-white px-4 py-2 rounded"
         >
           Add Threshold
@@ -59,9 +126,8 @@ const AlarmSettings: React.FC = () => {
       </div>
 
       <div className="bg-white shadow rounded-lg p-4">
-      <SensorReadingList readings={readings} />
+        <ThresholdSettingList thresholds={thresholds} onEdit={handleEditThreshold} />
       </div>
-
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
@@ -75,7 +141,8 @@ const AlarmSettings: React.FC = () => {
                 id="deviceId"
                 name="deviceId"
                 type="text"
-                value={newThreshold.deviceId}
+                value={isEditing && currentThreshold ? currentThreshold.deviceId : newThreshold.deviceId}
+
                 onChange={handleInputChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
@@ -88,11 +155,11 @@ const AlarmSettings: React.FC = () => {
                 id="sensorId"
                 name="sensorId"
                 type="text"
-                value={newThreshold.sensorId}
+                value={isEditing && currentThreshold ? currentThreshold.sensorId : newThreshold.sensorId}
+
                 onChange={handleInputChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
-
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="reading">
@@ -101,13 +168,14 @@ const AlarmSettings: React.FC = () => {
               <select
                 id="reading"
                 name="reading"
-                value={newThreshold.reading}
-                onChange={handleInputChange} // Add this line
+                value={isEditing && currentThreshold ? currentThreshold.reading : newThreshold.reading}
+
+                onChange={handleInputChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               >
                 <option value="">Select Reading</option>
-                <option value="temperature">Temperature</option> {/* Fixed option value */}
-                <option value="humidity">Humidity</option> {/* Fixed option value */}
+                <option value="temperature">Temperature</option>
+                <option value="humidity">Humidity</option>
               </select>
             </div>
             <div className="mb-4">
@@ -117,8 +185,8 @@ const AlarmSettings: React.FC = () => {
               <select
                 id="level"
                 name="level"
-                value={newThreshold.level}
-                onChange={handleInputChange} // Add this line
+                value={isEditing && currentThreshold ? currentThreshold.level : newThreshold.level}
+                onChange={handleInputChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               >
                 <option value="">Select Level</option>
@@ -127,8 +195,6 @@ const AlarmSettings: React.FC = () => {
                 <option value="low">Low</option>
               </select>
             </div>
-
-
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                 Email
@@ -137,35 +203,44 @@ const AlarmSettings: React.FC = () => {
                 id="email"
                 name="email"
                 type="text"
-                value={newThreshold.email}
+                value={isEditing && currentThreshold ? currentThreshold.email : newThreshold.email}
+
                 onChange={handleInputChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
-
             </div>
-            <QueryBuilder></QueryBuilder>
-            <div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="unit">
+                Unit
+              </label>
+              <input
+                id="unit"
+                name="unit"
+                type="text"
+                value={isEditing && currentThreshold ? currentThreshold.unit : newThreshold.unit}
 
+                onChange={handleInputChange}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
             </div>
-
+            <QueryBuilder onConditionChange={handleConditionChange} />
             <div className="flex justify-end">
-              <button
+            <button
                 onClick={() => setIsModalOpen(false)}
                 className="bg-gray-500 text-white px-4 py-2 rounded mr-2"
               >
                 Cancel
               </button>
               <button
-                onClick={handleAddThreshold}
+                onClick={handleAddOrEditThreshold}
                 className="bg-blue-500 text-white px-4 py-2 rounded"
               >
-                Add Threshold
+                {isEditing ? 'Save Changes' : 'Add Threshold'}
               </button>
             </div>
           </div>
         </div>
       )}
-
     </div>
   );
 };

@@ -23,20 +23,21 @@ const config: Config = {
 // You can load query value from your backend storage (for saving see `Query.onChange()`)
 const queryValue: JsonGroup = { id: QbUtils.uuid(), type: "group" };
 
-const QueryBuilder: React.FC = () => {
+const QueryBuilder: React.FC<{ onConditionChange: (condition: string) => void }> = ({ onConditionChange }) => {
   const [state, setState] = useState({
     tree: QbUtils.loadTree(queryValue),
     config: config
   });
 
   const onChange = useCallback((immutableTree: ImmutableTree, config: Config) => {
-    // Tip: for better performance you can apply `throttle` - see `packages/examples/src/demo`
-    setState(prevState => ({ ...prevState, tree: immutableTree, config: config }));
+    setState(prevState => ({ ...prevState, tree: immutableTree, config }));
 
-    const jsonTree = QbUtils.getTree(immutableTree);
-    console.log(jsonTree);
-    // `jsonTree` can be saved to backend, and later loaded to `queryValue`
-  }, []);
+    const queryString = QbUtils.queryString(immutableTree, config);
+    console.log(queryString); // This will show the generated condition
+
+    // Call the onConditionChange with the generated query string
+    onConditionChange(queryString);
+  }, [onConditionChange]);
 
   const renderBuilder = useCallback((props: BuilderProps) => (
     <div className="query-builder-container" style={{ padding: "10px" }}>
@@ -61,26 +62,9 @@ const QueryBuilder: React.FC = () => {
             {JSON.stringify(QbUtils.queryString(state.tree, state.config))}
           </pre>
         </div>
-        {/* <div>
-          MongoDb query:{" "}
-          <pre>
-            {JSON.stringify(QbUtils.mongodbFormat(state.tree, state.config))}
-          </pre>
-        </div>
-        <div>
-          SQL where:{" "}
-          <pre>
-            {JSON.stringify(QbUtils.sqlFormat(state.tree, state.config))}
-          </pre>
-        </div>
-        <div>
-          JsonLogic:{" "}
-          <pre>
-            {JSON.stringify(QbUtils.jsonLogicFormat(state.tree, state.config))}
-          </pre>
-        </div> */}
       </div>
     </div>
   );
 };
+
 export default QueryBuilder;

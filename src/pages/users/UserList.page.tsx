@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import Pagination from '../../components/Pagination';
+import Table from '../../components/Table';
+import Title from '../../components/Title';
 
 // Generate mock data
 const generateMockUsers = () => {
@@ -82,14 +85,66 @@ const UserList: React.FC = () => {
     setNewUserName('');
   };
 
+  const headers = (
+    <tr>
+      <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+        ID
+      </th>
+      <th 
+        scope="col" 
+        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 cursor-pointer"
+        onClick={handleSortChange}
+      >
+        Name {sortOrder === 'asc' ? '▲' : '▼'}
+      </th>
+      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+        Role
+      </th>
+      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+        Actions
+      </th>
+  </tr>
+  );
+  
+  const rows = (
+    <>
+      {currentUsers.map((user) => (
+        <tr key={user.id}>
+          <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+              {user.id}
+          </td>
+          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+              {user.name}
+          </td>
+          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+              {user.role}
+          </td>
+          <td className="whitespace-nowrap px-3 py-4 text-sm flex space-x-4">
+            <button
+                className={`px-2 py-1 rounded ${
+                    user.role === 'Admin' ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-red-500 text-white'
+                }`}
+                disabled={user.role === 'Admin'}
+            >
+                Delete
+            </button>
+            <a
+                href="/assign_device"
+                className={`mx-3 px-2 py-1 rounded ${
+                    user.role === 'Admin' ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'text-blue-500'
+                }`}
+            >
+                Assign
+            </a>
+          </td>
+        </tr>
+      ))}
+    </>
+  );
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-3xl font-bold text-gray-800">User Management</h2>
-        {/* <button className="bg-blue-500 text-white px-4 py-2 rounded">
-          Add User
-        </button> */}
-      </div>
+      <Title title="User Management" />
 
       {/* Add User Form */}
       <div className="mb-4">
@@ -135,63 +190,13 @@ const UserList: React.FC = () => {
         </select>
       </div>
 
-      <div className="bg-white shadow rounded-lg p-4 text-left">
-        <table className="min-w-full bg-white">
-          <thead>
-            <tr>
-              <th className="py-2">ID</th>
-              <th className="py-2 cursor-pointer" onClick={handleSortChange}>
-                Name {sortOrder === 'asc' ? '▲' : '▼'}
-              </th>
-              <th className="py-2">Role</th>
-              <th className="py-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentUsers.map((user) => (
-              <tr key={user.id}>
-                <td className="py-2">{user.id}</td>
-                <td className="py-2">{user.name}</td>
-                <td className="py-2">{user.role}</td>
-                <td className="py-2">
-                  <button
-                    className={`px-2 py-1 rounded ${user.role === 'Admin' ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-red-500 text-white'}`}
-                    disabled={user.role === 'Admin'}
-                  >
-                    Delete
-                  </button>
-                  <a href="/assign_device"
-                    className={`mx-3 px-2 py-1 rounded ${user.role === 'Admin' ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'text-blue-500'}`}
-                    disabled={user.role === 'Admin'}
-                  >
-                    Assign
-                  </a>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Table headers={headers} rows={rows} />
 
-      <div className="flex justify-between items-center mt-4">
-        <button
-          onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
-          className="bg-gray-300 text-gray-700 px-4 py-2 rounded"
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <div className="text-gray-700">
-          Page {currentPage} of {totalPages}
-        </div>
-        <button
-          onClick={() => handlePageChange(Math.min(currentPage + 1, totalPages))}
-          className="bg-gray-300 text-gray-700 px-4 py-2 rounded"
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
-      </div>
+      <Pagination 
+        currentPage={currentPage} 
+        totalPages={totalPages} 
+        onPageChange={handlePageChange} 
+      />
     </div>
   );
 };

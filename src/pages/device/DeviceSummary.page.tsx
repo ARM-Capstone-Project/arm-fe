@@ -184,3 +184,4 @@ const Device: React.FC = () => {
   );
 }
 export default Device;
+
