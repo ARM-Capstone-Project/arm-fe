@@ -5,10 +5,11 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import GaugeChart from 'react-gauge-chart';
-import DeviceList from '../../components/DeviceList.tsx';
+import DeviceList from './DeviceList.tsx';
+import L from 'leaflet';
 
 // Mock data for charts and gauges
-const lineChartData = [
+/*const lineChartData = [
   { name: 'Jan', temperature: 20, humidity: 60 },
   { name: 'Feb', temperature: 22, humidity: 62 },
   { name: 'Mar', temperature: 18, humidity: 65 },
@@ -22,7 +23,7 @@ const lineChartData = [
   { name: 'Nov', temperature: 20, humidity: 65 },
   { name: 'Dec', temperature: 18, humidity: 60 },
 ];
-
+*/
 const mockDevices = [
   { id: 1, name: 'Temperature Sensor 1', type: 'temperature', status: 'active', location: 'Room A' },
   { id: 2, name: 'Pressure Sensor 1', type: 'pressure', status: 'active', location: 'Room B' },
@@ -65,7 +66,7 @@ const Dashboard: React.FC = () => {
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
             {deviceLocations.map(device => (
-              <Marker key={device.id} position={device.location} icon={icon}>
+              <Marker key={device.id} position={device.location as [number, number]} icon={icon}>
                 <Popup>
                   <strong>{device.name}</strong><br />
                   Type: {device.type}

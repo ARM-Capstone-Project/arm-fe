@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DeviceIcons from '../../components/DeviceIcons';
 import Submenu from '../../components/Submenu';
 import LiveStatusChart from '../../components/LiveStatusChart';
 import AlarmSetting from './AlarmSetting.page';
 import DeviceMap from './DeviceMap.page';
 import DevicePage from './DevicePage.page';
+import DevicesList from './DevicesList.page';
+import { useSearchParams } from 'react-router-dom';
+import CreateDevice from '../../components/CreateDevice';
 
 // Mock data for devices and their live status
 const mockDevices = [
@@ -74,11 +77,21 @@ const mockLiveDataPressure = [
   ];
 
 const Device: React.FC = () => {
-    const [selectedSection, setSelectedSection] = useState('liveData');
+  //updated to navigate after device update
+    const [searchParams] = useSearchParams();
+    const [selectedSection, setSelectedSection] = useState<string>(searchParams.get('section') || 'liveData');
 
     const handleSelect = (section: string) => {
         setSelectedSection(section);
       };
+
+      useEffect(() => {
+        // Update the active section based on URL query parameter when the page loads
+        const section = searchParams.get('section');
+      if (section) {
+        setSelectedSection(section);
+      }
+    }, [searchParams]);
 
     const renderContent = () => {
         switch (selectedSection) {
@@ -123,12 +136,14 @@ const Device: React.FC = () => {
                 </div>
               </div>
             );
+          case 'deviceslist':
+            return<div><DevicesList /></div>
           case 'showMap':
             return <div><DeviceMap /></div>;
           case 'alarmSetting':
             return <div><AlarmSetting /></div>;
          case 'showActions' : 
-         return <div><DevicePage /></div>;
+         return <div><CreateDevice /></div>;
           default:
             return null;
         }

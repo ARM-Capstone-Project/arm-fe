@@ -3,7 +3,7 @@ import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
-// import { login } from 'services/auth.service';
+import { login } from '../../services/auth.service';
 
 // type Props = {};
 
@@ -37,7 +37,7 @@ const Login: React.FC = () => {
             navigate('/home');
             window.location.reload();
          },
-         (error) => {
+         (error: any) => {
             const resMessage =
                (error.response && error.response.data && error.response.data.message) ||
                error.message ||

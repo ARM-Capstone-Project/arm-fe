@@ -1,0 +1,113 @@
+/* DeviceForm.css */
+
+.device-form {
+  max-width: none;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  width: 150px; /* Adjust as needed */
+  font-weight: bold;
+  margin-right: 10px;
+  text-align: left;
+}
+
+.form-group input {
+  flex: 1;
+  padding: 8px;
+  font-size: 1em;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: left;
+}
+
+.sensor-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.remove-sensor-button,
+.add-sensor-button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  font-size: 0.9em;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.remove-sensor-button {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.add-sensor-button {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  font-size: 1em;
+  color: #fff;
+  background-color: #27ae60;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #2ecc71;
+}
+
+.sensor-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.sensor-checkbox {
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+  margin-bottom: 10px;
+}
+
+.sensor-checkbox input {
+  margin-right: 8px;
+}
+.sensor-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sensor-table th, .sensor-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.sensor-table th {
+  background-color: #f4f4f4;
+  text-align: left;
+}
+
+.sensor-table td input {
+  width: 100%;
+  box-sizing: border-box;
+}

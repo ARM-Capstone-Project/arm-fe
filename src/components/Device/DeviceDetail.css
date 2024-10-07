@@ -1,0 +1,52 @@
+.device-detail {
+    max-width: none;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .detail-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .detail-group {
+    margin-bottom: 15px;
+  }
+  
+  .detail-group label {
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .detail-group p {
+    margin: 0;
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .detail-section {
+    margin-top: 20px;
+  }
+  
+  .detail-section h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .detail-section ul {
+    padding-left: 20px;
+    list-style: disc;
+  }
+  
+  .detail-section ul li {
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #666;
+  }
+  
