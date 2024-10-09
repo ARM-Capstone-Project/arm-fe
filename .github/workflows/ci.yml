@@ -12,6 +12,9 @@ on:
       - 'screenshots/**'
       - 'terraform/**'
 
+permissions:
+  security-events: write # To upload sarif files
+
 jobs:
   build:
     runs-on: ubuntu-latest
