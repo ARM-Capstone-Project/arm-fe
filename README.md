@@ -191,5 +191,9 @@ kubectl get svc argocd-server -n argocd
 
 ![kubectl-argocd](screenshots/kubectl-argocd.png)
 
+![argocd-setup](screenshots/argocd-setup.png)
+
 ad8a3230c58a144a29d730c4b35c0255-116444762.ap-southeast-1.elb.amazonaws.com
+
+![argocd-app](screenshots/argocd-app.png)
 
