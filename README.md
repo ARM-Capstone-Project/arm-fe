@@ -38,6 +38,8 @@ The server will start on port 5173. You can access it by navigating to `http://l
 ✅ Configuration Managment: Helm
 
 ✅ Ingress Controller: Load Balancer - Exposed, DNS
+
+🚧 Monitoring: Prometheus and Grafana
 ```
 
 ## Installation for MacOS
@@ -147,6 +149,8 @@ kubectl apply -k k8s
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.11.2/deploy/static/provider/cloud/deploy.yaml
+
+kubectl get ing
 ```
 
 Add Host name
@@ -226,8 +230,6 @@ Security fixes
 
 ## Configure ArgoCD on EKS
 
-ad8a3230c58a144a29d730c4b35c0255-116444762.ap-southeast-1.elb.amazonaws.com
-
 Setup
 
 ```
@@ -244,14 +246,19 @@ kubectl get svc argocd-server -n argocd
 
 ![kubectl-argocd](screenshots/kubectl-argocd.png)
 
-Launch: 
-
-User: admin
-
-To generate password
+Expose services to the LoadBalancer
 
 ```
 kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+```
+
+Launch
+
+ad8a3230c58a144a29d730c4b35c0255-116444762.ap-southeast-1.elb.amazonaws.com
+
+To get the secret admin password
+
+```
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 ```
 
@@ -259,3 +266,55 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 
 ![argocd-app](screenshots/argocd-app.png)
 
+## Monitoring for EKS cluster: Prometheus and Grafana
+
+Setup using Helm
+
+```
+helm repo add stable https://charts.helm.sh/stable
+```
+
+### Install Prometheus and Grafana
+
+```
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm install prometheus prometheus-community/prometheus
+
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+helm install grafana grafana/grafana
+
+helm repo list
+```
+
+![helm-repo-list](screenshots/helm-repo-list.png)
+
+Expose services to the LoadBalancer
+
+```
+kubectl patch svc prometheus-server -p '{"spec": {"type": "LoadBalancer"}}'
+
+kubectl patch svc grafana -p '{"spec": {"type": "LoadBalancer"}}'
+```
+
+Launch Prometheus
+
+a94d55f1d27a446c2a1abf7236ba184a-1387041673.ap-southeast-1.elb.amazonaws.com
+
+```
+kubectl get svc prometheus-server
+```
+
+Launch Grafana
+
+a0047fa462eba407c884cd73ff4442c4-778076486.ap-southeast-1.elb.amazonaws.com
+
+```
+kubectl get svc grafana
+```
+
+To get the secret admin password
+
+```
+kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 -d; echo
+```
