@@ -48,6 +48,10 @@ jobs:
     
     - name: Scan Container image with Trivy
       uses: aquasecurity/trivy-action@9ab158e8597f3b310480b9a69402b419bc03dbd5 # tag=0.8.0
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: arm-fe-repo
+        IMAGE_TAG: ${{ github.run_id }}
       with:
         image-ref: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
         format: sarif
