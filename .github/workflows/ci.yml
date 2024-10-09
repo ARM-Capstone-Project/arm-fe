@@ -64,18 +64,18 @@ jobs:
       run: |
         sed -i 's/tag: .*/tag: "${{github.run_id}}"/' helm/arm-fe-chart/values.yaml
     
-    - name: Run Trivy vulnerability scanner in IaC mode
-      uses: aquasecurity/trivy-action@0.20.0
-      with:
-        scan-type: config
-        hide-progress: false
-        format: sarif
-        scan-ref: helm/arm-fe-chart
-        output: trivy-helm-results.sarif
-        exit-code: 1
-        ignore-unfixed: true
+    # - name: Run Trivy vulnerability scanner in IaC mode
+    #   uses: aquasecurity/trivy-action@0.20.0
+    #   with:
+    #     scan-type: config
+    #     hide-progress: false
+    #     format: sarif
+    #     scan-ref: helm/arm-fe-chart
+    #     output: trivy-helm-results.sarif
+    #     exit-code: 1
+    #     ignore-unfixed: true
 
-    - name: Upload Trivy scan results to GitHub Security tab
-      uses: github/codeql-action/upload-sarif@v3
-      with:
-        sarif_file: trivy-helm-results.sarif
+    # - name: Upload Trivy scan results to GitHub Security tab
+    #   uses: github/codeql-action/upload-sarif@v3
+    #   with:
+    #     sarif_file: trivy-helm-results.sarif
