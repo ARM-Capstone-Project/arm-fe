@@ -18,7 +18,7 @@ spec:
       - name: arm-fe
         image: 654654435122.dkr.ecr.ap-southeast-1.amazonaws.com/arm-fe-repo:{{ .Values.image.tag }}
         ports:
-        - containerPort: 8080
+        - containerPort: 80
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
