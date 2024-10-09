@@ -22,8 +22,8 @@ FROM nginx:alpine
 # Copy the built application from the builder stage to the nginx www directory
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Expose port 80 on the container
-EXPOSE 80
+# Expose port 8080 on the container
+EXPOSE 8080
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
