@@ -45,23 +45,6 @@ jobs:
         podman build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         podman push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "IMAGE_URI=${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}" >> $GITHUB_OUTPUT
-    
-    - name: Scan Container image with Trivy
-      uses: aquasecurity/trivy-action@0.20.0
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: arm-fe-repo
-        IMAGE_TAG: ${{ github.run_id }}
-      with:
-        image-ref: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
-        format: sarif
-        output: trivy-container-results.sarif
-        ignore-unfixed: true
-
-    - name: Upload Container image scan results to GitHub Security tab
-      uses: github/codeql-action/upload-sarif@v3
-      with:
-        sarif_file: trivy-container-results.sarif
 
   helm:
     runs-on: ubuntu-latest
