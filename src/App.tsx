@@ -1,4 +1,5 @@
 import './App.css'
+import React, { useState, useEffect } from 'react';
 import Header from '../src/components/Header.tsx';
 import Sidebar from '../src/components/Sidebar.tsx';
 import Footer from '../src/components/Footer.tsx';
@@ -7,6 +8,7 @@ import DevicePage from "./pages/device/DeviceSummary.page.tsx";
 import AssignDevices from "../src/pages/device/AssignDevices.page";
 import Notification from "../src/pages/notification/Notification.page";
 import UserList from "../src/pages/users/UserList.page";
+import UserDetails from "./pages/users/UserDetails.page.tsx";
 import CreateUser from "../src/pages/users/CreateUser.page";
 import AnalyticsPage from "../src/pages/analytics/Analytics.page";
 import CompanyHierarchy from "../src/pages/company/CompanyHierarchy.page";
@@ -18,14 +20,45 @@ import DevicesList from "./pages/device/DevicesList.page.tsx";
 import CreateDevice from './components/CreateDevice';
 import ZoneList from "./pages/zone/ZoneList.page.tsx";
 import ZoneForm from "./pages/zone/ZoneForm.page.tsx";
+import Register from "./pages/register/Register.page.tsx";
+import Login from "./pages/login/Login.page.tsx";
+
+import * as AuthService from './services/auth.service';
 
 function App() {
+
+  const [currentUser, setCurrentUser] = useState<IUser | undefined>(undefined);
+  useEffect(() => {
+
+    const currentUser = AuthService.getCurrentUser();
+    if (currentUser) {
+       setCurrentUser(currentUser);
+       console.log(currentUser)
+    }
+ }, []);
+
+ if (!currentUser) {
+  // If the user is not logged in, show the login page only
+  return (<Routes>
+     <Route path="/" element={<Login />} />
+    <Route path="/Login" element={<Login />} />
+    <Route path="/register" element={<Register />} />
+    </Routes>
+    )
+}
+
+  const logOut = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    setCurrentUser(null);
+  };
+
   return (
     //<Router>
     <div className="flex min-h-screen">
-      <Sidebar />
+      <Sidebar currentUser={currentUser}/>
       <div className="flex-grow flex flex-col">
-        <Header />
+        <Header currentUser={currentUser} logOut={logOut}/>
         <main className="flex-grow bg-gray-100 p-4">
           <Routes>
             <Route path="/" element={<Dashboard />} />
@@ -44,6 +77,7 @@ function App() {
             <Route path="/device-form/:deviceId" element={<DeviceDetail />} />
             <Route path="/device-upd/:deviceId" element={<UpdDeviceForm />} />// Edit mode
             <Route path="/device-create" element={<CreateDevice />} />
+            <Route path="/users/:userId" element={<UserDetails />} />
             {/* Add other routes here */}
           </Routes>
         </main>
