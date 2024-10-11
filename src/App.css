@@ -1,5 +1,7 @@
 
-
+body{
+  background-color: #ffff;
+}
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -60,4 +62,21 @@
   position: relative;
   z-index: 999;
   color: #fff;
+}
+
+.truncate {
+  width: 50px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.username_txt{
+  color: rgb(56, 56, 222) !important;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.text-green-600{
+  color: rgb(22 163 74 ) !important;
 }

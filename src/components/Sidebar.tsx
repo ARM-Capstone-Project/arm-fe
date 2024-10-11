@@ -5,8 +5,8 @@ import { faBuilding, faUsers, faCogs, faBell, faChartLine, faBars, faMap } from 
 import { Link } from 'react-router-dom';
 import logoImg from '../assets/Logo.jpg';
 import ListItem from './sidebar/ListItem';
-
-const Sidebar: React.FC = () => {
+import isAdmin from '../common/Helpers.jsx';
+const Sidebar= ({ currentUser }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const toggleSidebar = () => {
@@ -26,18 +26,26 @@ const Sidebar: React.FC = () => {
       </div>
       <nav>
         <ul>
-          <ListItem
+          {/* <ListItem
             to="/company"
             icon={faBuilding}
             text="Company"
             isOpen={isOpen}
-          />
-          <ListItem
-            to="/users"
-            icon={faUsers}
-            text="Users"
-            isOpen={isOpen}
-          />
+          /> */}
+          {
+          isAdmin(currentUser) && (
+            <>
+              <ListItem
+                to="/users"
+                icon={faUsers}
+                text="Users"
+                isOpen={isOpen}
+              />
+            </>
+          )
+          
+          }
+          
           <ListItem
             to="/devices"
             icon={faCogs}
