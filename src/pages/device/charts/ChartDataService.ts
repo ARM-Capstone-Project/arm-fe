@@ -3,7 +3,7 @@ import axios from 'axios';
 import { SensorData } from '@/pages/device/charts/interfaces/SensorData';
 
 
-const API_URL_READINGS = 'http://localhost:8080/api/sensor-readings/by-device-id';
+const API_URL_READINGS = 'http://localhost:8081/api/sensor-readings/by-device-id';
 
 export const fetchSensorDataByDeviceId = async (deviceId: string): Promise<SensorData   []> => {
   try {

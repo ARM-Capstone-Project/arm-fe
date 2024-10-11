@@ -174,8 +174,9 @@ const AlarmSettings: React.FC = () => {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               >
                 <option value="">Select Reading</option>
-                <option value="temperature">Temperature</option>
-                <option value="humidity">Humidity</option>
+                <option value="temperature">temperature</option>
+                <option value="humidity">humidity</option>
+                <option value="methane">methane</option>
               </select>
             </div>
             <div className="mb-4">
@@ -190,9 +191,8 @@ const AlarmSettings: React.FC = () => {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               >
                 <option value="">Select Level</option>
-                <option value="high">High</option>
-                <option value="medium">Medium</option>
-                <option value="low">Low</option>
+                <option value="caution">caution</option>
+                <option value="critical">critical</option>
               </select>
             </div>
             <div className="mb-4">
