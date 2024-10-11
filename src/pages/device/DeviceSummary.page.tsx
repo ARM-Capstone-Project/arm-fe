@@ -65,7 +65,8 @@ const Device: React.FC = () => {
                     >
                         <DeviceIcons type={device.type} />
                         <h3 className="text-xl font-semibold mt-2">{device.name}</h3>
-                        <p className="text-gray-500">Location: {device.location}</p>
+                        <h3 className="text-xl font-semibold mt-2">{device.id} </h3>
+                        <p className="text-gray-500">Zone: {device.location}</p>
                     </div>
                 ))}
             </div>
