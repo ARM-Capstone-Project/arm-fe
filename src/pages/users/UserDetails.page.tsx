@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../../api/index';
 import AssignRoleModal from '../role/AssignRoleModal.page.tsx';
-
-const UserDetails = () => {
+import isAdmin from '../../common/Helpers.jsx';
+const UserDetails = ({ currentUser }) => {
   const { userId } = useParams<{ userId: string }>();  // Get userId from the URL
   const [user, setUser] = useState<any>(null);
   const [error, setError] = useState('');
@@ -96,12 +96,17 @@ const UserDetails = () => {
 
             <div>
               <br/>
-          <a
+
+          {isAdmin(currentUser) && (
+            <a
             onClick={handleOpenModal}
             className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
           >
             Assign Role
           </a>
+          )}
+              
+          
 
           {/* Render the modal */}
           <AssignRoleModal

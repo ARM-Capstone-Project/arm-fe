@@ -32,19 +32,19 @@ const Sidebar= ({ currentUser }) => {
             text="Company"
             isOpen={isOpen}
           /> */}
-          {
+          {/* {
           isAdmin(currentUser) && (
-            <>
+            <> */}
               <ListItem
                 to="/users"
                 icon={faUsers}
                 text="Users"
                 isOpen={isOpen}
               />
-            </>
+            {/* </>
           )
           
-          }
+          } */}
           
           <ListItem
             to="/devices"

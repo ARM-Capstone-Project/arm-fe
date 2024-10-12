@@ -16,23 +16,7 @@ export const login = (username: string, password: string) => {
 
 export const register = (username: string, email: string, password: string) => {
   return api.post('/auth/register', {username, email, password });
-  // return auth_service_httpClient.post('/signup', {
-  //    data: {
-  //       user: {
-  //          username: username,
-  //          email: email,
-  //          password: password,
-  //       },
-  //    },
-  // });
-
-  // try {
-  //   const response = await api.post('/auth/register', {username, email, password });
-  //   alert('User registered successfully!');
-  //   navigate('/login');
-  // } catch (error: any) {
-  //   setError(error.response?.data?.message || 'Failed to register');
-  // }
+  
 };
 
 export const getCurrentUser = () => {

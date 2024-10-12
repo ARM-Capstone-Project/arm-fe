@@ -8,10 +8,12 @@ import * as Yup from 'yup';
 
 import IUser from 'types/user.type';
 import { register } from '../../services/auth.service';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
 
 const Register: React.FC = () => {
    const [successful, setSuccessful] = useState<boolean>(false);
    const [message, setMessage] = useState<string>('');
+   const navigate: NavigateFunction = useNavigate();
 
    const initialValues: IUser = {
       username: '',
@@ -43,7 +45,7 @@ const Register: React.FC = () => {
       register(username, email, password).then(
          (response) => {
             setMessage((response.data as { message: string }).message);
-            setSuccessful(true);
+            navigate('/login');
          },
          (error) => {
             const resMessage =

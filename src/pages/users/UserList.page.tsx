@@ -5,8 +5,8 @@ import Pagination from "../../components/Pagination";
 import Table from "../../components/Table";
 import Title from "../../components/Title";
 import UserRoleTable from "./UserRoleTable.page.tsx";
-
-const UsersList = () => {
+import isAdmin from '../../common/Helpers.jsx';
+const UsersList = ({ currentUser }) => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
 
@@ -123,12 +123,15 @@ const UsersList = () => {
             </ul>
 </div>
       </th>
-      <th
-        // scope="col"
-        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-      >
-        Actions
-      </th>
+      {isAdmin(currentUser) && (
+           <th
+           // scope="col"
+           className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+         >
+           Actions
+         </th>
+      )}
+   
     </tr>
   );
 
@@ -147,12 +150,10 @@ const UsersList = () => {
           <td className="whitespace-nowrap px-3 py-4 text-sm">
             <UserRoleTable user={user} />
           </td>
-          <td className="whitespace-nowrap px-3 py-4 text-sm flex space-x-4">
-            {user.roles.some((role) => role.name === "ADMIN") ? (
-              <> </>
-            ) : (
-              <>
-                <div>
+
+          {isAdmin(currentUser) && (
+                <td className="whitespace-nowrap px-3 py-4 text-sm flex space-x-4">
+                        <div>
                   <button className={`px-2 py-1 rounded bg-red-500 text-white`}>
                     Delete
                   </button>
@@ -167,9 +168,10 @@ const UsersList = () => {
                     Assign
                   </a>
                 </div>
-              </>
-            )}
-          </td>
+                </td>
+          )}
+
+          
         </tr>
       ))}
     </>

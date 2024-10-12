@@ -68,7 +68,7 @@ function App() {
             <Route path="/zones/:id" element={<ZoneForm />} />
             <Route path="/zones/:id/edit" element={<ZoneForm />} />
             <Route path="/notifications" element={<Notification />} />
-            <Route path="/users" element={<UserList />} />
+            <Route path="/users" element={<UserList currentUser={currentUser}/>} />
             <Route path="/new_user" element={<CreateUser />} />
             <Route path="/assign_device" element={<AssignDevices />} />
             <Route path="/analytics" element={<AnalyticsPage />} />
@@ -77,7 +77,7 @@ function App() {
             <Route path="/device-form/:deviceId" element={<DeviceDetail />} />
             <Route path="/device-upd/:deviceId" element={<UpdDeviceForm />} />// Edit mode
             <Route path="/device-create" element={<CreateDevice />} />
-            <Route path="/users/:userId" element={<UserDetails />} />
+            <Route path="/users/:userId" element={<UserDetails currentUser={currentUser}/>} />
             {/* Add other routes here */}
           </Routes>
         </main>
