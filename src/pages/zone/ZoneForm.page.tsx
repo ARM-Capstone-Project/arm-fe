@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
-import L from "leaflet";
 import api from "../../api/index";
 
 interface ZoneFormProps {
@@ -26,11 +25,11 @@ const ZoneForm: React.FC<ZoneFormProps> = ({ name = "" }) => {
       const fetchZoneData = async () => {
         try {
           const response = await api.get(`/zones/${id}`);
-          const data = response.data;
-          setZoneName(data.name);
-          setLatitude(data.latitude);
-          setLongitude(data.longitude);
-          setRadius(data.radius);
+          const data = response.data as ZoneFormProps;
+          setZoneName(data.name || "");
+          setLatitude(data.latitude ?? null);
+          setLongitude(data.longitude ?? null);
+          setRadius(data.radius ?? 0);
         } catch (error) {
           console.error("Error fetching zone data:", error);
         }
