@@ -85,12 +85,6 @@ const ZoneForm: React.FC<ZoneFormProps> = ({ name = "" }) => {
     }
   };
 
-  const handleMapClick = (event: any) => {
-    const { lat, lng } = event.latlng;
-    setLatitude(lat);
-    setLongitude(lng);
-  };
-
   return (
     <div className="p-6 bg-gray-100 min-h-screen flex">
       <div className="w-1/2">
@@ -168,7 +162,6 @@ const ZoneForm: React.FC<ZoneFormProps> = ({ name = "" }) => {
           center={[1.3521, 103.8198]}
           zoom={12}
           style={{ height: "70vh", width: "100%" }}
-          onClick={handleMapClick}
         >
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
