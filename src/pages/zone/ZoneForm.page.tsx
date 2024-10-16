@@ -27,8 +27,8 @@ const ZoneForm: React.FC<ZoneFormProps> = ({ name = "" }) => {
           const response = await api.get(`/zones/${id}`);
           const data = response.data as ZoneFormProps;
           setZoneName(data.name || "");
-          setLatitude(data.latitude ?? null);
-          setLongitude(data.longitude ?? null);
+          setLatitude(data.latitude || 0);
+          setLongitude(data.longitude || 0);
           setRadius(data.radius ?? 0);
         } catch (error) {
           console.error("Error fetching zone data:", error);

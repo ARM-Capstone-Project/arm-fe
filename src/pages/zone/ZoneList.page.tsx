@@ -27,7 +27,8 @@ const ZoneList: React.FC = () => {
     const fetchZones = async () => {
       try {
         const response = await api.get("/zones");
-        setZones(response.data);
+        const data = response.data as Zone[];
+        setZones(data);
       } catch (error: any) {
         setError("Failed to fetch zones");
       }
