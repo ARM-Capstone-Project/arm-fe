@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - main
+      - devops
     paths-ignore:
       - 'README.md'
       - 'helm/**'
