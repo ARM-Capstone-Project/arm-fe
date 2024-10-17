@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DeviceList from '../../components/DeviceList';
 import { Device } from '../../types/device';
 import { useNavigate } from 'react-router-dom';
+import {fetchAllDevices} from '../../services/DeviceService';
 
 const mockDevices: Device[] = [
         {
@@ -71,8 +72,18 @@ const mockDevices: Device[] = [
       ];      
 
 const DevicesList: React.FC = () => {
-    const [devices, setDevices] = useState<Device[]>(mockDevices);
+    //const [devices, setDevices] = useState<Device[]>(mockDevices);
+    const [devices, setDevices] = useState<Device[]>([]);
     const navigate = useNavigate();
+
+    useEffect(() => {
+      const loadDevices = async () => {
+          const fetchedDevices = await fetchAllDevices();
+          setDevices(fetchedDevices);
+      };
+
+      loadDevices();
+  }, []); 
 
     const handleEdit = (deviceId: string) => {
         console.log('Edit device:', deviceId);
