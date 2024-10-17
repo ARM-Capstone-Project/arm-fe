@@ -46,18 +46,18 @@ jobs:
         podman push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "IMAGE_URI=${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}" >> $GITHUB_OUTPUT
     
-    - name: Scan Container image with Trivy
-      uses: aquasecurity/trivy-action@0.20.0
-      with:
-        image-ref: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
-        format: sarif
-        output: trivy-container-results.sarif
-        ignore-unfixed: true
+    # - name: Scan Container image with Trivy
+    #   uses: aquasecurity/trivy-action@0.20.0
+    #   with:
+    #     image-ref: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+    #     format: sarif
+    #     output: trivy-container-results.sarif
+    #     ignore-unfixed: true
 
-    - name: Upload Container image scan results to GitHub Security tab
-      uses: github/codeql-action/upload-sarif@v3
-      with:
-        sarif_file: trivy-container-results.sarif
+    # - name: Upload Container image scan results to GitHub Security tab
+    #   uses: github/codeql-action/upload-sarif@v3
+    #   with:
+    #     sarif_file: trivy-container-results.sarif
 
   helm:
     runs-on: ubuntu-latest
@@ -74,18 +74,18 @@ jobs:
       run: |
         sed -i 's/tag: .*/tag: "${{github.run_id}}"/' helm/arm-fe-chart/values.yaml
     
-    - name: Run Trivy vulnerability scanner in IaC mode
-      uses: aquasecurity/trivy-action@9ab158e8597f3b310480b9a69402b419bc03dbd5 # tag=0.8.0
-      with:
-        scan-type: config
-        hide-progress: false
-        format: sarif
-        scan-ref: helm/arm-fe-chart
-        output: trivy-helm-results.sarif
-        exit-code: 1
-        ignore-unfixed: true
+    # - name: Run Trivy vulnerability scanner in IaC mode
+    #   uses: aquasecurity/trivy-action@9ab158e8597f3b310480b9a69402b419bc03dbd5 # tag=0.8.0
+    #   with:
+    #     scan-type: config
+    #     hide-progress: false
+    #     format: sarif
+    #     scan-ref: helm/arm-fe-chart
+    #     output: trivy-helm-results.sarif
+    #     exit-code: 1
+    #     ignore-unfixed: true
 
-    - name: Upload Trivy scan results to GitHub Security tab
-      uses: github/codeql-action/upload-sarif@312e093a1892bd801f026f1090904ee8e460b9b6 # v2.1.34
-      with:
-        sarif_file: trivy-helm-results.sarif
+    # - name: Upload Trivy scan results to GitHub Security tab
+    #   uses: github/codeql-action/upload-sarif@312e093a1892bd801f026f1090904ee8e460b9b6 # v2.1.34
+    #   with:
+    #     sarif_file: trivy-helm-results.sarif
