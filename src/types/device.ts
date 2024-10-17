@@ -1,10 +1,12 @@
 import { User } from "./user";
 
 export interface Sensor {
+  id: string;
   name: string;
+  status: string;
   type: string;
   unit: string;
-  deviceId: string;
+  device_id: string;
 }
 
 export interface SensorReading{
@@ -16,12 +18,24 @@ export interface SensorReading{
 }
 
 export interface Device {
-  deviceId: string;
-  deviceName: string;
-  deviceType: string;
+  id: string;
+  batchNo: string;
+  name: string;
+  type: string;
+  description: string;
+  tagNo: string;
   sensors: Sensor[];
-  zone: string;
+  zoneId: string;
+  zoneName: string;
   location: string;
   status: 'active' | 'inactive';
   users: User[];
+}
+
+export interface Zone {
+  id: string;
+  name: string;
+  latitude: number;
+  longitude: number;
+  radius: number;
 }

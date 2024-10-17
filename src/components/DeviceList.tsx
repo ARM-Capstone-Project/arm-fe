@@ -5,20 +5,21 @@ import { faTv, faStopCircle, faWandMagic, faSortUp, faSortDown } from '@fortawes
 
 interface DeviceListProps {
   devices: Device[];
-  onEdit: (deviceId: string) => void;
-  onView: (deviceId: string) => void;
-  onRemove: (deviceId: string) => void;
+  onEdit: (device: Device) => void;
+  onView: (ddevice: Device) => void;
+  onRemove: (ddevice: Device) => void;
 }
 
 const DeviceList: React.FC<DeviceListProps> = ({ devices, onEdit, onView, onRemove }) => {
-  const [sortColumn, setSortColumn] = useState<keyof Device>('deviceId');
+  const [sortColumn, setSortColumn] = useState<keyof Device>('id');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [filters, setFilters] = useState({
-    deviceId: '',
-    deviceName: '',
-    deviceType: '',
+    tagNo: '',
+    id: '',
+    name: '',
+    type: '',
     status: '',
-    zone: '',
+    zoneName: '',
     location: '',    
   });
 
@@ -41,19 +42,19 @@ const DeviceList: React.FC<DeviceListProps> = ({ devices, onEdit, onView, onRemo
 
   const filteredDevices = devices
     .filter((device) =>
-      device.deviceId.toLowerCase().includes(filters.deviceId.toLowerCase())
+      device.tagNo.toLowerCase().includes(filters.tagNo.toLowerCase())
     )
     .filter((device) =>
-      device.deviceName.toLowerCase().includes(filters.deviceName.toLowerCase())
+      device.name.toLowerCase().includes(filters.name.toLowerCase())
     )
     .filter((device) =>
-      device.deviceType.toLowerCase().includes(filters.deviceType.toLowerCase())
+      device.type.toLowerCase().includes(filters.type.toLowerCase())
     )
     .filter((device) =>
       filters.status ? device.status.toLowerCase() === filters.status.toLowerCase() : true
     )
     .filter((device) =>
-      device.status.toLowerCase().includes(filters.zone.toLowerCase())
+      device.status.toLowerCase().includes(filters.zoneName.toLowerCase())
     )
     .filter((device) =>
       device.location.toLowerCase().includes(filters.location.toLowerCase())
@@ -72,23 +73,23 @@ const DeviceList: React.FC<DeviceListProps> = ({ devices, onEdit, onView, onRemo
       <table className="min-w-full bg-white border-collapse">
         <thead>
           <tr>
-            <th className="py-2 px-4 border-b border-gray-200 cursor-pointer" onClick={() => handleSort('deviceId')}>
-              ID {sortColumn === 'deviceId' && (sortOrder === 'asc' ? <FontAwesomeIcon icon={faSortUp} /> : <FontAwesomeIcon icon={faSortDown} />)}
+            <th className="py-2 px-4 border-b border-gray-200 cursor-pointer" onClick={() => handleSort('tagNo')}>
+              Tag Number {sortColumn === 'tagNo' && (sortOrder === 'asc' ? <FontAwesomeIcon icon={faSortUp} /> : <FontAwesomeIcon icon={faSortDown} />)}
             </th>
-            <th className="py-2 px-4 border-b border-gray-200 cursor-pointer" onClick={() => handleSort('deviceName')}>
-              Name {sortColumn === 'deviceName' && (sortOrder === 'asc' ? <FontAwesomeIcon icon={faSortUp} /> : <FontAwesomeIcon icon={faSortDown} />)}
+            <th className="py-2 px-4 border-b border-gray-200 cursor-pointer" onClick={() => handleSort('name')}>
+              Name {sortColumn === 'name' && (sortOrder === 'asc' ? <FontAwesomeIcon icon={faSortUp} /> : <FontAwesomeIcon icon={faSortDown} />)}
               
             </th>
-            <th className="py-2 px-4 border-b border-gray-200 cursor-pointer" onClick={() => handleSort('deviceType')}>
-              Type {sortColumn === 'deviceType' && (sortOrder === 'asc' ? <FontAwesomeIcon icon={faSortUp} /> : <FontAwesomeIcon icon={faSortDown} />)}
+            <th className="py-2 px-4 border-b border-gray-200 cursor-pointer" onClick={() => handleSort('type')}>
+              Type {sortColumn === 'type' && (sortOrder === 'asc' ? <FontAwesomeIcon icon={faSortUp} /> : <FontAwesomeIcon icon={faSortDown} />)}
               
             </th>
             <th className="py-2 px-4 border-b border-gray-200 cursor-pointer" onClick={() => handleSort('status')}>
               Status {sortColumn === 'status' && (sortOrder === 'asc' ? <FontAwesomeIcon icon={faSortUp} /> : <FontAwesomeIcon icon={faSortDown} />)}
               
             </th>
-            <th className="py-2 px-4 border-b border-gray-200 cursor-pointer" onClick={() => handleSort('zone')}>
-              Zone {sortColumn === 'zone' && (sortOrder === 'asc' ? <FontAwesomeIcon icon={faSortUp} /> : <FontAwesomeIcon icon={faSortDown} />)}
+            <th className="py-2 px-4 border-b border-gray-200 cursor-pointer" onClick={() => handleSort('zoneName')}>
+              Zone {sortColumn === 'zoneName' && (sortOrder === 'asc' ? <FontAwesomeIcon icon={faSortUp} /> : <FontAwesomeIcon icon={faSortDown} />)}
               
             </th>
             <th className="py-2 px-4 border-b border-gray-200 cursor-pointer" onClick={() => handleSort('location')}>
@@ -103,9 +104,9 @@ const DeviceList: React.FC<DeviceListProps> = ({ devices, onEdit, onView, onRemo
           <td>
           <input
                 type="text"
-                name="deviceId"
-                placeholder="Filter ID"
-                value={filters.deviceId}
+                name="tagNo"
+                placeholder="Filter Tag No"
+                value={filters.tagNo}
                 onChange={handleFilterChange}
                 className="border p-1 mt-1 w-full"
               />
@@ -115,7 +116,7 @@ const DeviceList: React.FC<DeviceListProps> = ({ devices, onEdit, onView, onRemo
                 type="text"
                 name="deviceName"
                 placeholder="Filter Name"
-                value={filters.deviceName}
+                value={filters.name}
                 onChange={handleFilterChange}
                 className="border p-1 mt-1 w-full"
               />
@@ -125,7 +126,7 @@ const DeviceList: React.FC<DeviceListProps> = ({ devices, onEdit, onView, onRemo
                 type="text"
                 name="deviceType"
                 placeholder="Filter Type"
-                value={filters.deviceType}
+                value={filters.type}
                 onChange={handleFilterChange}
                 className="border p-1 mt-1 w-full"
               />
@@ -147,7 +148,7 @@ const DeviceList: React.FC<DeviceListProps> = ({ devices, onEdit, onView, onRemo
                 type="text"
                 name="zone"
                 placeholder="Filter Zone"
-                value={filters.zone}
+                value={filters.zoneName}
                 onChange={handleFilterChange}
                 className="border p-1 mt-1 w-full"
               />
@@ -164,19 +165,19 @@ const DeviceList: React.FC<DeviceListProps> = ({ devices, onEdit, onView, onRemo
           </td>
         </tr>
           {sortedDevices.map((device) => (
-            <tr key={device.deviceId}>
-              <td className="py-2 px-4 border-b border-gray-200">{device.deviceId}</td>
-              <td className="py-2 px-4 border-b border-gray-200">{device.deviceName}</td>
-              <td className="py-2 px-4 border-b border-gray-200">{device.deviceType}</td>
+            <tr key={device.id}>
+              <td className="py-2 px-4 border-b border-gray-200">{device.tagNo}</td>
+              <td className="py-2 px-4 border-b border-gray-200">{device.name}</td>
+              <td className="py-2 px-4 border-b border-gray-200">{device.type}</td>
               <td className={`py-2 px-4 border-b border-gray-200 ${device.status === 'active' ? 'text-green-500' : 'text-red-500'}`}>
                 {device.status}
               </td>
-              <td className="py-2 px-4 border-b border-gray-200">{device.zone}</td>
+              <td className="py-2 px-4 border-b border-gray-200">{device.zoneName}</td>
               <td className="py-2 px-4 border-b border-gray-200">{device.location}</td>
               <td className="py-2 px-4 border-b border-gray-200 flex gap-2">
-                <FontAwesomeIcon icon={faTv} title="View" onClick={() => onView(device.deviceId)} />
-                <FontAwesomeIcon icon={faWandMagic} title="Edit" onClick={() => onEdit(device.deviceId)} />
-                <FontAwesomeIcon icon={faStopCircle} title="Remove" onClick={() => onRemove(device.deviceId)} />
+                <FontAwesomeIcon icon={faTv} title="View" onClick={() => onView(device)} />
+                <FontAwesomeIcon icon={faWandMagic} title="Edit" onClick={() => onEdit(device)} />
+                <FontAwesomeIcon icon={faStopCircle} title="Remove" onClick={() => onRemove(device)} />
               </td>
             </tr>
           ))}
