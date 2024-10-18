@@ -4,7 +4,7 @@ export default  interface ThresholdSetting {
   sensorId: string;
   reading: "temperature" | "humidity" | "methane";
   condition: string;
-  level: "warning" | "critical";
-  unit: "celsius" | "%" | "ppm";
+  level: "caution" | "critical";
+  unit: "celsius" | "percentage" | "ppm";
   email: string;
 }

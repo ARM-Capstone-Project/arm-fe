@@ -2,7 +2,7 @@
 import axios from 'axios';
 import SensorReading from '../pages/device/interfaces/ThresholdSetting';
 
-const API_URL = 'http://localhost:8080/api/device-thresholds'; // Replace with your actual API URL
+const API_URL = 'http://localhost:8081/api/device-thresholds'; // Replace with your actual API URL
 export const saveThreshold = async (threshold: SensorReading) => {
     try {
       const response = await axios.post(API_URL, threshold, {
