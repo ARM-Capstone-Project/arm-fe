@@ -41,3 +41,13 @@ export const saveDevice = async (deviceId: string, device: Device) => {
       throw new Error(`Error updating device: ${error}`);
   }
 };
+
+export const createDevice = async (device: Device) => {
+  try {
+    const response = await api.post<Device>(`devices`, device);
+    return response.data;
+  } catch (error) {
+    console.error('Error creating device:', error);
+      throw new Error(`Error creting device: ${error}`);
+  }
+};

@@ -41,32 +41,33 @@ const DeviceList: React.FC<DeviceListProps> = ({ devices, onEdit, onView, onRemo
   };
 
   const filteredDevices = devices
-    .filter((device) =>
-      device.tagNo.toLowerCase().includes(filters.tagNo.toLowerCase())
-    )
-    .filter((device) =>
-      device.name.toLowerCase().includes(filters.name.toLowerCase())
-    )
-    .filter((device) =>
-      device.type.toLowerCase().includes(filters.type.toLowerCase())
-    )
-    .filter((device) =>
-      filters.status ? device.status.toLowerCase() === filters.status.toLowerCase() : true
-    )
-    .filter((device) =>
-      device.status.toLowerCase().includes(filters.zoneName.toLowerCase())
-    )
-    .filter((device) =>
-      device.location.toLowerCase().includes(filters.location.toLowerCase())
-    );
+  .filter((device) =>
+    (device.tagNo?.toLowerCase() ?? '').includes(filters.tagNo?.toLowerCase() ?? '')
+  )
+  .filter((device) =>
+    (device.name?.toLowerCase() ?? '').includes(filters.name?.toLowerCase() ?? '')
+  )
+  .filter((device) =>
+    (device.type?.toLowerCase() ?? '').includes(filters.type?.toLowerCase() ?? '')
+  )
+  .filter((device) =>
+    filters.status ? (device.status?.toLowerCase() ?? '') === filters.status?.toLowerCase() : true
+  )
+  .filter((device) =>
+    (device.zoneName?.toLowerCase() ?? '').includes(filters.zoneName?.toLowerCase() ?? '')
+  )
+  .filter((device) =>
+    (device.location?.toLowerCase() ?? '').includes(filters.location?.toLowerCase() ?? '')
+  );
 
-  const sortedDevices = filteredDevices.sort((a, b) => {
-    const order = sortOrder === 'asc' ? 1 : -1;
+const sortedDevices = filteredDevices.sort((a, b) => {
+  const order = sortOrder === 'asc' ? 1 : -1;
 
-    if (a[sortColumn] < b[sortColumn]) return -1 * order;
-    if (a[sortColumn] > b[sortColumn]) return 1 * order;
-    return 0;
-  });
+  if ((a[sortColumn] ?? '') < (b[sortColumn] ?? '')) return -1 * order;
+  if ((a[sortColumn] ?? '') > (b[sortColumn] ?? '')) return 1 * order;
+  return 0;
+});
+
 
   return (
     <div>

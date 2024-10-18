@@ -1,23 +1,30 @@
-import React, { useState } from 'react';
-import { Device, Sensor } from './../types/device';
+import React, { useEffect, useState } from 'react';
+import { Device, Sensor, Zone } from './../types/device';
 import './Device/DeviceForm.css';
 import { useNavigate } from 'react-router-dom';
+import {fetchAllZones} from '../services/ZoneService';
+import {createDevice} from '../services/DeviceService';
 
 const CreateDevice: React.FC = () => {
   const [device, setDevice] = useState<Device>({
-    deviceId: '',
-    deviceName: '',
-    deviceType: '',
+    tagNo: '',
+    id: '',
+    name: '',
+    type: '',
     sensors: [],
-    zone: '',
-    location: '',
     status: 'active',
+    zoneName: '',
+    location: '', 
     users: [],
+    batchNo: '',
+    zoneId: '',
+    description: '',
   });
 
   const [csvData, setCsvData] = useState<string[][]>([]);
   const [file, setFile] = useState<File | null>(null);
   const navigate = useNavigate();
+  const [zones, setZones] = useState<Zone[]>([]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files ? e.target.files[0] : null;
@@ -37,12 +44,35 @@ const CreateDevice: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const loadZones = async () => {
+      try {
+        const fetchedZones = await fetchAllZones();
+        setZones(fetchedZones);
+      } catch (error) {
+        console.error("Failed to fetch zones:", error);
+      }
+    };
+
+    loadZones();
+  }, []);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
 
     setDevice((prevDevice) => ({
       ...prevDevice,
       [id]: value,
+    }));
+  };
+
+  const handleZoneChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedZoneId = e.target.value;
+    const selectedZone = zones.find((zone) => zone.id === selectedZoneId);
+    setDevice((prevDevice) => ({
+      ...prevDevice,
+      zoneId: selectedZoneId,
+      zoneName: selectedZone ? selectedZone.name : '',
     }));
   };
 
@@ -64,7 +94,7 @@ const CreateDevice: React.FC = () => {
       ...prevDevice,
       sensors: [
         ...prevDevice.sensors,
-        { name: '', type: '', unit: '', deviceId: prevDevice.deviceId },
+        { id: '', name: '', type: '', unit: '', device_id: prevDevice.id, status: 'active' },
       ],
     }));
   };
@@ -76,29 +106,34 @@ const CreateDevice: React.FC = () => {
     }));
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     // Basic validation
-    if (!device.deviceId) {
-      window.alert('Device ID is required.');
+    if (!device.tagNo) {
+      window.alert('Device Tag No is required.');
       return;
     }
   
-    if (!device.deviceName) {
+    if (!device.name) {
       window.alert('Device Name is required.');
       return;
     }
   
-    if (!device.deviceType) {
+    if (!device.type) {
       window.alert('Device Type is required.');
       return;
     }
   
-    // You can perform the actual save operation here (e.g., sending data to an API)
-    window.alert(`Created device: ${device.deviceName}`);
-    console.log('Saving device:', device);
+    try {
+      const savedDevice = await createDevice(device);
+      window.alert(`Created device: ${savedDevice.name}`);
+      console.log('Saving device:', savedDevice);
   
-    // After saving, navigate to the devices list
-    navigate(`/devices?section=deviceslist`);
+      // After saving, navigate to the devices list
+      navigate(`/devices?section=deviceslist`);
+    } catch (error) {
+      console.error('Error saving device:', error);
+      window.alert('Failed to create device. Please try again.');
+    }
   };
   
 
@@ -166,11 +201,11 @@ const CreateDevice: React.FC = () => {
 
       <form>
         <div className="form-group">
-          <label htmlFor="deviceId">Device ID:</label>
+          <label htmlFor="deviceId">Tag No:</label>
           <input
             type="text"
-            id="deviceId"
-            value={device.deviceId}
+            id="tagNo"
+            value={device.tagNo}
             onChange={handleInputChange}
             required // Mark as required
           />
@@ -179,8 +214,8 @@ const CreateDevice: React.FC = () => {
           <label htmlFor="deviceName">Device Name:</label>
           <input
             type="text"
-            id="deviceName"
-            value={device.deviceName}
+            id="name"
+            value={device.name}
             onChange={handleInputChange}
           />
         </div>
@@ -188,8 +223,8 @@ const CreateDevice: React.FC = () => {
           <label htmlFor="deviceType">Device Type:</label>
           <input
             type="text"
-            id="deviceType"
-            value={device.deviceType}
+            id="type"
+            value={device.type}
             onChange={handleInputChange}
           />
         </div>
@@ -256,14 +291,16 @@ const CreateDevice: React.FC = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="zone">Zone:</label>
-          <input
-            type="text"
-            id="zone"
-            value={device.zone}
-            onChange={handleInputChange}
-          />
-        </div>
+        <label htmlFor="zone">Zone:</label>
+        <select id="zone" value={device.zoneId} onChange={handleZoneChange} required>
+          <option value="">Select a Zone</option>
+          {zones.map((zone) => (
+            <option key={zone.id} value={zone.id}>
+              {zone.name}
+            </option>
+          ))}
+        </select>
+      </div>
         <div className="form-group">
           <label htmlFor="location">Location:</label>
           <input

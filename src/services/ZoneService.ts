@@ -11,3 +11,13 @@ export const fetchZoneById = async (zoneId: string): Promise<Zone> => {
       throw new Error(`Error fetching device: ${error}`);
     }
   };
+
+  export const fetchAllZones = async (): Promise<Zone[]> => {
+    try {
+        const response = await api.get<Zone[]>('zones');
+        return response.data;
+      } catch (error) {
+        console.error('Error fetching zones:', error);
+        throw new Error(`Error fetching zones: ${error}`);
+      }
+  };

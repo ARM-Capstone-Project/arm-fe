@@ -82,17 +82,24 @@ const DevicesList: React.FC = () => {
           const fetchedDevices = await fetchAllDevices();
 
           // For each device, fetch the corresponding zone by zoneId
-        const devicesWithZones = await Promise.all(
-          fetchedDevices.map(async (device) => {
-            const zone: Zone = await fetchZoneById(device.zoneId);
-            return {
-              ...device,
-              zoneName: zone.name, //to display zone name
-              zone, // storing zone
-            };
-            console.log(device);
-          })
-        );
+          const devicesWithZones = await Promise.all(
+            fetchedDevices.map(async (device) => {
+              if (device.zoneId) { 
+                const zone: Zone = await fetchZoneById(device.zoneId);
+                return {
+                  ...device,
+                  zoneName: zone.name,
+                  zone,
+                };
+              } else {
+                return {
+                  ...device,
+                  zoneName: 'No Zone Assigned',
+                  zone: null,
+                };
+              }
+            })
+          );
 
           setDevices(devicesWithZones);
       };
