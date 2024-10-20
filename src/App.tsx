@@ -74,7 +74,6 @@ function App() {
             <Route path="/deviceslist" element={<DevicesList />} />
             <Route path="/device-form" element={<DeviceDetail />} />
             <Route path="/device-upd" element={<UpdDeviceForm />} />
-            // Edit mode
             <Route path="/device-create" element={<CreateDevice />} />
             <Route path="/users/:userId" element={<UserDetails />} />
             {/* Add other routes here */}

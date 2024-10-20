@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { hierarchyData } from './mockData';
 
@@ -12,6 +13,13 @@ const CompanyHierarchy: React.FC = () => {
       </div>
     </div>
   );
+}
+
+interface HierarchyNode {
+  name: string;
+  role: string;
+  profilePicture: string;
+  children?: HierarchyNode[];
 }
 
 const HierarchyNode: React.FC<{ node: any }> = ({ node }) => {

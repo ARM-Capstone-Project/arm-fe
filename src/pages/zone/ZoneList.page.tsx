@@ -29,8 +29,9 @@ const ZoneList: React.FC = () => {
         const response = await api.get("/zones");
         const data = response.data as Zone[];
         setZones(data);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
-        setError("Failed to fetch zones");
+        setError(`Failed to fetch zones, ${error}`);
       }
     };
 
@@ -66,8 +67,9 @@ const ZoneList: React.FC = () => {
         await api.delete(`/zones/${id}`);
         setZones((prevZones) => prevZones.filter((zone) => zone.id !== id));
         alert(`Deleted Zone ID: ${id} successfully`);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
-        setError("Failed to delete zone");
+        setError(`Failed to delete zone, ${error.message}`);
       }
     }
   };

@@ -12,7 +12,14 @@ import {
 
 import ListItem from "./sidebar/ListItem";
 import isAdmin from "../common/Helpers.jsx";
-const Sidebar = ({ currentUser }) => {
+
+interface SidebarProps {
+  currentUser: {
+    username: string;
+  };
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const toggleSidebar = () => {

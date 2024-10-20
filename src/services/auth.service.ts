@@ -37,7 +37,6 @@ export const register = (username: string, email: string, password: string) => {
 
 export const getCurrentUser = () => {
   const userStr = localStorage.getItem('user');
-  const auth_token = localStorage.getItem('auth_token');
   const currentUser = JSON.parse(userStr);
 
   if (currentUser) {

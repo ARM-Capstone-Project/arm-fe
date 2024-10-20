@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Device } from '../../types/device';
 import '../../components/Device/DeviceDetail.css';
 import DeviceSensorReading from '../../components/DeviceSensorReading';
@@ -9,6 +9,9 @@ const DeviceDetail: React.FC = () => {
   const { state } = useLocation();
   const deviceFromState = state?.device;
   const [device, setDevice] = useState<Device | null>(deviceFromState);
+
+  // TODO: error  'setDevice' is assigned a value but never used
+  setDevice(device)
 
   // const [device, setDevice] = useState<Device | null>(null);
   // const [loading, setLoading] = useState<boolean>(true);

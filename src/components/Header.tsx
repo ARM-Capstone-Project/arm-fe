@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import profileImg from '../assets/profile-picture.jpeg';
 
-const Header = ({ currentUser, logOut }) => {
+interface HeaderProps {
+  currentUser: {
+    username: string;
+  };
+  logOut: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ currentUser, logOut }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {

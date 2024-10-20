@@ -1,4 +1,5 @@
 // src/components/DeviceCard.tsx
+import React from 'react'
 
 interface DeviceCardProps {
   deviceName: string;

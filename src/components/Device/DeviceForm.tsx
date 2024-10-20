@@ -32,6 +32,8 @@ const DeviceDetail: React.FC = () => {
   const fetchDevice = (deviceId: string): Promise<Device> => {
     return new Promise((resolve) => {
       setTimeout(() => {
+        // TODO: Add line 35 and 36 because error  'deviceId' is defined but never used
+        console.log(deviceId)
         resolve(dummyDevice); // Simulating data fetch with dummy data
       }, 1000); // Simulate delay
     });
