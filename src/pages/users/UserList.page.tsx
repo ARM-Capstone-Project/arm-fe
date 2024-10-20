@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/index";
 import Pagination from "../../components/Pagination";
@@ -22,8 +22,9 @@ const UsersList = () => {
       try {
         const response = await api.get("/users");
         setUsers(response.data);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
-        setError("Failed to fetch users");
+        setError(`Failed to fetch users, ${error}`);
       }
     };
 
@@ -37,11 +38,11 @@ const UsersList = () => {
     ? users.filter((user) =>  user.roles.some(role => role.name === selectedRole))
     : users;
 
-  const filterUsersByRole = (users: User[], roleName: string): User[] => {
-    return users.filter(user => 
-      user.roles.some(role => role.name === roleName)
-    );
-  };
+  // const filterUsersByRole = (users: User[], roleName: string): User[] => {
+  //   return users.filter(user => 
+  //     user.roles.some(role => role.name === roleName)
+  //   );
+  // };
 
     // const adminUsers = filterUsersByRole(users, "ADMIN");
     // console.log(adminUsers);
@@ -86,16 +87,16 @@ const UsersList = () => {
   };
 
   // Handle adding a new user
-  const handleAddUser = () => {
-    const newUser = {
-      id: users.length + 1,
-      name: newUserName,
-      role: newUserRole,
-    };
+  // const handleAddUser = () => {
+  //   const newUser = {
+  //     id: users.length + 1,
+  //     name: newUserName,
+  //     role: newUserRole,
+  //   };
 
-    setUsers([...users, newUser]);
-    setNewUserName("");
-  };
+  //   setUsers([...users, newUser]);
+  //   setNewUserName("");
+  // };
 
   const handleUserClick = (userId: string) => {
     navigate(`/users/${userId}`); // Navigate to the user details page
@@ -207,6 +208,8 @@ const UsersList = () => {
           <option value="OPERATOR">OPERATOR</option>
         </select>
       </div>
+
+      {error && <div className="text-red-500 mb-4">{error}</div>}
 
       <Table headers={headers} rows={rows} border-none/>
 

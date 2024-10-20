@@ -1,5 +1,5 @@
 // src/pages/Dashboard.tsx
-import React, { useState } from "react";
+import React from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 // import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
@@ -142,7 +142,9 @@ const icon = L.icon({
 });
 
 const Dashboard: React.FC = () => {
-  const [devices, setDevices] = useState<Device[]>(mockDevices);
+  // TODO: error  'setDevices' is assigned a value but never used
+  // const [devices, setDevices] = useState<Device[]>(mockDevices);
+  const devices = mockDevices
 
   return (
     <div className="p-4">

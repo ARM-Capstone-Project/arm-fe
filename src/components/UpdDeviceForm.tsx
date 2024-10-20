@@ -80,6 +80,8 @@ const UpdDeviceForm: React.FC = () => {
         console.log('Saving device:', updatedDevice);
   
         await saveDevice(updatedDevice.id, updatedDevice);
+        // TODO: Add line 83 and 84 because error 'setDevice' is assigned a value but never used
+        setDevice(updatedDevice)
         navigate(`/devices?section=deviceslist`);
       } catch (error) {
         console.error('Error saving device:', error);

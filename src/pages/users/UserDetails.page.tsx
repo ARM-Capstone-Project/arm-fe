@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../../api/index';
 import AssignRoleModal from '../role/AssignRoleModal.page.tsx';
 
 const UserDetails = () => {
   const { userId } = useParams<{ userId: string }>();  // Get userId from the URL
+
   const [user, setUser] = useState<any>(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();  // Used to redirect after delete
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-
 
   // Fetch user details
   useEffect(() => {
@@ -20,7 +20,7 @@ const UserDetails = () => {
         const response = await api.get(`/users/${userId}`);
         setUser(response.data);
       } catch (error: any) {
-        setError('Failed to fetch user details');
+        setError(`Failed to fetch user details, ${error}`);
       } finally {
         setLoading(false);
       }
@@ -37,7 +37,7 @@ const UserDetails = () => {
         alert('User deleted successfully');
         navigate('/users');  // Redirect to the user list after deletion
       } catch (error: any) {
-        setError('Failed to delete user');
+        setError(`Failed to delete user, ${error}`);
       }
     }
   };

@@ -1,6 +1,6 @@
 import { SensorReading } from '../types/device';
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import { parse } from 'date-fns';
 import {
     LineChart,
@@ -46,6 +46,8 @@ const DeviceSensorReading: React.FC = () => {
                 // Uncomment this line when the API is ready
                 // const response = await axios.get<SensorReading[]>('https://api.example.com/sensor-readings');
                 // setReadings(response.data);
+                // TODO: Add line 49 and 50 because error  'setReadings' is assigned a value but never used
+                setReadings(readings)
             } catch (error) {
                 console.error('Error fetching sensor data:', error);
             }
@@ -55,6 +57,7 @@ const DeviceSensorReading: React.FC = () => {
     }, []);
 
     // Prepare data for charts based on reading type
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const groupedData = readings.reduce((acc: { [key: string]: any[] }, reading) => {
         const parsedDate = parse(reading.timestamp, 'dd/MM/yyyy HH:mm:ss', new Date()).toLocaleString();
         const value = parseFloat(reading.value);

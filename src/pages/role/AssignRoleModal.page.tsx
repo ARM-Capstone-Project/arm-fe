@@ -29,7 +29,7 @@ const AssignRoleModal: React.FC<AssignRoleModalProps> = ({ userId, isOpen, onClo
     }
 
     try {
-        const response = await api.post('/admin/assign_role', null, {
+        await api.post('/admin/assign_role', null, {
             params: {
               userId: userId,
               roleName: roleName
@@ -37,8 +37,9 @@ const AssignRoleModal: React.FC<AssignRoleModalProps> = ({ userId, isOpen, onClo
           });//await api.post('/admin/assign_role', {userId, roleName });
         onSuccess();  // Call the onSuccess callback on success
         onClose();    // Close the modal after successful API call
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
-        setError('Failed to assign role.');
+        setError(`Failed to assign role, ${error}`);
       }
 
 

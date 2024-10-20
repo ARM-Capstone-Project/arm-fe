@@ -17,7 +17,7 @@ const DeviceCharts: React.FC<{ deviceId: string }> = ({ deviceId }) => {
                 const data = await fetchSensorDataByDeviceId(deviceId);
                 setSensorData(data); // Set the fetched data
             } catch (error) {
-                setError('Failed to fetch sensor data');
+                setError(`Failed to fetch sensor data, ${error}`);
             } finally {
                 setLoading(false);
             }
