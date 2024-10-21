@@ -1,15 +1,15 @@
 // src/components/ListItem.tsx
 
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { IconDefinition } from '@fortawesome/fontawesome-common-types'
 
 interface ListItemProps {
-  to: string;
-  icon: IconDefinition;
-  text: string;
-  isOpen: boolean;
+  to: string
+  icon: IconDefinition
+  text: string
+  isOpen: boolean
 }
 
 const ListItem: React.FC<ListItemProps> = ({ to, icon, text, isOpen }) => {
@@ -20,7 +20,7 @@ const ListItem: React.FC<ListItemProps> = ({ to, icon, text, isOpen }) => {
         <span className={`${isOpen ? 'inline' : 'hidden'}`}>{text}</span>
       </Link>
     </li>
-  );
-};
+  )
+}
 
-export default ListItem;
+export default ListItem

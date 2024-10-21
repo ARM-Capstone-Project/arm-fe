@@ -1,32 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
-const operators = [
-  { id: 3, name: 'Bob Johnson', role: 'Operator' },
-];
+const operators = [{ id: 3, name: 'Bob Johnson', role: 'Operator' }]
 
 const devices = [
   { id: 1, name: 'Temperature Sensor' },
   { id: 2, name: 'Pressure Sensor' },
   { id: 3, name: 'Moisture Sensor' },
   { id: 4, name: 'Humidity Sensor' },
-];
+]
 
 const AssignDevices: React.FC = () => {
-  const [selectedOperator, setSelectedOperator] = useState('');
-  const [selectedDevices, setSelectedDevices] = useState<number[]>([]);
+  const [selectedOperator, setSelectedOperator] = useState('')
+  const [selectedDevices, setSelectedDevices] = useState<number[]>([])
 
   const handleAssignDevices = () => {
     // Handle device assignment logic here
-    console.log('Devices Assigned:', { selectedOperator, selectedDevices });
-  };
+    console.log('Devices Assigned:', { selectedOperator, selectedDevices })
+  }
 
   const toggleDeviceSelection = (deviceId: number) => {
     setSelectedDevices((prevSelected) =>
       prevSelected.includes(deviceId)
         ? prevSelected.filter((id) => id !== deviceId)
-        : [...prevSelected, deviceId]
-    );
-  };
+        : [...prevSelected, deviceId],
+    )
+  }
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -65,15 +63,12 @@ const AssignDevices: React.FC = () => {
             ))}
           </div>
         </div>
-        <button
-          onClick={handleAssignDevices}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
+        <button onClick={handleAssignDevices} className="bg-blue-500 text-white px-4 py-2 rounded">
           Assign Devices
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AssignDevices;
+export default AssignDevices

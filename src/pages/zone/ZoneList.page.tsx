@@ -1,86 +1,80 @@
-import React, { useState, useEffect } from "react";
-import { FaTrash } from "react-icons/fa";
-import { MapContainer, TileLayer, Circle, Popup } from "react-leaflet";
-import { Link } from "react-router-dom";
-import Pagination from "../../components/Pagination";
-import Table from "../../components/Table";
-import Title from "../../components/Title";
-import api from "../../api/index";
+import React, { useState, useEffect } from 'react'
+import { FaTrash } from 'react-icons/fa'
+import { MapContainer, TileLayer, Circle, Popup } from 'react-leaflet'
+import { Link } from 'react-router-dom'
+import Pagination from '../../components/Pagination'
+import Table from '../../components/Table'
+import Title from '../../components/Title'
+import api from '../../api/index'
 
 interface Zone {
-  id: string;
-  name: string;
-  latitude: number;
-  longitude: number;
-  radius: number;
+  id: string
+  name: string
+  latitude: number
+  longitude: number
+  radius: number
 }
 
 const ZoneList: React.FC = () => {
-  const [zones, setZones] = useState<Zone[]>([]);
-  const [error, setError] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [zones, setZones] = useState<Zone[]>([])
+  const [error, setError] = useState('')
+  const [searchTerm, setSearchTerm] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage] = useState(5)
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
 
   useEffect(() => {
     const fetchZones = async () => {
       try {
-        const response = await api.get("/zones");
-        const data = response.data as Zone[];
-        setZones(data);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const response = await api.get('/zones')
+        const data = response.data as Zone[]
+        setZones(data)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
-        setError(`Failed to fetch zones, ${error}`);
-      }
-    };
-
-    fetchZones();
-  }, []);
-
-  const filteredZones = zones.filter((zone) =>
-    zone.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const sortedZones = filteredZones.sort((a, b) => {
-    const nameA = a.name.toUpperCase();
-    const nameB = b.name.toUpperCase();
-
-    return sortOrder === "asc"
-      ? nameA < nameB
-        ? -1
-        : 1
-      : nameA > nameB
-      ? -1
-      : 1;
-  });
-
-  const totalPages = Math.ceil(sortedZones.length / itemsPerPage);
-  const currentZones = sortedZones.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
-  const handleDelete = async (id: string) => {
-    if (window.confirm("Are you sure you want to delete this zone?")) {
-      try {
-        await api.delete(`/zones/${id}`);
-        setZones((prevZones) => prevZones.filter((zone) => zone.id !== id));
-        alert(`Deleted Zone ID: ${id} successfully`);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        setError(`Failed to delete zone, ${error.message}`);
+        setError(`Failed to fetch zones, ${error}`)
       }
     }
-  };
+
+    fetchZones()
+  }, [])
+
+  const filteredZones = zones.filter((zone) =>
+    zone.name.toLowerCase().includes(searchTerm.toLowerCase()),
+  )
+
+  const sortedZones = filteredZones.sort((a, b) => {
+    const nameA = a.name.toUpperCase()
+    const nameB = b.name.toUpperCase()
+
+    return sortOrder === 'asc' ? (nameA < nameB ? -1 : 1) : nameA > nameB ? -1 : 1
+  })
+
+  const totalPages = Math.ceil(sortedZones.length / itemsPerPage)
+  const currentZones = sortedZones.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  )
+
+  const handleDelete = async (id: string) => {
+    if (window.confirm('Are you sure you want to delete this zone?')) {
+      try {
+        await api.delete(`/zones/${id}`)
+        setZones((prevZones) => prevZones.filter((zone) => zone.id !== id))
+        alert(`Deleted Zone ID: ${id} successfully`)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        setError(`Failed to delete zone, ${error.message}`)
+      }
+    }
+  }
 
   const handleSortChange = () => {
-    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-  };
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
+  }
 
   const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
+    setCurrentPage(pageNumber)
+  }
 
   const headers = (
     <tr>
@@ -95,34 +89,22 @@ const ZoneList: React.FC = () => {
         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 cursor-pointer"
         onClick={handleSortChange}
       >
-        Name {sortOrder === "asc" ? "▲" : "▼"}
+        Name {sortOrder === 'asc' ? '▲' : '▼'}
       </th>
-      <th
-        scope="col"
-        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-      >
+      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
         Latitude
       </th>
-      <th
-        scope="col"
-        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-      >
+      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
         Longitude
       </th>
-      <th
-        scope="col"
-        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-      >
+      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
         Radius
       </th>
-      <th
-        scope="col"
-        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-      >
+      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
         Actions
       </th>
     </tr>
-  );
+  )
 
   const rows = (
     <>
@@ -130,25 +112,14 @@ const ZoneList: React.FC = () => {
         currentZones.map((zone) => (
           <tr key={zone.id}>
             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-              <Link
-                to={`/zones/${zone.id}`}
-                className="text-indigo-600 hover:text-indigo-900"
-              >
+              <Link to={`/zones/${zone.id}`} className="text-indigo-600 hover:text-indigo-900">
                 {zone.id}
               </Link>
             </td>
-            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-              {zone.name}
-            </td>
-            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-              {zone.latitude}
-            </td>
-            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-              {zone.longitude}
-            </td>
-            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-              {zone.radius}
-            </td>
+            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{zone.name}</td>
+            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{zone.latitude}</td>
+            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{zone.longitude}</td>
+            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{zone.radius}</td>
             <td className="whitespace-nowrap px-3 py-4 text-sm flex space-x-4">
               <FaTrash
                 className="text-red-500 cursor-pointer"
@@ -165,7 +136,7 @@ const ZoneList: React.FC = () => {
         </tr>
       )}
     </>
-  );
+  )
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -215,14 +186,12 @@ const ZoneList: React.FC = () => {
         onPageChange={handlePageChange}
       />
       <div className="mt-6">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">
-          Map of Singapore
-        </h2>
+        <h2 className="text-xl font-semibold text-gray-800 mb-4">Map of Singapore</h2>
         <div className="map-container">
           <MapContainer
             center={[1.3521, 103.8198]}
             zoom={12}
-            style={{ height: "600px", width: "100%" }}
+            style={{ height: '600px', width: '100%' }}
           >
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -234,8 +203,8 @@ const ZoneList: React.FC = () => {
                 center={[zone.latitude, zone.longitude]}
                 radius={zone.radius}
                 pathOptions={{
-                  color: "blue",
-                  fillColor: "blue",
+                  color: 'blue',
+                  fillColor: 'blue',
                   fillOpacity: 0.3,
                 }}
               >
@@ -253,7 +222,7 @@ const ZoneList: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ZoneList;
+export default ZoneList

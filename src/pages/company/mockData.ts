@@ -9,8 +9,16 @@ export const hierarchyData = {
         role: 'Supervisor',
         profilePicture: 'https://via.placeholder.com/150',
         children: [
-          { name: 'Operator 1', role: 'Operator', profilePicture: 'https://via.placeholder.com/150' },
-          { name: 'Operator 2', role: 'Operator', profilePicture: 'https://via.placeholder.com/150' },
+          {
+            name: 'Operator 1',
+            role: 'Operator',
+            profilePicture: 'https://via.placeholder.com/150',
+          },
+          {
+            name: 'Operator 2',
+            role: 'Operator',
+            profilePicture: 'https://via.placeholder.com/150',
+          },
         ],
       },
       {
@@ -18,10 +26,18 @@ export const hierarchyData = {
         role: 'Supervisor',
         profilePicture: 'https://via.placeholder.com/150',
         children: [
-          { name: 'Operator 3', role: 'Operator', profilePicture: 'https://via.placeholder.com/150' },
-          { name: 'Operator 4', role: 'Operator', profilePicture: 'https://via.placeholder.com/150' },
+          {
+            name: 'Operator 3',
+            role: 'Operator',
+            profilePicture: 'https://via.placeholder.com/150',
+          },
+          {
+            name: 'Operator 4',
+            role: 'Operator',
+            profilePicture: 'https://via.placeholder.com/150',
+          },
         ],
       },
     ],
   },
-};
+}

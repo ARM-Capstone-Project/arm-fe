@@ -1,90 +1,99 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import api from "../../api/index";
-import Pagination from "../../components/Pagination";
-import Table from "../../components/Table";
-import Title from "../../components/Title";
-import UserRoleTable from "./UserRoleTable.page.tsx";
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import api from '../../api/index'
+import Pagination from '../../components/Pagination'
+import Table from '../../components/Table'
+import Title from '../../components/Title'
+import UserRoleTable from './UserRoleTable.page.tsx'
+
+// Define the Role and User interfaces
+interface Role {
+  id: string
+  name: string
+}
+
+interface User {
+  id: string
+  username: string
+  roles: Role[]
+}
 
 const UsersList = () => {
-  const [users, setUsers] = useState([]);
-  const [error, setError] = useState("");
+  const [users, setUsers] = useState<User[]>([]) // Specify User[] type for users
+  const [error, setError] = useState<string>('')
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
-  const [selectedRole, setSelectedRole] = useState("");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [itemsPerPage] = useState<number>(10)
+  const [selectedRole, setSelectedRole] = useState<string>('')
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
 
-  const navigate = useNavigate(); // React Router's navigation hook
+  const navigate = useNavigate() // React Router's navigation hook
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await api.get("/users");
-        setUsers(response.data);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        setError(`Failed to fetch users, ${error}`);
+        const response = await api.get<User[]>('/users') // Specify the expected response type
+        setUsers(response.data)
+      } catch (error) {
+        setError(`Failed to fetch users, ${error}`)
       }
-    };
+    }
 
-    fetchUsers();
-
-  }, []);
-
+    fetchUsers()
+  }, [])
 
   // Filter users by role
   const filteredUsers = selectedRole
-    ? users.filter((user) =>  user.roles.some(role => role.name === selectedRole))
-    : users;
+    ? users.filter((user) => user.roles.some((role) => role.name === selectedRole))
+    : users
 
   // const filterUsersByRole = (users: User[], roleName: string): User[] => {
-  //   return users.filter(user => 
+  //   return users.filter(user =>
   //     user.roles.some(role => role.name === roleName)
   //   );
   // };
 
-    // const adminUsers = filterUsersByRole(users, "ADMIN");
-    // console.log(adminUsers);
+  // const adminUsers = filterUsersByRole(users, "ADMIN");
+  // console.log(adminUsers);
 
   // Sort users by name
-  const sortedUsers = filteredUsers.toSorted((a, b) => {
-    const nameA = a.username.toUpperCase();
-    const nameB = b.username.toUpperCase();
+  const sortedUsers = filteredUsers.sort((a, b) => {
+    const nameA = a.username.toUpperCase()
+    const nameB = b.username.toUpperCase()
 
     if (nameA < nameB) {
-      return sortOrder === "asc" ? -1 : 1;
+      return sortOrder === 'asc' ? -1 : 1
     }
     if (nameA > nameB) {
-      return sortOrder === "asc" ? 1 : -1;
+      return sortOrder === 'asc' ? 1 : -1
     }
-    return 0;
-  });
+    return 0
+  })
 
   // Calculate total pages
-  const totalPages = Math.ceil(sortedUsers.length / itemsPerPage);
+  const totalPages = Math.ceil(sortedUsers.length / itemsPerPage)
 
   // Get current page users
   const currentUsers = sortedUsers.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+    currentPage * itemsPerPage,
+  )
 
   // Handle pagination
   const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
+    setCurrentPage(pageNumber)
+  }
 
   // Handle role filter change
   const handleRoleFilterChange = (role: string) => {
-    setSelectedRole(role);
-    setCurrentPage(1); // Reset to first page when filter changes
-  };
+    setSelectedRole(role)
+    setCurrentPage(1) // Reset to first page when filter changes
+  }
 
   // Handle sort change
   const handleSortChange = () => {
-    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-  };
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
+  }
 
   // Handle adding a new user
   // const handleAddUser = () => {
@@ -99,10 +108,10 @@ const UsersList = () => {
   // };
 
   const handleUserClick = (userId: string) => {
-    navigate(`/users/${userId}`); // Navigate to the user details page
-  };
+    navigate(`/users/${userId}`) // Navigate to the user details page
+  }
 
-  const allRoles = ['ADMIN' , 'MANAGER', 'OPERATOR' ,'USER'];
+  const allRoles = ['ADMIN', 'MANAGER', 'OPERATOR', 'USER']
 
   const headers = (
     <tr>
@@ -110,59 +119,48 @@ const UsersList = () => {
         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 cursor-pointer"
         onClick={handleSortChange}
       >
-        Name {sortOrder === "asc" ? "▲" : "▼"}
+        Name {sortOrder === 'asc' ? '▲' : '▼'}
       </th>
-      <th 
-        // scope="col"
-        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-       >
+      <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
         <div className="overflow-x-auto w-full max-w-md">
-            <ul className="flex space-x-4">
-                {allRoles.map((role) => (
-                    <li key={role} className="px-4 py-2 text-center w-60">{role}</li>
-                ))}
-            </ul>
-</div>
+          <ul className="flex space-x-4">
+            {allRoles.map((role) => (
+              <li key={role} className="px-4 py-2 text-center w-60">
+                {role}
+              </li>
+            ))}
+          </ul>
+        </div>
       </th>
-      <th
-        // scope="col"
-        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-      >
-        Actions
-      </th>
+      <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Actions</th>
     </tr>
-  );
+  )
 
   const rows = (
     <>
       {currentUsers.map((user) => (
         <tr key={user.id}>
           <td className="whitespace-nowrap px-3 py-4 text-sm ">
-            <a
-              className="username_txt"
-              onClick={() => handleUserClick(user.id)}
-            >
-              {user.username}{" "}
+            <a className="username_txt" onClick={() => handleUserClick(user.id)}>
+              {user.username}
             </a>
           </td>
           <td className="whitespace-nowrap px-3 py-4 text-sm">
             <UserRoleTable user={user} />
           </td>
           <td className="whitespace-nowrap px-3 py-4 text-sm flex space-x-4">
-            {user.roles.some((role) => role.name === "ADMIN") ? (
+            {user.roles.some((role) => role.name === 'ADMIN') ? (
               <> </>
             ) : (
               <>
                 <div>
-                  <button className={`px-2 py-1 rounded bg-red-500 text-white`}>
-                    Delete
-                  </button>
+                  <button className={`px-2 py-1 rounded bg-red-500 text-white`}>Delete</button>
                   <a
                     href="/assign_device"
                     className={`mx-3 px-2 py-1 rounded ${
-                      user.role === "Admin"
-                        ? "bg-gray-300  cursor-not-allowed"
-                        : "text-blue-500"
+                      user.roles.some((role) => role.name === 'Admin')
+                        ? 'bg-gray-300 cursor-not-allowed'
+                        : 'text-blue-500'
                     }`}
                   >
                     Assign
@@ -174,7 +172,7 @@ const UsersList = () => {
         </tr>
       ))}
     </>
-  );
+  )
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -182,17 +180,14 @@ const UsersList = () => {
 
       {/* Add User Form */}
       <div className="mb-4">
+        <div className="flex items-center justify-between bg-white p-6 shadow-md rounded-lg">
+          <h2 className="font-semibold">Invite or Manage Users</h2>
 
-      <div className="flex items-center justify-between bg-white p-6 shadow-md rounded-lg">
-      <h2 className=" font-semibold">Invite or Manage Users</h2>
-
-      {/* Add New User Button */}
-      <button className="flex items-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">
-        + 
-        Add New User
-      </button>
-    </div>
-        
+          {/* Add New User Button */}
+          <button className="flex items-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">
+            + Add New User
+          </button>
+        </div>
       </div>
 
       <div className="mb-4 w-1/4">
@@ -211,7 +206,7 @@ const UsersList = () => {
 
       {error && <div className="text-red-500 mb-4">{error}</div>}
 
-      <Table headers={headers} rows={rows} border-none/>
+      <Table headers={headers} rows={rows} border-none />
 
       <Pagination
         currentPage={currentPage}
@@ -219,8 +214,7 @@ const UsersList = () => {
         onPageChange={handlePageChange}
       />
     </div>
-  );
-};
+  )
+}
 
-export default UsersList;
-
+export default UsersList

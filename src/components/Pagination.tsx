@@ -1,17 +1,17 @@
-import React from 'react';
+import React from 'react'
 
 interface PaginationProps {
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
+  currentPage: number
+  totalPages: number
+  onPageChange: (page: number) => void
 }
 
 const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages) {
-      onPageChange(newPage);
+      onPageChange(newPage)
     }
-  };
+  }
 
   return (
     <div className="flex justify-between items-center mt-4">
@@ -33,7 +33,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
         Next
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default Pagination;
+export default Pagination

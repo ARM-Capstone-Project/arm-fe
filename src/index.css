@@ -23,11 +23,15 @@ a {
   text-decoration: inherit;
 }
 a:hover {
-  color: #BE123C;
+  color: #be123c;
 }
 
-.sub_menu a{color: #BE123C !important; } 
-.sub_menu a:hover{color: #ed6788 !important; } 
+.sub_menu a {
+  color: #be123c !important;
+}
+.sub_menu a:hover {
+  color: #ed6788 !important;
+}
 /* body {
   margin: 0;
   display: flex;
@@ -35,7 +39,8 @@ a:hover {
   min-width: 320px;
   min-height: 100vh;
 } */
-html, body {
+html,
+body {
   height: 100%;
   color: #000;
 }
@@ -63,7 +68,7 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
-.text-group{
+.text-group {
   color: #333 !important;
 }
 /* @media (prefers-color-scheme: light) {

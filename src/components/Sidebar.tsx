@@ -1,6 +1,6 @@
 // src/components/Sidebar.tsx
-import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faUsers,
   faCogs,
@@ -8,37 +8,33 @@ import {
   faChartLine,
   faBars,
   faMap,
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons'
 
-import ListItem from "./sidebar/ListItem";
-import isAdmin from "../common/Helpers.jsx";
+import ListItem from './sidebar/ListItem'
+import isAdmin from '../common/Helpers.jsx'
 
 interface SidebarProps {
   currentUser: {
-    username: string;
-  };
+    username: string
+  }
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(true)
 
   const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
+    setIsOpen(!isOpen)
+  }
 
   return (
     <aside
       className={`h-screen bg-stone-800 text-white transition-width duration-300 ${
-        isOpen ? "w-64" : "w-20"
+        isOpen ? 'w-64' : 'w-20'
       }`}
     >
       <div className="p-4 flex items-center justify-between bg-rose-700">
         <a href="/">
-          <h1
-            className={`text-xl hover:text-white font-bold ${
-              isOpen ? "inline" : "hidden"
-            }`}
-          >
+          <h1 className={`text-xl hover:text-white font-bold ${isOpen ? 'inline' : 'hidden'}`}>
             Alco Remote Monitoring
           </h1>
         </a>
@@ -56,38 +52,18 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
           /> */}
           {isAdmin(currentUser) && (
             <>
-              <ListItem
-                to="/users"
-                icon={faUsers}
-                text="Users"
-                isOpen={isOpen}
-              />
+              <ListItem to="/users" icon={faUsers} text="Users" isOpen={isOpen} />
             </>
           )}
 
-          <ListItem
-            to="/devices"
-            icon={faCogs}
-            text="Devices"
-            isOpen={isOpen}
-          />
+          <ListItem to="/devices" icon={faCogs} text="Devices" isOpen={isOpen} />
           <ListItem to="/zones" icon={faMap} text="Zones" isOpen={isOpen} />
-          <ListItem
-            to="/notifications"
-            icon={faBell}
-            text="Notifications"
-            isOpen={isOpen}
-          />
-          <ListItem
-            to="/analytics"
-            icon={faChartLine}
-            text="Analytics"
-            isOpen={isOpen}
-          />
+          <ListItem to="/notifications" icon={faBell} text="Notifications" isOpen={isOpen} />
+          <ListItem to="/analytics" icon={faChartLine} text="Analytics" isOpen={isOpen} />
         </ul>
       </nav>
     </aside>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar

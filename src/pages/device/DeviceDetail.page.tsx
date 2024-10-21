@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { Device } from '../../types/device';
-import '../../components/Device/DeviceDetail.css';
-import DeviceSensorReading from '../../components/DeviceSensorReading';
+import React, { useState } from 'react'
+import { useLocation } from 'react-router-dom'
+import { Device } from '../../types/device'
+import '../../components/Device/DeviceDetail.css'
+import DeviceSensorReading from '../../components/DeviceSensorReading'
 
 const DeviceDetail: React.FC = () => {
-
-  const { state } = useLocation();
-  const deviceFromState = state?.device;
-  const [device, setDevice] = useState<Device | null>(deviceFromState);
+  const { state } = useLocation()
+  const deviceFromState = state?.device
+  const [device, setDevice] = useState<Device | null>(deviceFromState)
 
   // TODO: error  'setDevice' is assigned a value but never used
   setDevice(device)
@@ -100,50 +99,53 @@ const DeviceDetail: React.FC = () => {
           <div className="detail-section">
             <h2>Sensors</h2>
             {device.sensors && device.sensors.length > 0 ? (
-            <table>
-            <tbody>
-      {device.sensors.map((sensor, index) => (
-        <tr key={index}>
-          <td></td><td></td>
-          <td>{sensor.name} </td>
-          <td>- {sensor.type} ({sensor.unit})</td>
-        </tr>
-      ))}
-    </tbody>
-    </table>  
-    ) : (
-      <p>No sensors available.</p>
-    )}
-  </div>
+              <table>
+                <tbody>
+                  {device.sensors.map((sensor, index) => (
+                    <tr key={index}>
+                      <td></td>
+                      <td></td>
+                      <td>{sensor.name} </td>
+                      <td>
+                        - {sensor.type} ({sensor.unit})
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>No sensors available.</p>
+            )}
+          </div>
 
           <div className="detail-section">
             <h2>Assigned Users</h2>
             {device.users && device.users.length > 0 ? (
-            <table>
-            <tbody>
-            {device.users.map((user) => (
-        <tr key={user.id}>
-          <td></td><td></td>
-          <td>{user.name} </td>
-          <td>- {user.role}</td>
-        </tr>
-      ))}
-    </tbody>
-    </table> 
-    ) : (
-      <p>No users assigned.</p>
-    )}
-  </div>
+              <table>
+                <tbody>
+                  {device.users.map((user) => (
+                    <tr key={user.id}>
+                      <td></td>
+                      <td></td>
+                      <td>{user.username} </td>
+                      <td>- {user.role}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>No users assigned.</p>
+            )}
+          </div>
         </div>
       )}
       <br></br>
       <br></br>
       <div>
-    <DeviceSensorReading />
+        <DeviceSensorReading />
+      </div>
     </div>
-    </div>
-    
-  );
-};
+  )
+}
 
-export default DeviceDetail;
+export default DeviceDetail

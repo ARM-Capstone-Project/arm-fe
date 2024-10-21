@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { Device, Sensor } from './../types/device';
-import './Device/DeviceForm.css';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { fetchSensorsByDeviceId } from '../services/SensorService';
-import { saveDevice } from '../services/DeviceService';
+import React, { useState, useEffect } from 'react'
+import { Device, Sensor } from './../types/device'
+import './Device/DeviceForm.css'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { fetchSensorsByDeviceId } from '../services/SensorService'
+import { saveDevice } from '../services/DeviceService'
 
 const UpdDeviceForm: React.FC = () => {
-  const { state } = useLocation();
-  const deviceFromState = state?.device;
-  const [device, setDevice] = useState<Device | null>(deviceFromState);
+  const { state } = useLocation()
+  const deviceFromState = state?.device
+  const [device, setDevice] = useState<Device | null>(deviceFromState)
 
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
-  const [sensors, setSensors] = useState<Sensor[]>(device?.sensors || []);
+  const [loading, setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<string | null>(null)
+  const navigate = useNavigate()
+  const [sensors, setSensors] = useState<Sensor[]>(device?.sensors || [])
 
   // Temporary local state to store the form inputs before saving
   const [formValues, setFormValues] = useState({
@@ -22,45 +22,45 @@ const UpdDeviceForm: React.FC = () => {
     zoneName: device?.zoneName || '',
     location: device?.location || '',
     status: device?.status || 'inactive',
-  });
+  })
 
   useEffect(() => {
     const fetchSensors = async () => {
       if (device) {
-        setLoading(true);
+        setLoading(true)
         try {
-          const sensorsData = await fetchSensorsByDeviceId(device.id);
-          setSensors(sensorsData);
+          const sensorsData = await fetchSensorsByDeviceId(device.id)
+          setSensors(sensorsData)
         } catch (error) {
-          console.error('Error fetching sensors:', error);
-          setError('Failed to fetch sensors. Please try again.');
+          console.error('Error fetching sensors:', error)
+          setError('Failed to fetch sensors. Please try again.')
         } finally {
-          setLoading(false);
+          setLoading(false)
         }
       }
-    };
+    }
 
-    fetchSensors();
-  }, [device]);
+    fetchSensors()
+  }, [device])
 
   // Update local form values on input
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
+    const { id, value } = e.target
 
     setFormValues((prevValues) => ({
       ...prevValues,
       [id]: value,
-    }));
-  };
+    }))
+  }
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target as HTMLInputElement;
+    const { value } = e.target as HTMLInputElement
 
     setFormValues((prevValues) => ({
       ...prevValues,
       status: value as 'active' | 'inactive',
-    }));
-  };
+    }))
+  }
 
   // Save the device with updated form values (keep sensors intact)
   const handleSave = async () => {
@@ -73,35 +73,37 @@ const UpdDeviceForm: React.FC = () => {
         location: formValues.location,
         status: formValues.status,
         sensors: sensors, // Keep the existing sensors
-      };
+      }
 
       try {
-        window.alert(`Updated for ${updatedDevice.name}`);
-        console.log('Saving device:', updatedDevice);
-  
-        await saveDevice(updatedDevice.id, updatedDevice);
+        window.alert(`Updated for ${updatedDevice.name}`)
+        console.log('Saving device:', updatedDevice)
+
+        await saveDevice(updatedDevice.id, updatedDevice)
         // TODO: Add line 83 and 84 because error 'setDevice' is assigned a value but never used
         setDevice(updatedDevice)
-        navigate(`/devices?section=deviceslist`);
+        navigate(`/devices?section=deviceslist`)
       } catch (error) {
-        console.error('Error saving device:', error);
-        window.alert('Failed to save device. Please try again.');
+        console.error('Error saving device:', error)
+        window.alert('Failed to save device. Please try again.')
       }
     }
-  };
+  }
 
   const handleCancel = () => {
-    navigate(`/devices?section=deviceslist`);
-  };
+    navigate(`/devices?section=deviceslist`)
+  }
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error: {error}</p>
 
   return (
     <div className="device-form">
       <h1 className="form-title">Device Form</h1>
       {device && (
-        <form onSubmit={(e) => e.preventDefault()}> {/* Prevent default form submission */}
+        <form onSubmit={(e) => e.preventDefault()}>
+          {' '}
+          {/* Prevent default form submission */}
           <div className="form-group">
             <label htmlFor="tagNo">Device ID:</label>
             <input type="text" id="tagNo" value={device.tagNo} readOnly />
@@ -124,7 +126,6 @@ const UpdDeviceForm: React.FC = () => {
               onChange={handleInputChange} // Update local form state
             />
           </div>
-
           <div className="form-group">
             <label htmlFor="zoneName">Zone:</label>
             <input
@@ -143,7 +144,6 @@ const UpdDeviceForm: React.FC = () => {
               onChange={handleInputChange} // Update local form state
             />
           </div>
-
           <div className="form-group">
             <label className="block font-medium">Status:</label>
             <div className="flex items-center space-x-4">
@@ -157,7 +157,9 @@ const UpdDeviceForm: React.FC = () => {
                   onChange={handleStatusChange}
                   className="mr-2"
                 />
-                <label htmlFor="status-active" className="text-sm">Activate</label>
+                <label htmlFor="status-active" className="text-sm">
+                  Activate
+                </label>
               </div>
               <div className="flex items-center">
                 <input
@@ -169,11 +171,12 @@ const UpdDeviceForm: React.FC = () => {
                   onChange={handleStatusChange}
                   className="mr-2"
                 />
-                <label htmlFor="status-inactive" className="text-sm">Deactivate</label>
+                <label htmlFor="status-inactive" className="text-sm">
+                  Deactivate
+                </label>
               </div>
             </div>
           </div>
-
           <div className="flex justify-end mt-4">
             <button
               type="button"
@@ -193,7 +196,7 @@ const UpdDeviceForm: React.FC = () => {
         </form>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default UpdDeviceForm;
+export default UpdDeviceForm

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import DeviceList from '../../components/DeviceList';
-import { Device, Zone } from '../../types/device';
-import { useNavigate } from 'react-router-dom';
-import {fetchAllDevices, deleteDevice} from '../../services/DeviceService';
-import {fetchZoneById} from '../../services/ZoneService';
+import React, { useEffect, useState } from 'react'
+import DeviceList from '../../components/DeviceList'
+import { Device, Zone } from '../../types/device'
+import { useNavigate } from 'react-router-dom'
+import { fetchAllDevices, deleteDevice } from '../../services/DeviceService'
+import { fetchZoneById } from '../../services/ZoneService'
 
 // const mockDevices: Device[] = [
 //         {
@@ -70,81 +70,81 @@ import {fetchZoneById} from '../../services/ZoneService';
 //             { id: 'usr10', name: 'Eve', role: 'Operator' },
 //           ],
 //         },
-//       ];      
+//       ];
 
 const DevicesList: React.FC = () => {
-    //const [devices, setDevices] = useState<Device[]>(mockDevices);
-    const [devices, setDevices] = useState<Device[]>([]);
-    const navigate = useNavigate();
+  //const [devices, setDevices] = useState<Device[]>(mockDevices);
+  const [devices, setDevices] = useState<Device[]>([])
+  const navigate = useNavigate()
 
-    useEffect(() => {
-      const loadDevices = async () => {
-          const fetchedDevices = await fetchAllDevices();
+  useEffect(() => {
+    const loadDevices = async () => {
+      const fetchedDevices = await fetchAllDevices()
 
-          // For each device, fetch the corresponding zone by zoneId
-          const devicesWithZones = await Promise.all(
-            fetchedDevices.map(async (device) => {
-              if (device.zoneId) { 
-                const zone: Zone = await fetchZoneById(device.zoneId);
-                return {
-                  ...device,
-                  zoneName: zone.name,
-                  zone,
-                };
-              } else {
-                return {
-                  ...device,
-                  zoneName: 'No Zone Assigned',
-                  zone: null,
-                };
-              }
-            })
-          );
-
-          setDevices(devicesWithZones);
-      };
-
-      loadDevices();
-  }, []); 
-
-    const handleEdit = (device: Device) => {
-        console.log('Edit device:', device);
-        navigate(`/device-upd`, { state: { device } });
-    };
-
-    const handleView = (device: Device) => {
-      console.log('View device:', device);
-        navigate(`/device-form`, { state: { device } });
-    };
-
-    const handleRemove = async (device: Device) => {
-      if (window.confirm(`Are you sure you want to remove ${device.name}?`)) {
-          try {
-              await deleteDevice(device.id);
-              setDevices(devices.filter((newDevice) => newDevice.id !== device.id));
-              console.log('Remove device:', device);
-          } catch (error) {
-              console.error('Error removing device:', error);
-              alert('Failed to remove device. Please try again.');
+      // For each device, fetch the corresponding zone by zoneId
+      const devicesWithZones = await Promise.all(
+        fetchedDevices.map(async (device) => {
+          if (device.zoneId) {
+            const zone: Zone = await fetchZoneById(device.zoneId)
+            return {
+              ...device,
+              zoneName: zone.name,
+              zone,
+            }
+          } else {
+            return {
+              ...device,
+              zoneName: 'No Zone Assigned',
+              zone: null,
+            }
           }
+        }),
+      )
+
+      setDevices(devicesWithZones)
+    }
+
+    loadDevices()
+  }, [])
+
+  const handleEdit = (device: Device) => {
+    console.log('Edit device:', device)
+    navigate(`/device-upd`, { state: { device } })
+  }
+
+  const handleView = (device: Device) => {
+    console.log('View device:', device)
+    navigate(`/device-form`, { state: { device } })
+  }
+
+  const handleRemove = async (device: Device) => {
+    if (window.confirm(`Are you sure you want to remove ${device.name}?`)) {
+      try {
+        await deleteDevice(device.id)
+        setDevices(devices.filter((newDevice) => newDevice.id !== device.id))
+        console.log('Remove device:', device)
+      } catch (error) {
+        console.error('Error removing device:', error)
+        alert('Failed to remove device. Please try again.')
       }
-  };
+    }
+  }
 
-    return (
-        <div className="p-4">
-            <h1 className="text-3xl font-bold mb-6">Device Management</h1>
-            {devices.length > 0 ? (
-                <DeviceList
-                    devices={devices}
-                    onEdit={handleEdit}
-                    onView={handleView}
-                    onRemove={handleRemove}
-                />
-            ) : (
-                <p>No devices available.</p>
-            )}
-        </div>
-    );
-};
+  return (
+    <div className="p-4">
+      <h1 className="text-3xl font-bold mb-6">Device Management</h1>
+      {devices.length > 0 ? (
+        <DeviceList
+          devices={devices}
+          onEdit={handleEdit}
+          onView={handleView}
+          onRemove={handleRemove}
+        />
+      ) : (
+        <p>No devices available.</p>
+      )}
+    </div>
+  )
+}
 
-export default DevicesList;
+export default DevicesList

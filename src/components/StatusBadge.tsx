@@ -1,11 +1,11 @@
-import React from 'react';
+import React from 'react'
 
 interface StatusBadgeProps {
-  status: 'active' | 'inactive';
+  status: 'active' | 'inactive'
 }
 
 const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
-  const isActive = status === 'active';
+  const isActive = status === 'active'
 
   return (
     <dd
@@ -17,7 +17,7 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
     >
       {isActive ? 'Active' : 'Inactive'}
     </dd>
-  );
-};
+  )
+}
 
-export default StatusBadge;
+export default StatusBadge

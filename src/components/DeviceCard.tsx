@@ -2,8 +2,8 @@
 import React from 'react'
 
 interface DeviceCardProps {
-  deviceName: string;
-  status: string;
+  deviceName: string
+  status: string
 }
 
 const DeviceCard: React.FC<DeviceCardProps> = ({ deviceName, status }) => {
@@ -14,7 +14,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({ deviceName, status }) => {
         Status: {status}
       </p>
     </div>
-  );
+  )
 }
 
-export default DeviceCard;
+export default DeviceCard
