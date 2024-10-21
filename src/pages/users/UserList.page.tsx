@@ -6,13 +6,25 @@ import Table from "../../components/Table";
 import Title from "../../components/Title";
 import UserRoleTable from "./UserRoleTable.page.tsx";
 
-const UsersList = () => {
-  const [users, setUsers] = useState([]);
-  const [error, setError] = useState("");
+// Define the Role and User interfaces
+interface Role {
+  id: string;
+  name: string;
+}
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
-  const [selectedRole, setSelectedRole] = useState("");
+interface User {
+  id: string;
+  username: string;
+  roles: Role[];
+}
+
+const UsersList = () => {
+  const [users, setUsers] = useState<User[]>([]); // Specify User[] type for users
+  const [error, setError] = useState<string>("");
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [itemsPerPage] = useState<number>(10);
+  const [selectedRole, setSelectedRole] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   const navigate = useNavigate(); // React Router's navigation hook
@@ -20,22 +32,19 @@ const UsersList = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await api.get("/users");
+        const response = await api.get<User[]>("/users"); // Specify the expected response type
         setUsers(response.data);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
+      } catch (error) {
         setError(`Failed to fetch users, ${error}`);
       }
     };
 
     fetchUsers();
-
   }, []);
-
 
   // Filter users by role
   const filteredUsers = selectedRole
-    ? users.filter((user) =>  user.roles.some(role => role.name === selectedRole))
+    ? users.filter((user) => user.roles.some(role => role.name === selectedRole))
     : users;
 
   // const filterUsersByRole = (users: User[], roleName: string): User[] => {
@@ -44,11 +53,11 @@ const UsersList = () => {
   //   );
   // };
 
-    // const adminUsers = filterUsersByRole(users, "ADMIN");
-    // console.log(adminUsers);
+  // const adminUsers = filterUsersByRole(users, "ADMIN");
+  // console.log(adminUsers);
 
   // Sort users by name
-  const sortedUsers = filteredUsers.toSorted((a, b) => {
+  const sortedUsers = filteredUsers.sort((a, b) => {
     const nameA = a.username.toUpperCase();
     const nameB = b.username.toUpperCase();
 
@@ -102,7 +111,7 @@ const UsersList = () => {
     navigate(`/users/${userId}`); // Navigate to the user details page
   };
 
-  const allRoles = ['ADMIN' , 'MANAGER', 'OPERATOR' ,'USER'];
+  const allRoles = ['ADMIN', 'MANAGER', 'OPERATOR', 'USER'];
 
   const headers = (
     <tr>
@@ -112,22 +121,16 @@ const UsersList = () => {
       >
         Name {sortOrder === "asc" ? "▲" : "▼"}
       </th>
-      <th 
-        // scope="col"
-        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-       >
+      <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
         <div className="overflow-x-auto w-full max-w-md">
-            <ul className="flex space-x-4">
-                {allRoles.map((role) => (
-                    <li key={role} className="px-4 py-2 text-center w-60">{role}</li>
-                ))}
-            </ul>
-</div>
+          <ul className="flex space-x-4">
+            {allRoles.map((role) => (
+              <li key={role} className="px-4 py-2 text-center w-60">{role}</li>
+            ))}
+          </ul>
+        </div>
       </th>
-      <th
-        // scope="col"
-        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-      >
+      <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
         Actions
       </th>
     </tr>
@@ -138,11 +141,8 @@ const UsersList = () => {
       {currentUsers.map((user) => (
         <tr key={user.id}>
           <td className="whitespace-nowrap px-3 py-4 text-sm ">
-            <a
-              className="username_txt"
-              onClick={() => handleUserClick(user.id)}
-            >
-              {user.username}{" "}
+            <a className="username_txt" onClick={() => handleUserClick(user.id)}>
+              {user.username}
             </a>
           </td>
           <td className="whitespace-nowrap px-3 py-4 text-sm">
@@ -160,8 +160,8 @@ const UsersList = () => {
                   <a
                     href="/assign_device"
                     className={`mx-3 px-2 py-1 rounded ${
-                      user.role === "Admin"
-                        ? "bg-gray-300  cursor-not-allowed"
+                      user.roles.some((role) => role.name === "Admin")
+                        ? "bg-gray-300 cursor-not-allowed"
                         : "text-blue-500"
                     }`}
                   >
@@ -182,17 +182,14 @@ const UsersList = () => {
 
       {/* Add User Form */}
       <div className="mb-4">
+        <div className="flex items-center justify-between bg-white p-6 shadow-md rounded-lg">
+          <h2 className="font-semibold">Invite or Manage Users</h2>
 
-      <div className="flex items-center justify-between bg-white p-6 shadow-md rounded-lg">
-      <h2 className=" font-semibold">Invite or Manage Users</h2>
-
-      {/* Add New User Button */}
-      <button className="flex items-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">
-        + 
-        Add New User
-      </button>
-    </div>
-        
+          {/* Add New User Button */}
+          <button className="flex items-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">
+            + Add New User
+          </button>
+        </div>
       </div>
 
       <div className="mb-4 w-1/4">
@@ -223,4 +220,3 @@ const UsersList = () => {
 };
 
 export default UsersList;
-

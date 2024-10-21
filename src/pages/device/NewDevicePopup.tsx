@@ -10,10 +10,22 @@ interface NewDevicePopupProps {
 
 const NewDevicePopup: React.FC<NewDevicePopupProps> = ({ isOpen, onClose, onSubmit }) => {
   const [deviceId, setDeviceId] = useState('');
-  const [sensors, setSensors] = useState<Sensor[]>([{ id: '', sensorId: '', rawDataList: [] }]);
+  const [sensors, setSensors] = useState<Sensor[]>([{
+    id: '', sensorId: '', rawDataList: [],
+    name: '',
+    type: '',
+    unit: '',
+    deviceId: ''
+  }]);
 
   const handleAddSensor = () => {
-    setSensors([...sensors, { id: '', sensorId: '', rawDataList: [] }]);
+    setSensors([...sensors, {
+      id: '', sensorId: '', rawDataList: [],
+      name: '',
+      type: '',
+      unit: '',
+      deviceId: ''
+    }]);
   };
 
   const handleRemoveSensor = (index: number) => {
@@ -51,7 +63,13 @@ const NewDevicePopup: React.FC<NewDevicePopupProps> = ({ isOpen, onClose, onSubm
     if (deviceId && sensors.length > 0) {
       onSubmit({ id: '', deviceId, sensors });
       setDeviceId('');
-      setSensors([{ id: '', sensorId: '', rawDataList: [] }]);
+      setSensors([{
+        id: '', sensorId: '', rawDataList: [],
+        name: '',
+        type: '',
+        unit: '',
+        deviceId: ''
+      }]);
       onClose();
     }
   };

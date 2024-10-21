@@ -24,8 +24,10 @@ import Login from "./pages/login/Login.page.tsx";
 
 import * as AuthService from "./services/auth.service";
 
+import User from './types/user.ts';
+
 function App() {
-  const [currentUser, setCurrentUser] = useState<IUser | undefined>(undefined);
+  const [currentUser, setCurrentUser] = useState<User | undefined>(undefined);
   useEffect(() => {
     const currentUser = AuthService.getCurrentUser();
     if (currentUser) {
@@ -48,7 +50,7 @@ function App() {
   const logOut = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-    setCurrentUser(null);
+    setCurrentUser(undefined);
   };
 
   return (

@@ -105,11 +105,10 @@ const UserDetails = () => {
 
           {/* Render the modal */}
           <AssignRoleModal
-            userId={user.id}     // Example user ID
-            isOpen={isModalOpen}
-            onClose={handleCloseModal}
-            onSuccess={handleSuccess}
-          />
+                  userId={user.id} // Example user ID
+                  isOpen={isModalOpen}
+                  onClose={handleCloseModal}
+                  onSuccess={handleSuccess} roles={[]}          />
         </div>
 
           </div>

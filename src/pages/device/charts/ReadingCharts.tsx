@@ -8,16 +8,20 @@ interface LineChartProps {
     data: SensorData[];
 }
 
+interface TransformedItem {
+    name: string;
+    [key: string]: string | number; // Allows dynamic keys of string type
+}
+
 const ReadingCharts: React.FC<LineChartProps> = ({ data }) => {
     // Transform data for the chart
-    const transformedData = data.map(item => {
-        const transformedItem = { name: item.timestamp }; // Create a name key for the X-axis
+    const transformedData: TransformedItem[] = data.map(item => {
+        const transformedItem: TransformedItem = { name: item.timestamp }; // Create a name key for the X-axis
         item.readings.forEach(reading => {
             transformedItem[reading.sensor] = reading.value; // Map sensor types to their values
         });
         return transformedItem;
     });
-
     // Get unique sensor keys for dynamic line creation
     const sensorKeys = [...new Set(data.flatMap(item => item.readings.map(reading => reading.sensor)))];
 
@@ -30,8 +34,9 @@ const ReadingCharts: React.FC<LineChartProps> = ({ data }) => {
             <Tooltip />
             <Legend />
             {sensorKeys.map(sensor => (
-                <Line key={sensor} type="monotone" dataKey={sensor} stroke={getStrokeColor(sensor)} />
+                <Line key={sensor as string} type="monotone" dataKey={sensor as string} stroke={getStrokeColor(sensor as string) } />
             ))}
+            
         </LineChart>
         </ResponsiveContainer>
     );

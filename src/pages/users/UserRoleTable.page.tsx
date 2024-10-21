@@ -14,7 +14,7 @@ interface User {
 
 
 // Main Component
-const UserRoleTable: React.FC<{ user: User[] }> = ({ user }) => {
+const UserRoleTable: React.FC<{ user: User }> = ({ user }) => {
   // Define the roles we are interested in
   const allRoles = ['ADMIN' , 'MANAGER', 'OPERATOR' ,'USER'];
 

@@ -9,14 +9,14 @@ const AlarmSettings: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentThreshold, setCurrentThreshold] = useState<ThresholdSetting | null>(null);
   const [newThreshold, setNewThreshold] = useState<ThresholdSetting>({
-    id: null,
+    id: '',
     deviceId: '',
     sensorId: '',
-    reading: '',
+    reading: 'temperature',
     condition: '',
     email: '',
-    level: '',
-    unit: '',
+    level: 'caution',
+    unit: 'celsius',
   });
   const [thresholds, setThresholds] = useState<ThresholdSetting[]>([]);
   useEffect(() => {
@@ -49,7 +49,7 @@ const AlarmSettings: React.FC = () => {
   const handleConditionChange = (condition: string) => {
     if (isEditing && currentThreshold) {
       setCurrentThreshold((prev) => ({
-        ...prev,
+        ...prev!,
         condition,
       }));
     } else {
@@ -78,14 +78,14 @@ const AlarmSettings: React.FC = () => {
         setThresholds((prev) => [...prev, newThreshold]);
         setIsModalOpen(false);
         setNewThreshold({
-          id: '',
+          id: '', 
           deviceId: '',
           sensorId: '',
-          reading: '',
+          reading: 'temperature',
           condition: '',
           email: '',
-          level: '',
-          unit: '',
+          level: 'caution',
+          unit: 'celsius',
         });
       } catch (error) {
         console.error('Failed to add threshold', error);
@@ -109,14 +109,14 @@ const AlarmSettings: React.FC = () => {
             setIsModalOpen(true);
             setIsEditing(false);
             setNewThreshold({
-              id: '',
+              id: '', 
               deviceId: '',
               sensorId: '',
-              reading: '',
+              reading: 'temperature',
               condition: '',
               email: '',
-              level: '',
-              unit: '',
+              level: 'caution',
+              unit: 'celsius',
             }); // Reset for adding new threshold
           }}
           className="bg-blue-500 text-white px-4 py-2 rounded"

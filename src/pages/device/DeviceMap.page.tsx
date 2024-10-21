@@ -4,6 +4,7 @@ import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import { LatLngTuple } from 'leaflet';
 
 // Mock data for device locations
 const deviceLocations = [
@@ -33,7 +34,7 @@ const DeviceMap: React.FC = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         {deviceLocations.map(device => (
-          <Marker key={device.id} position={device.location} icon={icon}>
+          <Marker key={device.id} position={device.location as LatLngTuple} icon={icon}>
             <Popup>
               <strong>{device.name}</strong><br />
               Type: {device.type}

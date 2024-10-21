@@ -10,14 +10,8 @@ const fetchDevice = async (): Promise<Device> => {
     id: 'device1',
     deviceId: '12345',
     sensors: [
-      {
-        id: 'sensor1',
-        sensorId: 'sensor123',
-        rawDataList: [
-          { id: 'raw1', rawName: 'Temperature', unitOfMeasurement: 'Celsius' },
-          { id: 'raw2', rawName: 'Humidity', unitOfMeasurement: '%' },
-        ],
-      },
+      { id: "sensor1", name: "sensor 1", type: "Temperature", unit: "Celsius", deviceId: "dev1", sensorId: "sen1", rawDataList: [] },
+      { id: "sensor2", name: "sensor 2", type: "Humidity", unit: "g/kg", deviceId: "dev1", sensorId: "sen2", rawDataList: [] }
     ],
   };
 };

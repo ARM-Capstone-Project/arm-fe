@@ -63,7 +63,7 @@ const Device: React.FC = () => {
                         className="bg-white shadow-md rounded p-4 cursor-pointer"
                         onClick={() => handleDeviceSelect(device.id)} // Set selected device ID on click
                     >
-                        <DeviceIcons type={device.type} />
+                        <DeviceIcons type={device.type as 'temperature' | 'pressure' | 'moisture' | 'humidity'} />
                         <h3 className="text-xl font-semibold mt-2">{device.name}</h3>
                         <h3 className="text-xl font-semibold mt-2">{device.id} </h3>
                         <p className="text-gray-500">Zone: {device.location}</p>

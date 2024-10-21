@@ -124,7 +124,7 @@ const DeviceDetail: React.FC = () => {
             {device.users.map((user) => (
         <tr key={user.id}>
           <td></td><td></td>
-          <td>{user.name} </td>
+          <td>{user.username} </td>
           <td>- {user.role}</td>
         </tr>
       ))}

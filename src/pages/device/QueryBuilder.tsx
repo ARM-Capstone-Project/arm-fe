@@ -36,7 +36,7 @@ const QueryBuilder: React.FC<{ onConditionChange: (condition: string) => void }>
     console.log(queryString); // This will show the generated condition
 
     // Call the onConditionChange with the generated query string
-    onConditionChange(queryString);
+    onConditionChange(queryString || '');
   }, [onConditionChange]);
 
   const renderBuilder = useCallback((props: BuilderProps) => (

@@ -10,6 +10,9 @@ import GaugeChart from 'react-gauge-chart';
 import DeviceList from '../../components/DeviceList.tsx';
 import AlertList from '../../components/AlertList.tsx';
 import Title from '../../components/Title.tsx';
+import L from 'leaflet';
+import { LatLngTuple } from 'leaflet';
+import { Device } from 'types/device.ts';
 
 // Mock data for charts and gauges
 const lineChartData = [
@@ -37,70 +40,86 @@ const barChartData = [
 
 const mockDevices: Device[] = [
   {
-    deviceId: '123',
-    deviceName: 'Sample Device',
-    deviceType: 'Sensor',
+    id: "dev1",
+    batchNo: "batch1", 
+    name: "Sample Device",
+    type: "Sensor",
+    description: "A sample sensor device", 
+    tagNo: "tag1", 
     sensors: [
-      { name: 'sensor 1', type: 'Temperature', unit: 'Celsius', deviceId: '123' },
-      { name: 'sensor 2', type: 'Humidity', unit: 'g/kg', deviceId: '123' },
+      { id: "sensor1", name: "sensor 1", type: "Temperature", unit: "Celsius", device_id: "dev1", status: "active" },
+      { id: "sensor2", name: "sensor 2", type: "Humidity", unit: "g/kg", device_id: "dev1", status: "active" }
     ],
-    zone: 'Zone A',
-    location: 'Room 101',
-    status: 'active',
+    zoneId: "zone1", 
+    zoneName: "Zone A",
+    location: "Room 101",
+    status: "active",
     users: [
-      { id: 'usr1', name: 'Amy', role: 'Supervisor' },
-      { id: 'usr2', name: 'Joe', role: 'Supervisor' },
-      { id: 'usr3', name: 'Fin', role: 'Operator' },
-      { id: 'usr4', name: 'Agae', role: 'Operator' },
-    ],
+      { id: "usr1", username: "Amy", role: "Supervisor" },
+      { id: "usr2", username: "Joe", role: "Supervisor" },
+      { id: "usr3", username: "Fin", role: "Operator" },
+      { id: "usr4", username: "Agae", role: "Operator" }
+    ]
   },
   {
-    deviceId: '124',
-    deviceName: 'Outdoor Sensor',
-    deviceType: 'Sensor',
+    id: "dev2",
+    batchNo: "batch2", 
+    name: "Outdoor Sensor",
+    type: "Sensor",
+    description: "An outdoor sensor device", 
+    tagNo: "tag2", 
     sensors: [
-      { name: 'sensor 3', type: 'Moisture', unit: '%', deviceId: '124' },
-      { name: 'sensor 4', type: 'Light', unit: 'lux', deviceId: '124' },
+      { id: "sensor3", name: "sensor 3", type: "Moisture", unit: "%", device_id: "dev2", status: "active" },
+      { id: "sensor4", name: "sensor 4", type: "Light", unit: "lux", device_id: "dev2", status: "active" }
     ],
-    zone: 'Zone B',
-    location: 'Garden',
-    status: 'inactive',
+    zoneId: "zone2", 
+    zoneName: "Zone B",
+    location: "Garden",
+    status: "inactive",
     users: [
-      { id: 'usr5', name: 'Lily', role: 'Supervisor' },
-      { id: 'usr6', name: 'David', role: 'Operator' },
-    ],
+      { id: "usr5", username: "Lily", role: "Supervisor" },
+      { id: "usr6", username: "David", role: "Operator" }
+    ]
   },
   {
-    deviceId: '125',
-    deviceName: 'Pressure Monitor',
-    deviceType: 'Monitor',
+    id: "dev3",
+    batchNo: "batch3", 
+    name: "Pressure Monitor",
+    type: "Monitor",
+    description: "A pressure monitoring device", 
+    tagNo: "tag3", 
     sensors: [
-      { name: 'sensor 5', type: 'Pressure', unit: 'Psi', deviceId: '125' },
+      { id: "sensor5", name: "sensor 5", type: "Pressure", unit: "Psi", device_id: "dev3", status: "active" }
     ],
-    zone: 'Zone C',
-    location: 'Factory Floor',
-    status: 'active',
+    zoneId: "zone3", 
+    zoneName: "Zone C",
+    location: "Factory Floor",
+    status: "active",
     users: [
-      { id: 'usr7', name: 'Mia', role: 'Supervisor' },
-      { id: 'usr8', name: 'Tom', role: 'Operator' },
-    ],
+      { id: "usr7", username: "Mia", role: "Supervisor" },
+      { id: "usr8", username: "Tom", role: "Operator" }
+    ]
   },
   {
-    deviceId: '126',
-    deviceName: 'Humidity Detector',
-    deviceType: 'Sensor',
+    id: "dev4",
+    batchNo: "batch4", 
+    name: "Humidity Detector",
+    type: "Sensor",
+    description: "A humidity detection device", 
+    tagNo: "tag4", 
     sensors: [
-      { name: 'sensor 6', type: 'Humidity', unit: '%', deviceId: '126' },
+      { id: "sensor6", name: "sensor 6", type: "Humidity", unit: "%", device_id: "dev4", status: "active" }
     ],
-    zone: 'Zone D',
-    location: 'Warehouse',
-    status: 'active',
+    zoneId: "zone4", 
+    zoneName: "Zone D",
+    location: "Warehouse",
+    status: "active",
     users: [
-      { id: 'usr9', name: 'John', role: 'Supervisor' },
-      { id: 'usr10', name: 'Eve', role: 'Operator' },
-    ],
-  },
-]; 
+      { id: "usr9", username: "John", role: "Supervisor" },
+      { id: "usr10", username: "Eve", role: "Operator" }
+    ]
+  }
+];
 
 const mockAlerts = [
   { id: 1, name: 'Temperature Alert', description: 'High temperature detected', timestamp: '2024-07-15 12:00' },
@@ -177,7 +196,12 @@ const AnalyticsPage: React.FC = () => {
         {/* Device List and Status */}
         <div className="bg-white shadow-md rounded p-4">
           <h2 className="text-xl font-semibold mb-4">Device List and Status</h2>
-          <DeviceList devices={mockDevices} />
+          <DeviceList 
+            devices={mockDevices}
+            onEdit={() => {}}
+            onRemove={() => {}}
+            onView={() => {}}
+          />
         </div>
         
       </div>
@@ -192,7 +216,7 @@ const AnalyticsPage: React.FC = () => {
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
             {deviceLocations.map(device => (
-              <Marker key={device.id} position={device.location} icon={icon}>
+              <Marker key={device.id} position={device.location as LatLngTuple} icon={icon}>
                 <Popup>
                   <strong>{device.name}</strong><br />
                   Type: {device.type}
