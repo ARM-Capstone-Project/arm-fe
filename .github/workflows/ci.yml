@@ -63,6 +63,14 @@ jobs:
     - name: Update tag in Helm chart
       run: |
         sed -i 's/tag: .*/tag: "${{github.run_id}}"/' helm/arm-fe-chart/values.yaml
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.email "122134041+goh0622@users.noreply.github.com"
+        git config --global user.name "GitHub Workflows CI/CD"
+        git add helm/arm-fe-chart/values.yaml
+        git commit -m "Update tag in Helm chart"
+        git push
     
     # - name: Run Trivy vulnerability scanner in IaC mode
     #   uses: aquasecurity/trivy-action@0.20.0
