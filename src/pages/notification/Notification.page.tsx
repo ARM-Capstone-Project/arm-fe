@@ -1,8 +1,8 @@
 // src/components/Notification.tsx
 
-import React, { useState } from 'react';
-import { FaBell, FaTrash } from 'react-icons/fa';
-import Title from '../../components/Title';
+import React, { useState } from 'react'
+import { FaBell, FaTrash } from 'react-icons/fa'
+import Title from '../../components/Title'
 
 const mockNotifications = [
   {
@@ -23,25 +23,24 @@ const mockNotifications = [
     message: 'Humidity in the Greenhouse is too high.',
     time: '30 minutes ago',
   },
-];
+]
 
 const Notification: React.FC = () => {
-  const [notifications, setNotifications] = useState(mockNotifications);
+  const [notifications, setNotifications] = useState(mockNotifications)
 
   const handleDelete = (id: number) => {
-    setNotifications(notifications.filter(notification => notification.id !== id));
-    console.log(`Deleted Notification ID: ${id}`);
-  };
+    setNotifications(notifications.filter((notification) => notification.id !== id))
+    console.log(`Deleted Notification ID: ${id}`)
+  }
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <div className="flex items-center justify-between mb-6">
         <Title title="Notifications" />
         <FaBell className="text-gray-600 text-2xl" />
-        
       </div>
       <div className="space-y-4">
-        {notifications.map(notification => (
+        {notifications.map((notification) => (
           <div key={notification.id} className="bg-white shadow rounded-lg p-4 flex items-start">
             <div className="flex-shrink-0">
               <FaBell className="text-rose-600 text-2xl" />
@@ -65,7 +64,7 @@ const Notification: React.FC = () => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Notification;
+export default Notification

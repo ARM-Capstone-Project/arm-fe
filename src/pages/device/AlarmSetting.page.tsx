@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import QueryBuilder from './QueryBuilder';
-import { saveThreshold, fetchThresholds } from '../../services/DataService';
-import ThresholdSetting from './interfaces/ThresholdSetting';
-import ThresholdSettingList from './ThresholdListing.page';
+import React, { useState, useEffect } from 'react'
+import QueryBuilder from './QueryBuilder'
+import { saveThreshold, fetchThresholds } from '../../services/DataService'
+import ThresholdSetting from './interfaces/ThresholdSetting'
+import ThresholdSettingList from './ThresholdListing.page'
 
 const AlarmSettings: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [currentThreshold, setCurrentThreshold] = useState<ThresholdSetting | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
+  const [currentThreshold, setCurrentThreshold] = useState<ThresholdSetting | null>(null)
   const [newThreshold, setNewThreshold] = useState<ThresholdSetting>({
     id: '',
     deviceId: '',
@@ -17,68 +17,72 @@ const AlarmSettings: React.FC = () => {
     email: '',
     level: 'caution',
     unit: 'celsius',
-  });
-  const [thresholds, setThresholds] = useState<ThresholdSetting[]>([]);
+  })
+  const [thresholds, setThresholds] = useState<ThresholdSetting[]>([])
   useEffect(() => {
     const loadThresholds = async () => {
       try {
-        const fetchedThresholds = await fetchThresholds();
-        setThresholds(fetchedThresholds);
+        const fetchedThresholds = await fetchThresholds()
+        setThresholds(fetchedThresholds)
       } catch (error) {
-        console.error('Failed to fetch thresholds:', error);
+        console.error('Failed to fetch thresholds:', error)
       }
-    };
+    }
 
-    loadThresholds();
-  }, []);
+    loadThresholds()
+  }, [])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     if (isEditing && currentThreshold) {
       setCurrentThreshold({
         ...currentThreshold,
         [e.target.name]: e.target.value,
-      });
+      })
     } else {
       setNewThreshold({
         ...newThreshold,
         [e.target.name]: e.target.value,
-      });
+      })
     }
-  };
+  }
 
   const handleConditionChange = (condition: string) => {
     if (isEditing && currentThreshold) {
       setCurrentThreshold((prev) => ({
         ...prev!,
         condition,
-      }));
+      }))
     } else {
       setNewThreshold((prev) => ({
         ...prev,
         condition,
-      }));
+      }))
     }
-  };
+  }
 
   const handleAddOrEditThreshold = async () => {
     if (isEditing && currentThreshold) {
-      const updatedThreshold = { ...currentThreshold };
+      const updatedThreshold = { ...currentThreshold }
       try {
-        await saveThreshold(updatedThreshold);
-        setThresholds((prev) => prev.map(threshold => threshold.id === updatedThreshold.id ? updatedThreshold : threshold));
-        setIsModalOpen(false);
-        setCurrentThreshold(null);
+        await saveThreshold(updatedThreshold)
+        setThresholds((prev) =>
+          prev.map((threshold) =>
+            threshold.id === updatedThreshold.id ? updatedThreshold : threshold,
+          ),
+        )
+        setIsModalOpen(false)
+        setCurrentThreshold(null)
       } catch (error) {
-        console.error('Failed to update threshold', error);
+        console.error('Failed to update threshold', error)
       }
     } else {
-      console.log('New Threshold:', newThreshold);
+      console.log('New Threshold:', newThreshold)
       try {
-        await saveThreshold(newThreshold);
-        setThresholds((prev) => [...prev, newThreshold]);
-        setIsModalOpen(false);
+        await saveThreshold(newThreshold)
+        setThresholds((prev) => [...prev, newThreshold])
+        setIsModalOpen(false)
         setNewThreshold({
-          id: '', 
+          id: '',
           deviceId: '',
           sensorId: '',
           reading: 'temperature',
@@ -86,19 +90,19 @@ const AlarmSettings: React.FC = () => {
           email: '',
           level: 'caution',
           unit: 'celsius',
-        });
+        })
       } catch (error) {
-        console.error('Failed to add threshold', error);
+        console.error('Failed to add threshold', error)
       }
     }
-  };
+  }
 
   const handleEditThreshold = (threshold: ThresholdSetting) => {
-    setCurrentThreshold(threshold);
-    setIsEditing(true);
-    setNewThreshold(threshold); // Populate newThreshold with the current threshold
-    setIsModalOpen(true);
-  };
+    setCurrentThreshold(threshold)
+    setIsEditing(true)
+    setNewThreshold(threshold) // Populate newThreshold with the current threshold
+    setIsModalOpen(true)
+  }
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -106,10 +110,10 @@ const AlarmSettings: React.FC = () => {
         <h2 className="text-3xl font-bold text-gray-800">Threshold Settings</h2>
         <button
           onClick={() => {
-            setIsModalOpen(true);
-            setIsEditing(false);
+            setIsModalOpen(true)
+            setIsEditing(false)
             setNewThreshold({
-              id: '', 
+              id: '',
               deviceId: '',
               sensorId: '',
               reading: 'temperature',
@@ -117,7 +121,7 @@ const AlarmSettings: React.FC = () => {
               email: '',
               level: 'caution',
               unit: 'celsius',
-            }); // Reset for adding new threshold
+            }) // Reset for adding new threshold
           }}
           className="bg-blue-500 text-white px-4 py-2 rounded"
         >
@@ -141,8 +145,9 @@ const AlarmSettings: React.FC = () => {
                 id="deviceId"
                 name="deviceId"
                 type="text"
-                value={isEditing && currentThreshold ? currentThreshold.deviceId : newThreshold.deviceId}
-
+                value={
+                  isEditing && currentThreshold ? currentThreshold.deviceId : newThreshold.deviceId
+                }
                 onChange={handleInputChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
@@ -155,8 +160,9 @@ const AlarmSettings: React.FC = () => {
                 id="sensorId"
                 name="sensorId"
                 type="text"
-                value={isEditing && currentThreshold ? currentThreshold.sensorId : newThreshold.sensorId}
-
+                value={
+                  isEditing && currentThreshold ? currentThreshold.sensorId : newThreshold.sensorId
+                }
                 onChange={handleInputChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
@@ -168,8 +174,9 @@ const AlarmSettings: React.FC = () => {
               <select
                 id="reading"
                 name="reading"
-                value={isEditing && currentThreshold ? currentThreshold.reading : newThreshold.reading}
-
+                value={
+                  isEditing && currentThreshold ? currentThreshold.reading : newThreshold.reading
+                }
                 onChange={handleInputChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               >
@@ -204,7 +211,6 @@ const AlarmSettings: React.FC = () => {
                 name="email"
                 type="text"
                 value={isEditing && currentThreshold ? currentThreshold.email : newThreshold.email}
-
                 onChange={handleInputChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
@@ -218,14 +224,13 @@ const AlarmSettings: React.FC = () => {
                 name="unit"
                 type="text"
                 value={isEditing && currentThreshold ? currentThreshold.unit : newThreshold.unit}
-
                 onChange={handleInputChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
             <QueryBuilder onConditionChange={handleConditionChange} />
             <div className="flex justify-end">
-            <button
+              <button
                 onClick={() => setIsModalOpen(false)}
                 className="bg-gray-500 text-white px-4 py-2 rounded mr-2"
               >
@@ -242,7 +247,7 @@ const AlarmSettings: React.FC = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default AlarmSettings;
+export default AlarmSettings

@@ -1,5 +1,4 @@
-
-body{
+body {
   background-color: #ffff;
 }
 .logo {
@@ -37,27 +36,27 @@ body{
 .read-the-docs {
   color: #888;
 }
-.boxed-container{
+.boxed-container {
   max-width: 1440px;
   margin: 0 auto;
-  box-shadow: 0 24px 48px rgba(17,16,62,0.12);
+  box-shadow: 0 24px 48px rgba(17, 16, 62, 0.12);
   min-height: 70%;
   min-height: -webkit-calc(100% - 300px);
   min-height: -moz-calc(100% - 300px);
-  min-height: calc(100% - 300px);          /*min-height hack*/
+  min-height: calc(100% - 300px); /*min-height hack*/
 }
 
-.recharts-wrapper{
-  box-shadow: 0 24px 48px rgba(17,16,62,0.12);
+.recharts-wrapper {
+  box-shadow: 0 24px 48px rgba(17, 16, 62, 0.12);
   background-color: #fff;
 }
-.profile_btn{
+.profile_btn {
   padding: 4px;
   background: none;
   color: #fff;
 }
 
-.nav_toggle{
+.nav_toggle {
   background: rgb(218, 92, 115);
   position: relative;
   z-index: 999;
@@ -71,12 +70,12 @@ body{
   text-overflow: ellipsis;
 }
 
-.username_txt{
+.username_txt {
   color: rgb(56, 56, 222) !important;
   cursor: pointer;
   text-decoration: underline;
 }
 
-.text-green-600{
-  color: rgb(22 163 74 ) !important;
+.text-green-600 {
+  color: rgb(22 163 74) !important;
 }

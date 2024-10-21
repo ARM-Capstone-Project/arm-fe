@@ -1,40 +1,40 @@
-import "./App.css";
-import React, { useState, useEffect } from "react";
-import Header from "../src/components/Header.tsx";
-import Sidebar from "../src/components/Sidebar.tsx";
-import Dashboard from "../src/pages/dashboard/Dashboard.page";
-import DevicePage from "./pages/device/DeviceSummary.page.tsx";
-import AssignDevices from "../src/pages/device/AssignDevices.page";
-import Notification from "../src/pages/notification/Notification.page";
-import UserList from "../src/pages/users/UserList.page";
-import UserDetails from "./pages/users/UserDetails.page.tsx";
-import CreateUser from "../src/pages/users/CreateUser.page";
-import AnalyticsPage from "../src/pages/analytics/Analytics.page";
-import CompanyHierarchy from "../src/pages/company/CompanyHierarchy.page";
+import './App.css'
+import React, { useState, useEffect } from 'react'
+import Header from '../src/components/Header.tsx'
+import Sidebar from '../src/components/Sidebar.tsx'
+import Dashboard from '../src/pages/dashboard/Dashboard.page'
+import DevicePage from './pages/device/DeviceSummary.page.tsx'
+import AssignDevices from '../src/pages/device/AssignDevices.page'
+import Notification from '../src/pages/notification/Notification.page'
+import UserList from '../src/pages/users/UserList.page'
+import UserDetails from './pages/users/UserDetails.page.tsx'
+import CreateUser from '../src/pages/users/CreateUser.page'
+import AnalyticsPage from '../src/pages/analytics/Analytics.page'
+import CompanyHierarchy from '../src/pages/company/CompanyHierarchy.page'
 
-import { Routes, Route } from "react-router-dom";
-import DeviceDetail from "./pages/device/DeviceDetail.page.tsx";
-import UpdDeviceForm from "./components/UpdDeviceForm";
-import DevicesList from "./pages/device/DevicesList.page.tsx";
-import CreateDevice from "./components/CreateDevice";
-import ZoneList from "./pages/zone/ZoneList.page.tsx";
-import ZoneForm from "./pages/zone/ZoneForm.page.tsx";
-import Register from "./pages/register/Register.page.tsx";
-import Login from "./pages/login/Login.page.tsx";
+import { Routes, Route } from 'react-router-dom'
+import DeviceDetail from './pages/device/DeviceDetail.page.tsx'
+import UpdDeviceForm from './components/UpdDeviceForm'
+import DevicesList from './pages/device/DevicesList.page.tsx'
+import CreateDevice from './components/CreateDevice'
+import ZoneList from './pages/zone/ZoneList.page.tsx'
+import ZoneForm from './pages/zone/ZoneForm.page.tsx'
+import Register from './pages/register/Register.page.tsx'
+import Login from './pages/login/Login.page.tsx'
 
-import * as AuthService from "./services/auth.service";
+import * as AuthService from './services/auth.service'
 
-import User from './types/user.ts';
+import User from './types/user.ts'
 
 function App() {
-  const [currentUser, setCurrentUser] = useState<User | undefined>(undefined);
+  const [currentUser, setCurrentUser] = useState<User | undefined>(undefined)
   useEffect(() => {
-    const currentUser = AuthService.getCurrentUser();
+    const currentUser = AuthService.getCurrentUser()
     if (currentUser) {
-      setCurrentUser(currentUser);
-      console.log(currentUser);
+      setCurrentUser(currentUser)
+      console.log(currentUser)
     }
-  }, []);
+  }, [])
 
   if (!currentUser) {
     // If the user is not logged in, show the login page only
@@ -44,14 +44,14 @@ function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>
-    );
+    )
   }
 
   const logOut = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    setCurrentUser(undefined);
-  };
+    localStorage.removeItem('user')
+    localStorage.removeItem('token')
+    setCurrentUser(undefined)
+  }
 
   return (
     //<Router>
@@ -83,7 +83,7 @@ function App() {
         </main>
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,9 +1,9 @@
-import React from 'react';
-import ThresholdSetting from './interfaces/ThresholdSetting';
+import React from 'react'
+import ThresholdSetting from './interfaces/ThresholdSetting'
 
 interface ThresholdSettingListProps {
-  thresholds: ThresholdSetting[];
-  onEdit: (threshold: ThresholdSetting) => void; // New prop for edit function
+  thresholds: ThresholdSetting[]
+  onEdit: (threshold: ThresholdSetting) => void // New prop for edit function
 }
 
 const ThresholdSettingList: React.FC<ThresholdSettingListProps> = ({ thresholds, onEdit }) => {
@@ -47,7 +47,7 @@ const ThresholdSettingList: React.FC<ThresholdSettingListProps> = ({ thresholds,
         </tbody>
       </table>
     </div>
-  );
-};
+  )
+}
 
 export default ThresholdSettingList

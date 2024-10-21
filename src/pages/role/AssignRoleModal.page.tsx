@@ -1,49 +1,52 @@
-import React, { useState } from 'react';
-import api from '../../api/index';
+import React, { useState } from 'react'
+import api from '../../api/index'
 
 interface Role {
-  id: string;
-  name: string;
+  id: string
+  name: string
 }
 
 interface AssignRoleModalProps {
-  userId: string;
-  roles: Role[];
-  isOpen: boolean;
-  onClose: () => void;
-  onSuccess: () => void;  // Callback for successful role assignment
+  userId: string
+  roles: Role[]
+  isOpen: boolean
+  onClose: () => void
+  onSuccess: () => void // Callback for successful role assignment
 }
 
-const AssignRoleModal: React.FC<AssignRoleModalProps> = ({ userId, isOpen, onClose, onSuccess }) => {
-  const [roleName, setRoleName] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
+const AssignRoleModal: React.FC<AssignRoleModalProps> = ({
+  userId,
+  isOpen,
+  onClose,
+  onSuccess,
+}) => {
+  const [roleName, setRoleName] = useState<string>('')
+  const [error, setError] = useState<string | null>(null)
 
-  const allRoles = ['MANAGER', 'OPERATOR' ,'USER'];
+  const allRoles = ['MANAGER', 'OPERATOR', 'USER']
 
-  if (!isOpen) return null; // Return nothing if modal is not open
+  if (!isOpen) return null // Return nothing if modal is not open
 
   const handleAssignRole = async () => {
     if (!roleName) {
-      setError('Please select a role.');
-      return;
+      setError('Please select a role.')
+      return
     }
 
     try {
-        await api.post('/admin/assign_role', null, {
-            params: {
-              userId: userId,
-              roleName: roleName
-            }
-          });//await api.post('/admin/assign_role', {userId, roleName });
-        onSuccess();  // Call the onSuccess callback on success
-        onClose();    // Close the modal after successful API call
+      await api.post('/admin/assign_role', null, {
+        params: {
+          userId: userId,
+          roleName: roleName,
+        },
+      }) //await api.post('/admin/assign_role', {userId, roleName });
+      onSuccess() // Call the onSuccess callback on success
+      onClose() // Close the modal after successful API call
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        setError(`Failed to assign role, ${error}`);
-      }
-
-
-  };
+    } catch (error: any) {
+      setError(`Failed to assign role, ${error}`)
+    }
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -84,7 +87,7 @@ const AssignRoleModal: React.FC<AssignRoleModalProps> = ({ userId, isOpen, onClo
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AssignRoleModal;
+export default AssignRoleModal

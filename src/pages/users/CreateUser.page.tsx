@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
-const roles = ['Supervisor', 'Operator'];
+const roles = ['Supervisor', 'Operator']
 
 const CreateUser: React.FC = () => {
-  const [name, setName] = useState('');
-  const [role, setRole] = useState('Operator');
+  const [name, setName] = useState('')
+  const [role, setRole] = useState('Operator')
 
   const handleCreateUser = () => {
     // Handle user creation logic here
-    alert('User Created: '+ name + "with role " + role );
-  };
+    alert('User Created: ' + name + 'with role ' + role)
+  }
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -40,15 +40,12 @@ const CreateUser: React.FC = () => {
             ))}
           </select>
         </div>
-        <button
-          onClick={handleCreateUser}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
+        <button onClick={handleCreateUser} className="bg-blue-500 text-white px-4 py-2 rounded">
           Create User
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CreateUser;
+export default CreateUser
