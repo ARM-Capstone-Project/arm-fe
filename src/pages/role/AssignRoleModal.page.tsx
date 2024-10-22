@@ -39,10 +39,10 @@ const AssignRoleModal: React.FC<AssignRoleModalProps> = ({
           userId: userId,
           roleName: roleName,
         },
-      }) //await api.post('/admin/assign_role', {userId, roleName });
+      })
       onSuccess() // Call the onSuccess callback on success
       onClose() // Close the modal after successful API call
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setError(`Failed to assign role, ${error}`)
     }
@@ -54,8 +54,11 @@ const AssignRoleModal: React.FC<AssignRoleModalProps> = ({
         <h2 className="text-xl font-semibold mb-4">Assign Role</h2>
 
         <div className="mb-4">
-          <label className="block mb-2">Select Role</label>
+          <label htmlFor="role-select" className="block mb-2">
+            Select Role
+          </label>
           <select
+            id="role-select"
             value={roleName}
             onChange={(e) => setRoleName(e.target.value)}
             className="w-full border border-gray-300 rounded px-3 py-2"

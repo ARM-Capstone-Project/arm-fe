@@ -18,8 +18,9 @@ const CreateUser: React.FC = () => {
       </div>
       <div className="bg-white shadow rounded-lg p-4">
         <div className="mb-4">
-          <label className="block text-gray-700">Name</label>
+        <label htmlFor="name" className="block text-gray-700">Name</label>
           <input
+            id="name"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -27,8 +28,9 @@ const CreateUser: React.FC = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Role</label>
+        <label htmlFor="role" className="block text-gray-700">Role</label>
           <select
+            id="role"
             value={role}
             onChange={(e) => setRole(e.target.value)}
             className="mt-1 block w-full px-4 py-2 border rounded-md focus:ring focus:ring-opacity-50 focus:ring-blue-300"
