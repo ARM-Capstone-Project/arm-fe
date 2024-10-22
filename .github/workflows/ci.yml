@@ -31,24 +31,8 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Run tests with coverage
-      run: npm run coverage
-
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        files: ./coverage/*.json
-        flags: unittests
-        name: code-coverage-report
-
-    - name: Commit and push changes
-      run: |
-        git config --local user.email "actions@github.com"
-        git config --local user.name "GitHub Actiosn"
-        git add ./coverage
-        git commit -m "Add coverage reports"
-        git push
+    - name: Run tests
+      run: npm run test
 
   build:
     runs-on: ubuntu-latest
