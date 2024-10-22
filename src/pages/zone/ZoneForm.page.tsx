@@ -102,8 +102,11 @@ const ZoneForm: React.FC<ZoneFormProps> = ({ name = '' }) => {
         <div className="bg-white rounded-lg shadow-md p-4">
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col mb-4">
-              <label className="mb-2 text-gray-700">Name</label>
+              <label htmlFor="zoneName" className="mb-2 text-gray-700">
+                Name
+              </label>
               <input
+                id="zoneName"
                 type="text"
                 placeholder="Enter zone name"
                 value={zoneName}
@@ -113,8 +116,11 @@ const ZoneForm: React.FC<ZoneFormProps> = ({ name = '' }) => {
               />
             </div>
             <div className="flex flex-col mb-4">
-              <label className="mb-2 text-gray-700">Latitude</label>
+              <label htmlFor="latitude" className="mb-2 text-gray-700">
+                Latitude
+              </label>
               <input
+                id="latitude"
                 type="number"
                 placeholder="Enter latitude"
                 value={latitude ?? ''}
@@ -124,8 +130,11 @@ const ZoneForm: React.FC<ZoneFormProps> = ({ name = '' }) => {
               />
             </div>
             <div className="flex flex-col mb-4">
-              <label className="mb-2 text-gray-700">Longitude</label>
+              <label htmlFor="longitude" className="mb-2 text-gray-700">
+                Longitude
+              </label>
               <input
+                id="longitude"
                 type="number"
                 placeholder="Enter longitude"
                 value={longitude ?? ''}
@@ -135,8 +144,11 @@ const ZoneForm: React.FC<ZoneFormProps> = ({ name = '' }) => {
               />
             </div>
             <div className="flex flex-col mb-4">
-              <label className="mb-2 text-gray-700">Radius (in meters)</label>
+              <label htmlFor="radius" className="mb-2 text-gray-700">
+                Radius (in meters)
+              </label>
               <input
+                id="radius"
                 type="number"
                 placeholder="Enter radius"
                 value={radius}

@@ -122,6 +122,7 @@ const ZoneList: React.FC = () => {
             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{zone.radius}</td>
             <td className="whitespace-nowrap px-3 py-4 text-sm flex space-x-4">
               <FaTrash
+                id={`trash-${zone.id}`}
                 className="text-red-500 cursor-pointer"
                 onClick={() => handleDelete(zone.id)}
               />
@@ -210,9 +211,7 @@ const ZoneList: React.FC = () => {
               >
                 <Popup>
                   <p>{zone.id}</p>
-                  <p>
-                    <strong>{zone.name}</strong>
-                  </p>
+                  <p></p>
                   <p>Latitude: {zone.latitude}</p>
                   <p>Longitude: {zone.longitude}</p>
                 </Popup>

@@ -12,7 +12,7 @@ export default defineConfig({
       // speed up since test don't rely on css
       css: false,
       coverage: {
-          provider: 'istanbul',
+         provider: 'istanbul',
          reporter: ['text', 'json', 'html'],
       },
    },
