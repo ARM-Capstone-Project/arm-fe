@@ -16,8 +16,44 @@ permissions:
   security-events: write # To upload sarif files
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4.1.1
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests with coverage
+      run: npm run coverage
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./coverage/*.json
+        flags: unittests
+        name: code-coverage-report
+
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "actions@github.com"
+        git config --local user.name "GitHub Actiosn"
+        git add ./coverage
+        git commit -m "Add coverage reports"
+        git push
+
   build:
     runs-on: ubuntu-latest
+
+    needs: test
 
     steps:
     - name: Checkout code
@@ -56,7 +92,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v4.1.1
       with:
         token: ${{ secrets.TOKEN }}
 
@@ -66,8 +102,8 @@ jobs:
 
     - name: Commit and push changes
       run: |
-        git config --global user.email "122134041+goh0622@users.noreply.github.com"
-        git config --global user.name "GitHub Workflows CI/CD"
+        git config --local user.email "actions@github.com"
+        git config --local user.name "GitHub Actions"
         git add helm/arm-fe-chart/values.yaml
         git commit -m "Update tag in Helm chart"
         git push
