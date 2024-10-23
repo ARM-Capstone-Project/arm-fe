@@ -42,7 +42,7 @@ const AssignRoleModal: React.FC<AssignRoleModalProps> = ({
       })
       onSuccess() // Call the onSuccess callback on success
       onClose() // Close the modal after successful API call
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setError(`Failed to assign role, ${error}`)
     }
