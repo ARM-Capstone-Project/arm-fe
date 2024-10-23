@@ -90,7 +90,6 @@ describe('Login Component', () => {
     fireEvent.change(screen.getByLabelText(/password/i), { target: { value: 'password' } })
     fireEvent.click(screen.getByRole('button', { name: /login/i }))
 
-    // Use waitFor to assert button is disabled
     await waitFor(() => {
       expect(screen.getByRole('button', { name: /login/i })).toBeDisabled()
     })

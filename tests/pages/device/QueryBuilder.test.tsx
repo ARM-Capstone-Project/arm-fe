@@ -26,8 +26,8 @@ vi.mock('@react-awesome-query-builder/ui', () => {
         },
       },
     },
-    Query: (props) => <div>{JSON.stringify(props)}</div>, // Mocking Query component
-    Builder: () => <div>Mocked Query Builder</div>, // Mocking Builder component
+    Query: (props) => <div>{JSON.stringify(props)}</div>,
+    Builder: () => <div>Mocked Query Builder</div>,
   }
 })
 

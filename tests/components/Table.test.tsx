@@ -18,11 +18,15 @@ describe('Table component', () => {
   const rows = (
     <>
       <tr>
-        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">Row 1 Col 1</td>
+        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">
+          Row 1 Col 1
+        </td>
         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Row 1 Col 2</td>
       </tr>
       <tr>
-        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">Row 2 Col 1</td>
+        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">
+          Row 2 Col 1
+        </td>
         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Row 2 Col 2</td>
       </tr>
     </>
@@ -31,11 +35,9 @@ describe('Table component', () => {
   it('renders the table with provided headers and rows', () => {
     render(<Table headers={headers} rows={rows} />)
 
-    // Check if headers are in the document
     expect(screen.getByText('Header 1')).toBeInTheDocument()
     expect(screen.getByText('Header 2')).toBeInTheDocument()
 
-    // Check if rows are in the document
     expect(screen.getByText('Row 1 Col 1')).toBeInTheDocument()
     expect(screen.getByText('Row 1 Col 2')).toBeInTheDocument()
     expect(screen.getByText('Row 2 Col 1')).toBeInTheDocument()

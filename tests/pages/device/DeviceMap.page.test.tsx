@@ -21,9 +21,8 @@ describe('DeviceMap Component', () => {
   it('renders all device markers', () => {
     render(<DeviceMap />)
     const markers = screen.getAllByTestId('marker')
-    expect(markers).toHaveLength(4) // 4 markers for the devices
+    expect(markers).toHaveLength(4)
 
-    // Check for popup content in each marker
     expect(markers[0]).toHaveTextContent('Temperature Sensors Group')
     expect(markers[0]).toHaveTextContent('Type: temperature')
 

@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest'
-import eventBus from '../../src/api/eventBus'
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
+import eventBus from '../../src/api/EventBus'
 
 describe('eventBus', () => {
   let callback: EventListener
