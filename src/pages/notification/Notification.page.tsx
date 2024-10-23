@@ -55,6 +55,7 @@ const Notification: React.FC = () => {
                 <button
                   className="text-red-500 hover:text-red-700 focus:outline-none"
                   onClick={() => handleDelete(notification.id)}
+                  aria-label={`Delete ${notification.title}`}
                 >
                   <FaTrash className="text-red-500" />
                 </button>

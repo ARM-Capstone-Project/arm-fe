@@ -70,8 +70,9 @@ const Login: React.FC = () => {
               <div>
                 <label htmlFor="username">username</label>
                 <Field
+                  id="username"
                   name="username"
-                  type="username"
+                  type="text"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
                 <ErrorMessage name="username" component="div" className="alert alert-danger" />
@@ -80,6 +81,7 @@ const Login: React.FC = () => {
               <div>
                 <label htmlFor="password">Password</label>
                 <Field
+                  id="password"
                   name="password"
                   type="password"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-blue-500 dark:focus:border-blue-500"
