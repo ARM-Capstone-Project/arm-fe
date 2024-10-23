@@ -18,7 +18,9 @@ const CreateUser: React.FC = () => {
       </div>
       <div className="bg-white shadow rounded-lg p-4">
         <div className="mb-4">
-        <label htmlFor="name" className="block text-gray-700">Name</label>
+          <label htmlFor="name" className="block text-gray-700">
+            Name
+          </label>
           <input
             id="name"
             type="text"
@@ -28,7 +30,9 @@ const CreateUser: React.FC = () => {
           />
         </div>
         <div className="mb-4">
-        <label htmlFor="role" className="block text-gray-700">Role</label>
+          <label htmlFor="role" className="block text-gray-700">
+            Role
+          </label>
           <select
             id="role"
             value={role}
