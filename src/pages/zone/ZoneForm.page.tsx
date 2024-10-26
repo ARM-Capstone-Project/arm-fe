@@ -17,9 +17,15 @@ const ZoneForm: React.FC<ZoneFormProps> = ({ name = '' }) => {
   const [latitude, setLatitude] = useState<number | null>(null)
   const [longitude, setLongitude] = useState<number | null>(null)
   const [radius, setRadius] = useState<number>(0)
+
+  const [sensorType, setSensorType] = useState<string>("Temperature");
+  const [region, setRegion] = useState<string>("North");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [zoneOpt, setZoneOpt] = useState<any | null>(null);
+
   const navigate = useNavigate()
   const isEdit = !!id
-
+  
   useEffect(() => {
     if (id) {
       const fetchZoneData = async () => {
@@ -84,6 +90,20 @@ const ZoneForm: React.FC<ZoneFormProps> = ({ name = '' }) => {
       handleCreate(event)
     }
   }
+
+  const handleRequestZoneOpt = async () => {
+    try {
+      const response = await api.get("/zone-opt", {
+        params: {
+          sensorType,
+          region,
+        },
+      });
+      setZoneOpt(response.data);
+    } catch (error) {
+      console.error("Error fetching optimal placement:", error);
+    }
+  };
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen flex">
@@ -198,6 +218,54 @@ const ZoneForm: React.FC<ZoneFormProps> = ({ name = '' }) => {
             </>
           )}
         </MapContainer>
+      </div>
+
+      <div className="p-6 bg-gray-100 flex">
+        <div className="w-full p-4 bg-white rounded-lg shadow-md flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-gray-700">
+            I want to plant a sensor to collect the{" "}
+            <select
+              value={sensorType}
+              onChange={(e) => setSensorType(e.target.value)}
+              className="border border-gray-300 rounded-md p-2"
+            >
+              <option value="Temperature">Temperature</option>
+              <option value="Moisture">Moisture</option>
+              <option value="Methane">Methane</option>
+            </select>{" "}
+            data in the{" "}
+            <select
+              value={region}
+              onChange={(e) => setRegion(e.target.value)}
+              className="border border-gray-300 rounded-md p-2"
+            >
+              <option value="North">North</option>
+              <option value="North East">North East</option>
+              <option value="East">East</option>
+              <option value="South">South</option>
+              <option value="South West">South West</option>
+              <option value="West">West</option>
+              <option value="North West">North West</option>
+            </select>{" "}
+            region of Singapore.
+          </h2>
+          <button
+            type="button"
+            onClick={handleRequestZoneOpt}
+            className="ml-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
+          >
+            Get a zone
+          </button>
+        </div>
+        {zoneOpt && (
+          <div className="mt-4 p-4 bg-gray-200 rounded-md">
+            <h3 className="font-semibold">Result:</h3>
+            <p>Name: {zoneOpt.name}</p>
+            <p>Longitude: {zoneOpt.longitude}</p>
+            <p>Latitude: {zoneOpt.latitude}</p>
+            <p>Suggested Radius: {zoneOpt.radius} meters</p>
+          </div>
+        )}
       </div>
     </div>
   )
