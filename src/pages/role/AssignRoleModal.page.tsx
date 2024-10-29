@@ -78,7 +78,7 @@ const AssignRoleModal: React.FC<AssignRoleModalProps> = ({ userId, isOpen, onClo
             onClick={handleAssignRole}
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
           >
-            Assign Role
+            Assign
           </button>
         </div>
       </div>

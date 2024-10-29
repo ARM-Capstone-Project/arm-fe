@@ -101,6 +101,19 @@ const UsersList = ({ currentUser }) => {
     navigate(`/users/${userId}`); // Navigate to the user details page
   };
 
+  // Delete user
+  const handleDelete = async (userId: string) => {
+    if (window.confirm('Are you sure you want to delete this user?')) {
+      try {
+        await api.delete(`/users/${userId}`);
+        alert('User deleted successfully');
+        window.location.reload();
+      } catch (error: any) {
+        setError('Failed to delete user');
+      }
+    }
+  };
+
   const allRoles = ['ADMIN' , 'MANAGER', 'OPERATOR' ,'USER'];
 
   const headers = (
@@ -154,7 +167,7 @@ const UsersList = ({ currentUser }) => {
           {isAdmin(currentUser) && (
                 <td className="whitespace-nowrap px-3 py-4 text-sm flex space-x-4">
                         <div>
-                  <button className={`px-2 py-1 rounded bg-red-500 text-white`}>
+                  <button onClick={() => handleDelete(user.id)} className={`px-2 py-1 rounded bg-red-500 text-white`}>
                     Delete
                   </button>
                   <a
