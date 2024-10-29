@@ -8,4 +8,11 @@ git clone <repo-url>
 npm install
 
 npm run dev
+
+
+```
+
+automation
+```
+npx cypress open
 ```
